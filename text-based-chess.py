@@ -1,7 +1,10 @@
+#Classes and Definitions
+
 class Pawn:
 	def __init__(self, x, y):
 		self.xaxis = x
 		self.yaxis = y
+	
 	def cord(self):
 		cord = [self.xaxis, self.yaxis]
 		print(cord)
@@ -12,12 +15,17 @@ class Pawn:
 		else: 
 			self.yaxis = y		 
 		
+# Testing Zone
+
 pawnTest = Pawn('A', 2)
 print(pawnTest.xaxis, pawnTest.yaxis)
 pawnTest.cord()
 pawnTest.movePawn('A',10)
 pawnTest.movePawn('B',2)
 pawnTest.cord()
+
+
+
 """
 pawn = ['a',1]
 
