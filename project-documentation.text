@@ -1,0 +1,13 @@
+Documenting chess-text
+1. Downloaded GitHub
+2. Created description for my file
+3. Created a file `touch text-based-chess.py` 
+4. Installed python3 `brew install python3`
+5. Opened the created file in vim `vim text-based-chess.py`
+6. Looked through some VIM commands
+7. Created a brain storm text file w/vim `:w project_brainstorm.txt`
+8. Trying to figure out how to “draw” the chess board using lists with nested tuples or dictionary
+9. Tried to use classes and all the advanced stuff but I said fuck it and just start programming with what I know
+10. Now I’m just confused lol
+11. Okay I got the class working but now the pawnTest.movePawn gives me an error with the arguments. 
+    - Within the class I forgot to add the self argument in movePawn

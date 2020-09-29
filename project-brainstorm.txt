@@ -1,0 +1,11 @@
+Project Brain Storm:
+- local two player game
+- all text; no images
+	- ideally i would "draw out" the board using undersacores or whatever
+	- realistically, it's 
+		1. get a string of text telling me the position of the piece, 
+		2. telling me if I'm check-ed, 
+		3. through some command it'll tell me the position of player b's pieces
+		4. give a command to move the piece to the appropriate coordinate
+		5. confirm a kill
+- i'd start with programming pawns > king > rooks > bishops > queen > knights  
