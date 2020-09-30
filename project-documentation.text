@@ -11,3 +11,10 @@ Documenting chess-text
 10. Now I’m just confused lol
 11. Okay I got the class working but now the pawnTest.movePawn gives me an error with the arguments. 
     - Within the class I forgot to add the self argument in movePawn
+--------
+9/30
+I was able to start understanding how to use the classes and inheretance
+I've created a superclass called ChessPiece and subclasses Pawn and Rook 
+I'll be adding another property to the super class that will check if the piece is on the board
+Creating the proper movement for the Rook was a challenge. Originally I thought I could use and OR statement with the two conditionals but that did not result in the desired output so I switched dit to what I had now. The current method also gave me issues but it was due to a typo where I typed `self.axis` instead of `self.xaxis` or `self.yaxis`. I'm not sure if I had that type before but that could have been the issue with the OR statement
+I added self.cord() to the Rook and Pawn movements to help with the test code  
