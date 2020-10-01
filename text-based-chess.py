@@ -1,24 +1,23 @@
 #Classes and Definitions
-
+letters = ['A','B','C','D','E','F','G','H'] 
+nums = [1,2,3,4,5,6,7,8]
 
 class ChessPiece:
 	def __init__(self, x, y):
-		self.xaxis = x
-		self.yaxis = y
+		if (x in letters and y in nums):
+			self.xaxis = x
+			self.yaxis = y
+		else:
+			print("The piece is off the board")
 	def cord(self):
 		cord = [self.xaxis, self.yaxis]
 		print(cord)
-	def onBoard(self, x, y):
-		xOnBoard = x in ['A','B','C','D','E','F','G','H'] 	
-		if y not in [1,2,3,4,5,6,7,8]:
-			print("You're off the board")
-		
+			
 
-class Pawn(ChessPiece):
-	if 
+class Pawn(ChessPiece): 
 	def movePawn(self, x, y):
-		if (x != self.xaxis) or (y > 8):
-			print("Can't move there")
+		if x != self.xaxis:
+			print("The pawn can't move there")
 		else: 
 			self.yaxis = y		 
 			self.cord()
@@ -34,17 +33,16 @@ class Rook(ChessPiece):
 			self.xaxis = x
 			self.cord()
 		else:
-			print("Can't move there")
+			print("The rook can't move there")
 	
 #Testing Zone
-'''
+
 pawnTest = Pawn('A', 2)
-print(pawnTest.xaxis, pawnTest.yaxis)
 pawnTest.cord()
 pawnTest.movePawn('A',10)
 pawnTest.movePawn('B',2)
 pawnTest.cord()
-'''
+
 
 rTest = Rook('E', 1)
 rTest.cord()
