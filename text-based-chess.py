@@ -47,7 +47,12 @@ class Bishop(ChessPiece):
       if self.onBoard(x,y) == False:
          print("Bishop cannot move to [",x,",",y,"]")
       else:
-         self.move(x, y)
+         if x == self.xaxis or y == self.yaxis:
+            print("Bishop cannot move to [",x,",",y,"]")
+         else:
+            self.xaxis = x
+            self.yaxis = y
+            self.cord()	
 '''
 class Bishop(ChessPiece):
 	def moveBishop(self, x, y):
@@ -74,9 +79,9 @@ class Bishop(ChessPiece):
 print("---Rook Tests---")
 bTest = Bishop('E', 1)
 bTest.moveBishop('E', 2)
+bTest.moveBishop('F', 1)
 bTest.moveBishop('D', 2)
 bTest.moveBishop('D', 6)
 bTest.moveBishop('2', 6)
 bTest.moveBishop('H', 6)
-
 
