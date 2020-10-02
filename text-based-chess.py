@@ -7,6 +7,7 @@ class ChessPiece:
 		self.xaxis = x
 		self.yaxis = y
 		print([self.xaxis,self.yaxis])
+	piece = ""
 	def cord(self):
 		cord = [self.xaxis, self.yaxis]
 		print(cord)
@@ -36,8 +37,16 @@ class Movement(ChessPiece):
             self.xaxis = x
             self.cord()
          else:
-            print("piece does not go there")
-	
+            print(ChessPiece.piece, "cannot move there")
+   def moveDiag(self, x, y):
+      if self.onBoard(x,y) == True:
+         if x == self.xaxis or y == self.yaxis:
+            self.xaxis = x
+            self.yaxis = y
+            self.cord()
+         else:
+            print(ChessPiece.piece, "cannot move there")
+
 class Pawn(ChessPiece): 
 	def movePawn(self, x, y):
 		if (x != self.xaxis) or (self.onBoard(x,y) == False):
@@ -53,7 +62,7 @@ class Rook(ChessPiece):
 		else:
 			self.move(x, y)
 
-class Bishop(ChessPiece):
+class Bishop0(ChessPiece):
    def moveBishop(self, x, y):
       if self.onBoard(x,y) == False:
          print("Bishop cannot move to [",x,",",y,"]")
@@ -65,19 +74,25 @@ class Bishop(ChessPiece):
             self.xaxis = x
             self.yaxis = y
             self.cord()	
+class Bishop(Movement):
+   ChessPiece.piece = "Bishop"
+   def moveBishop(self, x, y):
+      self.moveDiag(x,y)
 
 class Queen(Movement):
+   ChessPiece.piece = "Queen"
    def moveQueen(self, x, y):
       self.moveUDLR(x, y)            
          
 #--------------------------------------
 #Testing Zone
+print("------Queen-----")
 qTest = Queen("D",4)
 qTest.moveQueen("D",1)
 qTest.moveQueen("F",7)
 
 
-"""
+print("------Bishop-----")
 bTest = Bishop('E', 1)
 bTest.moveBishop('E', 2)
 bTest.moveBishop('F', 1)
@@ -89,7 +104,7 @@ bTest.moveBishop('F', 8)
 bTest.moveBishop('A', 3)
 bTest.moveBishop('A', 8)
 bTest.moveBishop('C', 1)
-"""
+
 
 
 
