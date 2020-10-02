@@ -11,19 +11,20 @@ class ChessPiece:
 		cord = [self.xaxis, self.yaxis]
 		print(cord)
 	def onBoard(self, x, y):
-		if (self.xaxis not in letters) or (self.yaxis not in nums):
+		if (x not in letters):
 			return False
+		else:
+			return True
 	def move(self, x, y):
-		#pieceOnBoard = self.onBoard(x,y)
-		#if pieceOnBoard == ("not in letters" or "not in numbers"):
-		# moving up/down a col
-		if x == self.xaxis:
-			self.yaxis = y
-			self.cord()	
-		# moving left/right a row 
-		elif y == self.yaxis:
-			self.xaxis = x
-			self.cord()	
+		if self.onBoard(x,y) == True:
+			# moving up/down a col
+			if x == self.xaxis:
+				self.yaxis = y
+				self.cord()	
+			# moving left/right a row 
+			elif y == self.yaxis:
+				self.xaxis = x
+				self.cord()	
 	
 class Pawn(ChessPiece): 
 	def movePawn(self, x, y):
@@ -32,24 +33,21 @@ class Pawn(ChessPiece):
 		else: 
 			self.yaxis = y		 
 			self.cord()
-#i think i'm going to do something similar to what i did with Pawn
+
 class Rook(ChessPiece):	
-	def moveRook(self, x, y):
-		if self.onBoard(x,y) == False:	
+	def move_Rook(self, x, y):
+		if self.onBoard(x,y) != False:	
 			print("Rook cannot move to [",x,",",y,"]")	
 		else:
 			self.move(x, y)
 
+	def moveRook(self, x, y):
+		self.move(x, y)
 
 
 
 #--------------------------------------
 #Testing Zone
-
-print("---Pawn Tests---")
-pawnTest = Pawn('A', 2)
-pawnTest.movePawn('B',2)
-pawnTest.movePawn('A',5)
 
 print("---Rook Tests---")
 rTest = Rook('E', 1)
@@ -60,27 +58,4 @@ rTest.moveRook('2', 6)
 rTest.moveRook('A', 6)
 
 
-"""
-rTest = Rook('E', 1)
-rTest.cord()
-rTest.moveRook('E', 2)
-rTest.moveRook('D', 2)
-rTest.moveRook('D', 6)
-#rTest.moveRook('2', 6)
-#rTest.moveRook('X', 6)
-#rTest.moveRook('D', 11)
-rTest.moveRook('E', 6)
-rTest.moveRook('A', 1)
-rTest.moveRook('A', 6)
-rTest.moveRook('D', 8)
 
-
-qTest = Queen('A', 4)
-qTest.cord()
-qTest.moveRook('E', 2)
-qTest.moveRook('D', 2)
-qTest.moveRook('D', 6)
-qTest.moveRook('E', 20)
-qTest.moveRook('A', 1)
-qTest.moveRook('A', 6)
-"""
