@@ -1,6 +1,6 @@
 #Classes and Definitions
 letters = ['A','B','C','D','E','F','G','H'] 
-nums = [1,2,3,4,5,6,7,8]
+numbers = [1,2,3,4,5,6,7,8]
 
 class ChessPiece:
 	def __init__(self, x, y):
@@ -11,7 +11,7 @@ class ChessPiece:
 		cord = [self.xaxis, self.yaxis]
 		print(cord)
 	def onBoard(self, x, y):
-		if (x not in letters):
+		if (x not in letters) or (y not in numbers):	
 			return False
 		else:
 			return True
@@ -25,7 +25,8 @@ class ChessPiece:
 			elif y == self.yaxis:
 				self.xaxis = x
 				self.cord()	
-	
+	#def onPiece(self, x, y):
+		# how do i check if a piece is on the board
 class Pawn(ChessPiece): 
 	def movePawn(self, x, y):
 		if (x != self.xaxis) or (self.onBoard(x,y) == False):
@@ -35,27 +36,47 @@ class Pawn(ChessPiece):
 			self.cord()
 
 class Rook(ChessPiece):	
-	def move_Rook(self, x, y):
-		if self.onBoard(x,y) != False:	
+	def moveRook(self, x, y):
+		if self.onBoard(x,y) == False:	
 			print("Rook cannot move to [",x,",",y,"]")	
 		else:
 			self.move(x, y)
 
-	def moveRook(self, x, y):
-		self.move(x, y)
-
-
+class Bishop(ChessPiece):
+   def moveBishop(self, x, y):
+      if self.onBoard(x,y) == False:
+         print("Bishop cannot move to [",x,",",y,"]")
+      else:
+         self.move(x, y)
+'''
+class Bishop(ChessPiece):
+	def moveBishop(self, x, y):
+		if self.onBoard(x,y) == False:
+			print("Bishop cannot move to [",x,",",y,"]")
+		else:
+			for i in range(len(letters)):
+				if self.xaxis == letters[i]:
+					selfVar = i + 1
+				if x == letters[i]:
+					argVar = i + 1	
+			if (argVar == selfVar + 1) or (argVar == selfVar - 1):
+				self.xaxis = x
+				self.yaxis = y
+				self.cord()
+			else:
+				print("Bishop cannot move to [",x,",",y,"]") 
+	
+'''
 
 #--------------------------------------
 #Testing Zone
 
 print("---Rook Tests---")
-rTest = Rook('E', 1)
-rTest.moveRook('E', 2)
-rTest.moveRook('D', 2)
-rTest.moveRook('D', 6)
-rTest.moveRook('2', 6)
-rTest.moveRook('A', 6)
-
+bTest = Bishop('E', 1)
+bTest.moveBishop('E', 2)
+bTest.moveBishop('D', 2)
+bTest.moveBishop('D', 6)
+bTest.moveBishop('2', 6)
+bTest.moveBishop('H', 6)
 
 
