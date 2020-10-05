@@ -3,23 +3,23 @@ letters = ['A','B','C','D','E','F','G','H']
 numbers = [1,2,3,4,5,6,7,8]
 
 class ChessPiece:
-	def __init__(self, x, y):
-		self.xaxis = x
-		self.yaxis = y
-		print([self.xaxis,self.yaxis])
+   def __init__(self, x, y):
+      self.xaxis = x
+      self.yaxis = y
+      print([self.xaxis,self.yaxis])
 	
-	def cord(self):
-		cord = [self.xaxis, self.yaxis]
-		print(cord)
-	def onBoard(self, x, y):
-		if (x not in letters) or (y not in numbers):
-			print("Location does not exist")	
-			return False
-		else:
-			return True
+   def cord(self):
+      cord = [self.xaxis, self.yaxis]
+      print(cord)
 	
+   def onBoard(self, x, y):
+      if (x in letters) and (y in numbers):
+         return True
+      else:
+         print([x,y],"is not valid")
 
 class Movement(ChessPiece):
+   #lateral movement
    def latMov(self, x, y): 
       if x == self.xaxis:
          self.yaxis = y
@@ -27,14 +27,14 @@ class Movement(ChessPiece):
       elif y == self.yaxis:
          self.xaxis = x
          self.cord()
-   
+
+   #Diagonal movement
    def diagMov(self, x, y):
-      #if x == self.xaxis or y == self.yaxis:
-         #print("cannot cannot move there")
-      if x != self.xaxis and y != self.yaxis:
+      if x == self.xaxis or y == self.yaxis:
+         return False 
+      else:         
          self.xaxis = x
          self.yaxis = y
-         self.cord()
 
    def moveDiag(self, x, y):
       if self.onBoard(x,y) == True:
@@ -70,30 +70,33 @@ class Queen(Movement):
          print("queen cannot move there")
       else:
          self.moveDiag(x,y)
-     
-                  
 
 class Bishop(Movement):
    def moveBishop(self, x, y):
-      if self.moveDiag(x,y) == False:
-         print("Bishop doees not move there")    
-      else:   
+      if self.moveDiag(x,y) == True:   
          self.moveDiag(x,y)
-     
+      else: 
+         print("bishop cannot move to",[x,y]) 
 #--------------------------------------
 #Testing Zone
 print("------Bishop-----")
 bTest = Bishop('E', 1) #c
+
 bTest.moveBishop('E', 2) #did not give me bishop DNMT
 bTest.moveBishop('F', 1) 
+
 bTest.moveBishop('D', 2) #c
+
 bTest.moveBishop('D', 6)
 bTest.moveBishop('2', 6) #i get the error but i think i think i get two: the location dne and BDNMT 
+
 bTest.moveBishop('H', 6) #c
 bTest.moveBishop('F', 8) #c
 bTest.moveBishop('A', 3) #c
+
 bTest.moveBishop('A', 8)
-bTest.moveBishop('C', 1) #c
+
+#bTest.moveBishop('C', 1) #c
 
 
 
