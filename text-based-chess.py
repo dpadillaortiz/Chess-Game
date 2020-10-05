@@ -7,8 +7,7 @@ class ChessPiece:
 		self.xaxis = x
 		self.yaxis = y
 		print([self.xaxis,self.yaxis])
-	def name(self, name):
-		pieceName = name
+	
 	def cord(self):
 		cord = [self.xaxis, self.yaxis]
 		print(cord)
@@ -18,75 +17,83 @@ class ChessPiece:
 			return False
 		else:
 			return True
-	piece = self.name(n)
+	
 
 class Movement(ChessPiece):
-   def moveUDLR(self, x, y):
-      if self.onBoard(x,y) == True:
-         if x == self.xaxis:
-            self.yaxis = y
-            self.cord()
-            return True
-         elif y == self.yaxis:
-            self.xaxis = x
-            self.cord()
-            return True
+   def latMov(self, x, y): 
+      if x == self.xaxis:
+         self.yaxis = y
+         self.cord() 
+      elif y == self.yaxis:
+         self.xaxis = x
+         self.cord()
+   
+   def diagMov(self, x, y):
+      #if x == self.xaxis or y == self.yaxis:
+         #print("cannot cannot move there")
+      if x != self.xaxis and y != self.yaxis:
+         self.xaxis = x
+         self.yaxis = y
+         self.cord()
 
    def moveDiag(self, x, y):
       if self.onBoard(x,y) == True:
-         if x == self.xaxis or y == self.yaxis:
-            print(ChessPiece.piece,"cannot move there")
-         else:
-            self.xaxis = x
-            self.yaxis = y
-            self.cord()
+         self.diagMov(x,y)
+      else:
+         return False
+   
+   def moveUDLR(self, x, y):
+      if self.onBoard(x,y) == True:
+         self.latMov(x,y)
+      else:
+         return False
+      
 
 class Pawn(ChessPiece): 
-	def movePawn(self, x, y):
-		if (x != self.xaxis) or (self.onBoard(x,y) == False):
-			print("The pawn can't move there")
-		else: 
-			self.yaxis = y		 
-			self.cord()
+   def movePawn(self, x, y):
+      if (x != self.xaxis) or (self.onBoard(x,y) == False):
+         print("The pawn can't move there")
+      else: 
+         self.yaxis = y		 
+         self.cord()
 
 class Rook(ChessPiece):	
-	def moveRook(self, x, y):
-		if self.onBoard(x,y) == False:	
-			print("Rook cannot move to [",x,",",y,"]")	
-		else:
-			self.move(x, y)
+   def moveRook(self, x, y):
+      if self.onBoard(x,y) == False:	
+         print("Rook cannot move to [",x,",",y,"]")
+      else:
+         self.move(x, y)
 
 class Queen(Movement): 
-   def moveQueen(self, x, y):
-      self.moveUDLR(x,y)
+   def moveQueen(self, x, y):   
+      if self.moveDiag(x,y) == False:
+         print("queen cannot move there")
+      else:
+         self.moveDiag(x,y)
      
                   
 
 class Bishop(Movement):
-   ChessPiece.name("Bishop")
    def moveBishop(self, x, y):
-      self.moveDiag(x,y)
+      if self.moveDiag(x,y) == False:
+         print("Bishop doees not move there")    
+      else:   
+         self.moveDiag(x,y)
      
 #--------------------------------------
 #Testing Zone
-print("------Queen-----")
-qTest = Queen("D",4)
-qTest.moveQueen("D",1)
-qTest.moveQueen("F",7)
-
-
 print("------Bishop-----")
-bTest = Bishop('E', 1)
-bTest.moveBishop('E', 2)
-bTest.moveBishop('F', 1)
-bTest.moveBishop('D', 2)
+bTest = Bishop('E', 1) #c
+bTest.moveBishop('E', 2) #did not give me bishop DNMT
+bTest.moveBishop('F', 1) 
+bTest.moveBishop('D', 2) #c
 bTest.moveBishop('D', 6)
-bTest.moveBishop('2', 6)
-bTest.moveBishop('H', 6)
-bTest.moveBishop('F', 8)
-bTest.moveBishop('A', 3)
+bTest.moveBishop('2', 6) #i get the error but i think i think i get two: the location dne and BDNMT 
+bTest.moveBishop('H', 6) #c
+bTest.moveBishop('F', 8) #c
+bTest.moveBishop('A', 3) #c
 bTest.moveBishop('A', 8)
-bTest.moveBishop('C', 1)
+bTest.moveBishop('C', 1) #c
 
 
 
