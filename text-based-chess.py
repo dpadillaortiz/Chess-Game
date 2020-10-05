@@ -7,25 +7,18 @@ class ChessPiece:
 		self.xaxis = x
 		self.yaxis = y
 		print([self.xaxis,self.yaxis])
-	piece = ""
+	def name(self, name):
+		pieceName = name
 	def cord(self):
 		cord = [self.xaxis, self.yaxis]
 		print(cord)
 	def onBoard(self, x, y):
-		if (x not in letters) or (y not in numbers):	
+		if (x not in letters) or (y not in numbers):
+			print("Location does not exist")	
 			return False
 		else:
 			return True
-	def move(self, x, y):
-		if self.onBoard(x,y) == True:
-			# moving up/down a col
-			if x == self.xaxis:
-				self.yaxis = y
-				self.cord()	
-			# moving left/right a row 
-			elif y == self.yaxis:
-				self.xaxis = x
-				self.cord()	
+	piece = self.name(n)
 
 class Movement(ChessPiece):
    def moveUDLR(self, x, y):
@@ -33,19 +26,20 @@ class Movement(ChessPiece):
          if x == self.xaxis:
             self.yaxis = y
             self.cord()
+            return True
          elif y == self.yaxis:
             self.xaxis = x
             self.cord()
-         else:
-            print(ChessPiece.piece, "cannot move there")
+            return True
+
    def moveDiag(self, x, y):
       if self.onBoard(x,y) == True:
          if x == self.xaxis or y == self.yaxis:
+            print(ChessPiece.piece,"cannot move there")
+         else:
             self.xaxis = x
             self.yaxis = y
             self.cord()
-         else:
-            print(ChessPiece.piece, "cannot move there")
 
 class Pawn(ChessPiece): 
 	def movePawn(self, x, y):
@@ -62,28 +56,17 @@ class Rook(ChessPiece):
 		else:
 			self.move(x, y)
 
-class Bishop0(ChessPiece):
-   def moveBishop(self, x, y):
-      if self.onBoard(x,y) == False:
-         print("Bishop cannot move to [",x,",",y,"]")
-      else:
-         if x == self.xaxis or y == self.yaxis:
-            print("Bishop cannot move to [",x,",",y,"]")
-            return False
-         else:
-            self.xaxis = x
-            self.yaxis = y
-            self.cord()	
+class Queen(Movement): 
+   def moveQueen(self, x, y):
+      self.moveUDLR(x,y)
+     
+                  
+
 class Bishop(Movement):
-   ChessPiece.piece = "Bishop"
+   ChessPiece.name("Bishop")
    def moveBishop(self, x, y):
       self.moveDiag(x,y)
-
-class Queen(Movement):
-   ChessPiece.piece = "Queen"
-   def moveQueen(self, x, y):
-      self.moveUDLR(x, y)            
-         
+     
 #--------------------------------------
 #Testing Zone
 print("------Queen-----")
