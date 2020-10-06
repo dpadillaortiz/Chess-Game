@@ -51,13 +51,13 @@ class Movement(ChessPiece):
          return False
       
 
-class Rook(ChessPiece):	
+class Rook(Movement):	
    def moveRook(self, x, y):
-      if self.moveUDLR(x,y) == True:   
-         self.moveLat(x,y)
-      else: 
+      if self.moveUDLR(x,y) != True:   
          print("Rook cannot move to",[x,y])
-
+      else:
+         self.moveUDLR(x,y)
+ 
 class Bishop(Movement):
    def moveBishop(self, x, y):
       if self.moveDiag(x,y) == True:   
