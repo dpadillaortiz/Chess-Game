@@ -53,10 +53,10 @@ class Movement(ChessPiece):
 
 class Rook(Movement):	
    def moveRook(self, x, y):
-      if self.moveUDLR(x,y) != True:   
-         print("Rook cannot move to",[x,y])
-      else:
+      if self.moveUDLR(x,y) == True:
          self.moveUDLR(x,y)
+      else:   
+         print("Rook cannot move to",[x,y])
  
 class Bishop(Movement):
    def moveBishop(self, x, y):
@@ -80,26 +80,27 @@ class Pawn(ChessPiece):
          self.yaxis = y		 
          self.cord()
 
-def bishopTest():
-   print("------Bishop-----")
-   bTest = Bishop('E', 1) #c
+def rookTest():
+   print("------Rook-----")
+   bTest = Rook('E', 1) 
 
-   bTest.moveBishop('E', 2) #did not give me bishop DNMT
-   bTest.moveBishop('F', 1) 
+   bTest.moveRook('E', 2)
+   bTest.moveRook('F', 1) 
 
-   bTest.moveBishop('D', 2) #c
+   bTest.moveRook('D', 2)
 
-   bTest.moveBishop('D', 6)
-   bTest.moveBishop('2', 6) #i get the error but i think i think i get two: the location dne and BDNMT 
+   bTest.moveRook('D', 6)
+   bTest.moveRook('2', 6)
 
-   bTest.moveBishop('H', 6) #c
-   bTest.moveBishop('F', 8) #c
-   bTest.moveBishop('A', 3) #c
+   bTest.moveRook('H', 6) 
+   bTest.moveRook('F', 8) 
+   bTest.moveRook('A', 3) 
 
-   bTest.moveBishop('A', 8)
+   bTest.moveRook('A', 8)
 
-   bTest.moveBishop('C', 1) #c
+   bTest.moveRook('C', 1) 
 
+rookTest()
 
 def bishopTest():
    print("------Bishop-----")
