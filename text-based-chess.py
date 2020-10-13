@@ -83,25 +83,12 @@ def bishopTest():
    bTest.moveBishop('F', 8) 
    bTest.moveBishop('A', 3) 
    bTest.moveBishop('A', 8)
-   bTest.moveBishop('C', 1) 
 
-#bishopTest()
+   bTest.moveBishop('C', 1) #c
 
-def queenTest():
-   print("------Queen-----")
-   qTest = Queen('E', 1) 
-   qTest.moveQueen('E', 2)   
-   qTest.moveQueen('F', 1) 
-   qTest.moveQueen('D', 2) 
-   qTest.moveQueen('D', 6)
-   qTest.moveQueen('2', 6)
-   qTest.moveQueen('H', 6) 
-   qTest.moveQueen('F', 8) 
-   qTest.moveQueen('A', 3) 
-   qTest.moveQueen('A', 8)
-   qTest.moveQueen('C', 1) 
 
-#queenTest()
+
+
 
 
 
