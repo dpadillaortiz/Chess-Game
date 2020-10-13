@@ -9,8 +9,7 @@ class ChessPiece:
       print([self.xaxis,self.yaxis])
 	
    def cord(self):
-      cord = [self.xaxis, self.yaxis]
-      print(cord)
+      print([self.xaxis, self.yaxis])
 	
    def onBoard(self, x, y):
       if (x in letters) and (y in numbers):
@@ -19,16 +18,16 @@ class ChessPiece:
          print([x,y],"is not valid")
 
 class Movement(ChessPiece):
-   #lateral movement
    def latMov(self, x, y): 
-      if x == self.xaxis:
+      if x != self.xaxis and y != self.yaxis:
+         return False
+      else:
          self.yaxis = y
-         self.cord() 
-      elif y == self.yaxis:
          self.xaxis = x
          self.cord()
 
    #Diagonal movement
+   #needs more specific conditions; as long as the it's false, it'll move the piece to the desired location
    def diagMov(self, x, y):
       if x == self.xaxis or y == self.yaxis:
          return False 
@@ -41,9 +40,11 @@ class Movement(ChessPiece):
 class Rook(Movement):	
    def moveRook(self, x, y):
       if self.onBoard(x,y) == True:
-         self.latMov(x,y)
-      else:   
-         print("Rook cannot move to",[x,y])
+         if self.latMov(x,y) == False:
+            print("Rook cannot move to",[x,y])
+         #having this else statement below doubles the print output for the correct rook coords, why? Is it because if the self.latMov function in "self.latMov(x,y) == False" doesn't return false, it just keeps evaluating the function? Not the result I was hoping for but it's a happy accident.
+         #else:
+          #  self.latMov(x,y)
 
 #Bishop class is not completed
 class Bishop(Movement):
@@ -82,7 +83,6 @@ class Pawn(ChessPiece):
 def rookTest():
    print("------Rook-----")
    rTest = Rook('E', 1) 
-
    rTest.moveRook('E', 2)
    rTest.moveRook('F', 1) 
    rTest.moveRook('D', 2)
@@ -93,6 +93,7 @@ def rookTest():
    rTest.moveRook('A', 3) 
    rTest.moveRook('A', 8)
    rTest.moveRook('C', 1) 
+   rTest.moveRook('H', 1) 
 
 rookTest()
 
@@ -124,7 +125,8 @@ def queenTest():
    qTest.moveQueen('F', 8) 
    qTest.moveQueen('A', 3) 
    qTest.moveQueen('A', 8)
-   qTest.moveQueen('C', 1) 
+   qTest.moveQueen('C', 1)
+   
 
 #queenTest()
 
