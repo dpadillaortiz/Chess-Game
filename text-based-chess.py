@@ -3,30 +3,22 @@ letters = ['A','B','C','D','E','F','G','H']
 numbers = [1,2,3,4,5,6,7,8]
 
 class ChessPiece:
-   def __init__(self, x, y):
       self.xaxis = x
       self.yaxis = y
       print([self.xaxis,self.yaxis])
 	
    def cord(self):
-      cord = [self.xaxis, self.yaxis]
-      print(cord)
 	
    def onBoard(self, x, y):
       if (x in letters) and (y in numbers):
          return True
       else:
          print([x,y],"is not valid")
-
+   
 class Movement(ChessPiece):
-   #lateral movement
    def latMov(self, x, y): 
-      if x == self.xaxis:
          self.yaxis = y
          self.cord() 
-      elif y == self.yaxis:
-         self.xaxis = x
-         self.cord()
 
    #Diagonal movement
    def diagMov(self, x, y):
@@ -38,13 +30,8 @@ class Movement(ChessPiece):
          self.cord()
    
 #Rook class is completed but here's a double error for an "off-board" piece 
-class Rook(Movement):	
    def moveRook(self, x, y):
       if self.onBoard(x,y) == True:
-         self.latMov(x,y)
-      else:   
-         print("Rook cannot move to",[x,y])
-
 #Bishop class is not completed
 class Bishop(Movement):
    def moveBishop(self, x, y):
@@ -81,18 +68,6 @@ class Pawn(ChessPiece):
 
 def rookTest():
    print("------Rook-----")
-   rTest = Rook('E', 1) 
-
-   rTest.moveRook('E', 2)
-   rTest.moveRook('F', 1) 
-   rTest.moveRook('D', 2)
-   rTest.moveRook('D', 6)
-   rTest.moveRook('2', 6)
-   rTest.moveRook('H', 6) 
-   rTest.moveRook('F', 8) 
-   rTest.moveRook('A', 3) 
-   rTest.moveRook('A', 8)
-   rTest.moveRook('C', 1) 
 
 rookTest()
 
