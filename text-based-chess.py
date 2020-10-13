@@ -37,39 +37,46 @@ class Movement(ChessPiece):
          self.yaxis = y
          self.cord()
    
-#Rook class is completed but here's a double error for an "off-board" piece 
+   #check + movement
+   def moveDiag(self, x, y):
+      if self.onBoard(x,y) == True:
+         self.diagMov(x,y)
+      else:
+         return False
+   
+   def moveUDLR(self, x, y):
+      if self.onBoard(x,y) == True:
+         self.latMov(x,y)
+      else:
+         return False
+      
 class Rook(Movement):	
    def moveRook(self, x, y):
       if self.onBoard(x,y) == True:
          self.latMov(x,y)
       else:   
          print("Rook cannot move to",[x,y])
-
-#Bishop class is not completed
+ 
+class Rook_old(Movement):	
+   def moveRook(self, x, y):
+      if self.moveUDLR(x,y) == True:
+         self.moveUDLR(x,y)
+      else:   
+         print("Rook cannot move to",[x,y])
+ 
 class Bishop(Movement):
    def moveBishop(self, x, y):
-      if self.onBoard(x,y) == True:   
-         self.diagMov(x,y)
+      if self.moveDiag(x,y) == True:   
+         self.moveDiag(x,y)
       else: 
          print("Bishop cannot move to",[x,y]) 
 
 class Queen(Movement): 
    def moveQueen(self, x, y):   
-      if self.onBoard(x,y) == True: 
-         if x == self.xaxis:
-            self.yaxis = y
-            self.cord() 
-         elif y == self.yaxis:
-            self.xaxis = x
-            self.cord()
-         elif x == self.xaxis or y == self.yaxis:
-            return False 
-         else:         
-            self.xaxis = x
-            self.yaxis = y
-            self.cord()        
+      if self.moveDiag(x,y) == False:
+         print("queen cannot move there")
       else:
-         print("Queen cannot move to",[x,y]) 
+         self.moveDiag(x,y)
 
 class Pawn(ChessPiece): 
    def movePawn(self, x, y):
@@ -81,52 +88,49 @@ class Pawn(ChessPiece):
 
 def rookTest():
    print("------Rook-----")
-   rTest = Rook('E', 1) 
+   bTest = Rook('E', 1) 
 
-   rTest.moveRook('E', 2)
-   rTest.moveRook('F', 1) 
-   rTest.moveRook('D', 2)
-   rTest.moveRook('D', 6)
-   rTest.moveRook('2', 6)
-   rTest.moveRook('H', 6) 
-   rTest.moveRook('F', 8) 
-   rTest.moveRook('A', 3) 
-   rTest.moveRook('A', 8)
-   rTest.moveRook('C', 1) 
+   bTest.moveRook('E', 2)
+   bTest.moveRook('F', 1) 
+
+   bTest.moveRook('D', 2)
+
+   bTest.moveRook('D', 6)
+   bTest.moveRook('2', 6)
+
+   bTest.moveRook('H', 6) 
+   bTest.moveRook('F', 8) 
+   bTest.moveRook('A', 3) 
+
+   bTest.moveRook('A', 8)
+
+   bTest.moveRook('C', 1) 
 
 rookTest()
 
 def bishopTest():
    print("------Bishop-----")
-   bTest = Bishop('E', 1) 
-   bTest.moveBishop('E', 2)   
+   bTest = Bishop('E', 1) #c
+
+   bTest.moveBishop('E', 2) #did not give me bishop DNMT
    bTest.moveBishop('F', 1) 
-   bTest.moveBishop('D', 2) 
+
+   bTest.moveBishop('D', 2) #c
+
    bTest.moveBishop('D', 6)
-   bTest.moveBishop('2', 6)
-   bTest.moveBishop('H', 6) 
-   bTest.moveBishop('F', 8) 
-   bTest.moveBishop('A', 3) 
+   bTest.moveBishop('2', 6) #i get the error but i think i think i get two: the location dne and BDNMT 
+
+   bTest.moveBishop('H', 6) #c
+   bTest.moveBishop('F', 8) #c
+   bTest.moveBishop('A', 3) #c
+
    bTest.moveBishop('A', 8)
-   bTest.moveBishop('C', 1) 
 
-#bishopTest()
+   bTest.moveBishop('C', 1) #c
 
-def queenTest():
-   print("------Queen-----")
-   qTest = Queen('E', 1) 
-   qTest.moveQueen('E', 2)   
-   qTest.moveQueen('F', 1) 
-   qTest.moveQueen('D', 2) 
-   qTest.moveQueen('D', 6)
-   qTest.moveQueen('2', 6)
-   qTest.moveQueen('H', 6) 
-   qTest.moveQueen('F', 8) 
-   qTest.moveQueen('A', 3) 
-   qTest.moveQueen('A', 8)
-   qTest.moveQueen('C', 1) 
 
-#queenTest()
+
+
 
 
 
