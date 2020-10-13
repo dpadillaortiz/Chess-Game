@@ -50,8 +50,14 @@ class Movement(ChessPiece):
       else:
          return False
       
-
 class Rook(Movement):	
+   def moveRook(self, x, y):
+      if self.onBoard(x,y) == True:
+         self.latMov(x,y)
+      else:   
+         print("Rook cannot move to",[x,y])
+ 
+class Rook_old(Movement):	
    def moveRook(self, x, y):
       if self.moveUDLR(x,y) == True:
          self.moveUDLR(x,y)
