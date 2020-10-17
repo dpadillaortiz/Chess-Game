@@ -42,9 +42,6 @@ class Rook(Movement):
       if self.onBoard(x,y) == True:
          if self.latMov(x,y) == False:
             print("Rook cannot move to",[x,y])
-         #having this else statement below doubles the print output for the correct rook coords, why? Is it because if the self.latMov function in "self.latMov(x,y) == False" doesn't return false, it just keeps evaluating the function? Not the result I was hoping for but it's a happy accident.
-         #else:
-          #  self.latMov(x,y)
 
 #Bishop class is not completed
 class Bishop(Movement):
