@@ -35,8 +35,8 @@ class Movement(ChessPiece):
          self.xaxis = x
          self.yaxis = y
          self.cord()
-   
-#Rook class is completed but here's a double error for an "off-board" piece 
+
+#Rook movement is completed  
 class Rook(Movement):	
    def moveRook(self, x, y):
       if self.onBoard(x,y) == True:
@@ -47,9 +47,8 @@ class Rook(Movement):
 class Bishop(Movement):
    def moveBishop(self, x, y):
       if self.onBoard(x,y) == True:   
-         self.diagMov(x,y)
-      else: 
-         print("Bishop cannot move to",[x,y]) 
+         if self.diagMov(x,y) == False:
+            print("Bishop cannot move to", [x,y])
 
 class Queen(Movement): 
    def moveQueen(self, x, y):   
@@ -98,17 +97,21 @@ def bishopTest():
    print("------Bishop-----")
    bTest = Bishop('E', 1) 
    bTest.moveBishop('E', 2)   
-   bTest.moveBishop('F', 1) 
-   bTest.moveBishop('D', 2) 
-   bTest.moveBishop('D', 6)
-   bTest.moveBishop('2', 6)
-   bTest.moveBishop('H', 6) 
    bTest.moveBishop('F', 8) 
    bTest.moveBishop('A', 3) 
    bTest.moveBishop('A', 8)
    bTest.moveBishop('C', 1) 
+   bTest.moveBishop('D', 2) 
+   bTest.moveBishop('D', 6)
+   bTest.moveBishop('F', 1) 
+   bTest.moveBishop('D', 6)
+   bTest.moveBishop('2', 6)
+   bTest.moveBishop('H', 6) 
 
-#bishopTest()
+
+
+
+bishopTest()
 
 def queenTest():
    print("------Queen-----")
