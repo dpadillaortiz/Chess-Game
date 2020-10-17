@@ -27,7 +27,6 @@ class Movement(ChessPiece):
          self.cord()
 
    #Diagonal movement
-   #needs more specific conditions; as long as the it's false, it'll move the piece to the desired location
    def diagMov(self, x, y):
       if x == self.xaxis or y == self.yaxis:
          return False 
@@ -43,7 +42,7 @@ class Rook(Movement):
          if self.latMov(x,y) == False:
             print("Rook cannot move to",[x,y])
 
-#Bishop class is not completed
+#Bishop class is completed
 class Bishop(Movement):
    def moveBishop(self, x, y):
       if self.onBoard(x,y) == True:   
@@ -51,22 +50,12 @@ class Bishop(Movement):
             print("Bishop cannot move to", [x,y])
 
 class Queen(Movement): 
-   def moveQueen(self, x, y):   
-      if self.onBoard(x,y) == True: 
-         if x == self.xaxis:
-            self.yaxis = y
-            self.cord() 
-         elif y == self.yaxis:
-            self.xaxis = x
-            self.cord()
-         elif x == self.xaxis or y == self.yaxis:
-            return False 
-         else:         
-            self.xaxis = x
-            self.yaxis = y
-            self.cord()        
-      else:
-         print("Queen cannot move to",[x,y]) 
+   def moveQueen(self, x, y):
+      if self.onBoard(x,y) == True:
+         if self.latMov(x,y) == False:
+            print("Queen cannot move to",[x,y])
+         elif self.diagMov(x,y) == False:
+            print("Queen cannot move to",[x,y])
 
 class Pawn(ChessPiece): 
    def movePawn(self, x, y):
@@ -91,7 +80,7 @@ def rookTest():
    rTest.moveRook('C', 1) 
    rTest.moveRook('H', 1) 
 
-rookTest()
+#rookTest()
 
 def bishopTest():
    print("------Bishop-----")
@@ -108,10 +97,7 @@ def bishopTest():
    bTest.moveBishop('2', 6)
    bTest.moveBishop('H', 6) 
 
-
-
-
-bishopTest()
+#bishopTest()
 
 def queenTest():
    print("------Queen-----")
@@ -127,8 +113,7 @@ def queenTest():
    qTest.moveQueen('A', 8)
    qTest.moveQueen('C', 1)
    
-
-#queenTest()
+queenTest()
 
 
 
