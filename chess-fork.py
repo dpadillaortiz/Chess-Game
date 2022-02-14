@@ -21,11 +21,11 @@ class Chesspiece:
         # To do:
             # [x] Check if position is valid
             # [x] Check to see if that conditional should be a defined function
-        def on_board():
+        def on_board_w():
             board_index = 'ABCDEFGHabcdefgh123456789'
             if new_pos[0] in board_index and new_pos[1] in board_index:
                 update_board()
-        def update_board():
+        def update_board_w():
             """
             if func == True:
                 self.position = new_pos
@@ -36,21 +36,29 @@ class Chesspiece:
             else:
                 self.position = new_pos
                 self.board_obj.board[0][3] = self.position
-            
-        on_board()
-        print(self) 
+        def on_board():
+            print(new_pos + " this is on_board")
+            board_index = 'ABCDEFGHabcdefgh123456789'
+            if new_pos[0] in board_index and new_pos[1] in board_index:
+                return True
+        def update_board(func):
+            print("hi")
+            if func == True:
+                print(new_pos + " this is update_board")
+                self.position = new_pos
+                self.board_obj.board[0][3] = self.position
+        # would not work with update_board(on_board)
+        update_board(on_board())
+        print("Moved to:", self.position) 
+
+
 
 # To do:
     # Create classes for rook, bishop, etc...
     # Put Chesspiece class within specific piece class
-
 chessBoard = Chessboard()
 chessPiece = Chesspiece('Rook', 'A2', chessBoard)
-
-print(chessBoard)
-
 print(chessPiece)
-
 chessPiece.move_piece('C4')
 
 
