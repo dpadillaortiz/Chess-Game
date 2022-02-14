@@ -40,13 +40,15 @@ class Chesspiece:
             board_index = 'ABCDEFGHabcdefgh123456789'
             if new_pos[0] in board_index and new_pos[1] in board_index:
                 return True
+            else:
+                return new_pos + " is out of bounds."
         def update_board(func):
             if func == True:
                 self.position = new_pos
                 self.board_obj.board[0][3] = self.position
         # would not work with update_board(on_board)
         update_board(on_board())
-        print("Moved to:", self.position) 
+        print(self.name, "moved to", self.position) 
 
 
 
@@ -57,5 +59,4 @@ chessBoard = Chessboard()
 chessPiece = Chesspiece('Rook', 'A2', chessBoard)
 print(chessPiece)
 chessPiece.move_piece('C4')
-
-
+chessPiece.move_piece('z4')
