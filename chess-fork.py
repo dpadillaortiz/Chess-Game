@@ -37,14 +37,11 @@ class Chesspiece:
                 self.position = new_pos
                 self.board_obj.board[0][3] = self.position
         def on_board():
-            print(new_pos + " this is on_board")
             board_index = 'ABCDEFGHabcdefgh123456789'
             if new_pos[0] in board_index and new_pos[1] in board_index:
                 return True
         def update_board(func):
-            print("hi")
             if func == True:
-                print(new_pos + " this is update_board")
                 self.position = new_pos
                 self.board_obj.board[0][3] = self.position
         # would not work with update_board(on_board)
