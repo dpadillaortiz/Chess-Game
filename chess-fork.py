@@ -19,13 +19,25 @@ class Chesspiece:
     # Updates the position of the piece
     def move_piece(self, new_pos):
         # To do:
-            # Check if position is valid
-            # Check to see if that conditional should be a defined function
-        self.position = new_pos
-        if self.board_obj == None:
-            pass
-        else:
-            self.board_obj.board[0][3] = self.position
+            # [x] Check if position is valid
+            # [x] Check to see if that conditional should be a defined function
+        def on_board():
+            board_index = 'ABCDEFGHabcdefgh123456789'
+            if new_pos[0] in board_index and new_pos[1] in board_index:
+                update_board()
+        def update_board():
+            """
+            if func == True:
+                self.position = new_pos
+                self.board_obj.board[0][3] = self.position
+            """
+            if self.board_obj == None:
+                pass
+            else:
+                self.position = new_pos
+                self.board_obj.board[0][3] = self.position
+            
+        on_board()
         print(self) 
 
 # To do:
@@ -41,5 +53,4 @@ print(chessPiece)
 
 chessPiece.move_piece('C4')
 
-print(chessBoard)
 
