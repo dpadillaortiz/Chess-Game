@@ -18,37 +18,19 @@ class Chesspiece:
         return self.name + " is on " + self.position
     # Updates the position of the piece
     def move_piece(self, new_pos):
-        # To do:
-            # [x] Check if position is valid
-            # [x] Check to see if that conditional should be a defined function
-        def on_board_w():
-            board_index = 'ABCDEFGHabcdefgh123456789'
-            if new_pos[0] in board_index and new_pos[1] in board_index:
-                update_board()
-        def update_board_w():
-            """
-            if func == True:
-                self.position = new_pos
-                self.board_obj.board[0][3] = self.position
-            """
-            if self.board_obj == None:
-                pass
-            else:
-                self.position = new_pos
-                self.board_obj.board[0][3] = self.position
         def on_board():
             board_index = 'ABCDEFGHabcdefgh123456789'
             if new_pos[0] in board_index and new_pos[1] in board_index:
                 return True
             else:
-                return new_pos + " is out of bounds."
+                print(new_pos, "is out of bounds.")
         def update_board(func):
             if func == True:
                 self.position = new_pos
                 self.board_obj.board[0][3] = self.position
-        # would not work with update_board(on_board)
+                print(self.name, "moved to", self.position) 
         update_board(on_board())
-        print(self.name, "moved to", self.position) 
+        
 
 
 
@@ -60,3 +42,5 @@ chessPiece = Chesspiece('Rook', 'A2', chessBoard)
 print(chessPiece)
 chessPiece.move_piece('C4')
 chessPiece.move_piece('z4')
+chessPiece.move_piece('2J')
+chessPiece.move_piece('20')
