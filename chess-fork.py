@@ -27,13 +27,21 @@ class Chesspiece:
                 self.board_obj.board[0][3] = self.position
                 print(self.name, "moved to", self.position) 
         update_board(on_board())
-        
-
-
-
 # To do:
-    # Create classes for rook, bishop, etc...
-    # Put Chesspiece class within specific piece class
+    # [x] Create classes for rook, bishop, etc...
+    # [x] Put Chesspiece class within specific piece class
+# class Pawn
+# class Rook:
+# class Bishop:
+# class Knight:
+# class Queen:
+    # Inherit Rook
+    # Inherit Bishop
+# class King
+    # Possibly inherit Pawn
+    
+
+
 chessBoard = Chessboard()
 chessPiece = Chesspiece('Rook', 'A2', chessBoard)
 print(chessPiece)
