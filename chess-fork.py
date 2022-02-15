@@ -1,3 +1,12 @@
+# To do:
+    # [x] Create classes for rook, bishop, etc...
+    # [x] Put Chesspiece class within specific piece class
+    # [] Map the board_index to corresponding spot in self.board
+    # Check if a piece is already on that spot 
+        # Might have to include taking pieces
+        # Should I create a different class to keep track of where pieces are?
+    # Create Rook movement
+
 class Chessboard:
     def __init__(self, piece = None):
         # Creates an 8x8 board
@@ -27,24 +36,25 @@ class Chesspiece:
                 self.board_obj.board[0][3] = self.position
                 print(self.name, "moved to", self.position) 
         update_board(on_board())
-# To do:
-    # [x] Create classes for rook, bishop, etc...
-    # [x] Put Chesspiece class within specific piece class
-# class Pawn
-# class Rook:
-# class Bishop:
+
+# class Pawn:
+    # movement is dependent on whether or not the pawn has moved
+class Rook:
+    def __init__(self):
+        pass 
 # class Knight:
+# class Bishop:
 # class Queen:
     # Inherit Rook
     # Inherit Bishop
 # class King
     # Possibly inherit Pawn
-    
-
 
 chessBoard = Chessboard()
+#print(chessBoard)
+
 chessPiece = Chesspiece('Rook', 'A2', chessBoard)
-print(chessPiece)
+print(chessPiece.name)
 chessPiece.move_piece('C4')
 chessPiece.move_piece('z4')
 chessPiece.move_piece('2J')
