@@ -1,10 +1,7 @@
 class Chessboard:
     def __init__(self, piece = None):
-        # To do:
-            # add a way to print to board line by line
-            # make a one line for loop to create chess board
-            # 8x8 chessboard
-        self.board = [[None, None, None, None, None, None, None, None], [None, None, None, None, None, None, None, None], [None, None, None, None, None, None, None, None], [None, None, None, None, None, None, None, None]]
+        # Creates an 8x8 board
+        self.board = [[None for x in range(8)] for x in range(8)]
         self.piece = piece
     def __str__(self):
         return str(self.board)
