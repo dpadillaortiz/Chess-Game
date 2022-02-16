@@ -18,7 +18,7 @@ class Chessboard:
         self.board_index = list(string.ascii_uppercase)[:8] + [str(x) for x in range(1,9)]
         # Creates key pair 'A': [0, 1, 2, 3, 4, 5, 6, 7],...,'H': [0, 1, 2, 3, 4, 5, 6, 7]
         # in order to .. shit i forgot
-        self.board_key = {key:value for key, value in zip(self.board_index, [[x for x in range(8)] for x in range(8)])}
+        self.board_key = {key:value for key, value in zip(self.board_index, [[x for x in range(8)] for x in range(16)])}
     def __str__(self):
         return str(self.board)
 
