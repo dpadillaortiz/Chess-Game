@@ -16,9 +16,8 @@ class Chessboard:
         self.piece = piece
         # Makes this 'ABCDEFGH12345678'into a list - each element is of type str
         self.board_index = list(string.ascii_uppercase)[:8] + [str(x) for x in range(1,9)]
-        # Creates key pair 'A': [0, 1, 2, 3, 4, 5, 6, 7],...,'H': [0, 1, 2, 3, 4, 5, 6, 7]
-        # in order to .. shit i forgot
-        self.board_key = {key:value for key, value in zip(self.board_index, [[x for x in range(8)] for x in range(16)])}
+        # Creates {'A':0, ..., 'H':7, '1':0, ..., '8':7}
+        self.board_key = {key:value for key, value in zip(self.board_index, [x for x in range(8)] + [x for x in range(8)])}
     def __str__(self):
         return str(self.board)
 
@@ -37,17 +36,24 @@ class Chesspiece:
                 return True
             else:
                 print(new_pos, "is out of bounds.")
-        def update_board(func):
+                
+        def update_position(func):
             if func == True:
                 self.position = new_pos
-                self.board_obj.board[6][5] = self.position
-                print(self.name, "moved to", self.position) 
-        update_board(on_board())
+                return self.position
+        def update_board():
+            self.x_pos = self.board_obj.board_key[self.position[0]]
+            self.y_pos = self.board_obj.board_key[self.position[1]]
+            self.board_obj.board[self.x_pos][self.y_pos] = self.position
+            print(self.name, "moved to", self.position) 
+        update_position(on_board())
+        update_board()
 
 # class Pawn:
     # movement is dependent on whether or not the pawn has moved
 # class Rook:
 # class Knight:
+
 # class Bishop:
 # class Queen:
     # Inherit Rook
