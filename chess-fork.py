@@ -7,11 +7,18 @@
         # Should I create a different class to keep track of where pieces are?
     # Create Rook movement
 
+import string
+
 class Chessboard:
     def __init__(self, piece = None):
         # Creates an 8x8 board
         self.board = [[None for x in range(8)] for x in range(8)]
         self.piece = piece
+        # Makes this 'ABCDEFGH12345678'into a list - each element is of type str
+        self.board_index = list(string.ascii_uppercase)[:8] + [str(x) for x in range(1,9)]
+        # Creates key pair 'A': [0, 1, 2, 3, 4, 5, 6, 7],...,'H': [0, 1, 2, 3, 4, 5, 6, 7]
+        # in order to .. shit i forgot
+        self.board_key = {key:value for key, value in zip(self.board_index, [[x for x in range(8)] for x in range(8)])}
     def __str__(self):
         return str(self.board)
 
@@ -25,8 +32,8 @@ class Chesspiece:
     # Updates the position of the piece
     def move_piece(self, new_pos):
         def on_board():
-            board_index = 'ABCDEFGHabcdefgh123456789'
-            if new_pos[0] in board_index and new_pos[1] in board_index:
+            # Checks to see if new_pos is a within the bounds of the board
+            if new_pos[0] in self.board_obj.board_index and new_pos[1:] in self.board_obj.board_index:
                 return True
             else:
                 print(new_pos, "is out of bounds.")
@@ -39,9 +46,7 @@ class Chesspiece:
 
 # class Pawn:
     # movement is dependent on whether or not the pawn has moved
-class Rook:
-    def __init__(self):
-        pass 
+# class Rook:
 # class Knight:
 # class Bishop:
 # class Queen:
@@ -51,11 +56,13 @@ class Rook:
     # Possibly inherit Pawn
 
 chessBoard = Chessboard()
-#print(chessBoard)
+
 
 chessPiece = Chesspiece('Rook', 'A2', chessBoard)
-print(chessPiece.name)
+print(chessPiece)
 chessPiece.move_piece('C4')
 chessPiece.move_piece('z4')
 chessPiece.move_piece('2J')
 chessPiece.move_piece('20')
+
+print(chessBoard)
