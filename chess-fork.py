@@ -40,7 +40,7 @@ class Chesspiece:
         def update_board(func):
             if func == True:
                 self.position = new_pos
-                self.board_obj.board[0][3] = self.position
+                self.board_obj.board[6][5] = self.position
                 print(self.name, "moved to", self.position) 
         update_board(on_board())
 
