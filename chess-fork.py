@@ -82,3 +82,11 @@ chessPiece.move_piece('2J')
 chessPiece.move_piece('20')
 
 print(chessBoard)
+
+
+queenchessPiece = Chesspiece('Queen', 'A3', chessBoard)
+print(queenchessPiece)
+# Should print "Position is not available"
+queenchessPiece.move_piece('C4')
+# Should have A3 on the board
+print(chessBoard)
