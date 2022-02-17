@@ -25,7 +25,6 @@ class Chessboard:
             self.x_pos = self.board_key[position[0]]
             self.y_pos = self.board_key[position[1]]
             self.board[self.x_pos][self.y_pos] = position
-            # print(self.name, "moved to", self.position) 
 
 class Chesspiece:
     def __init__(self, name, position, board_obj = None):
@@ -47,16 +46,6 @@ class Chesspiece:
             if func == True:
                 self.position = new_pos
                 self.board_obj.update_board(self.position)
-        """
-        def update_board(self):
-            self.x_pos = self.board_obj.board_key[self.position[0]]
-            self.y_pos = self.board_obj.board_key[self.position[1]]
-            self.board_obj.board[self.x_pos][self.y_pos] = self.position
-            print(self.name, "moved to", self.position) 
-        
-        update_position(on_board())
-        update_board(self)
-        """
         update_position(on_board())
 
 # class Pawn:
