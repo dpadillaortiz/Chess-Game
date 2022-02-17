@@ -6,7 +6,7 @@
         # Might have to include taking pieces
         # Should I create a different class to keep track of where pieces are?
     # Create Rook movement
-    # Move on_board to Chessboard
+    # [x] Move on_board to Chessboard
 
 import string
 
