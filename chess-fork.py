@@ -1,7 +1,7 @@
 # To do:
     # [x] Create classes for rook, bishop, etc...
     # [x] Put Chesspiece class within specific piece class
-    # [] Map the board_index to corresponding spot in self.board
+    # [x] Map the board_index to corresponding spot in self.board
     # Check if a piece is already on that spot 
         # Might have to include taking pieces
         # Should I create a different class to keep track of where pieces are?
@@ -20,6 +20,12 @@ class Chessboard:
         self.board_key = {key:value for key, value in zip(self.board_index, [x for x in range(8)] + [x for x in range(8)])}
     def __str__(self):
         return str(self.board)
+    # Updates the board with the position of the piece
+    def update_board(self, position):
+            self.x_pos = self.board_key[position[0]]
+            self.y_pos = self.board_key[position[1]]
+            self.board[self.x_pos][self.y_pos] = position
+            # print(self.name, "moved to", self.position) 
 
 class Chesspiece:
     def __init__(self, name, position, board_obj = None):
@@ -30,24 +36,28 @@ class Chesspiece:
         return self.name + " is on " + self.position
     # Updates the position of the piece
     def move_piece(self, new_pos):
+        # Checks to see if new_pos is a within the bounds of the board
         def on_board():
-            # Checks to see if new_pos is a within the bounds of the board
             if new_pos[0] in self.board_obj.board_index and new_pos[1:] in self.board_obj.board_index:
                 return True
             else:
                 print(new_pos, "is out of bounds.")
-                
+        # Updates the position of Chesspiece and adds it to Chessboard.board
         def update_position(func):
             if func == True:
                 self.position = new_pos
-                return self.position
-        def update_board():
+                self.board_obj.update_board(self.position)
+        """
+        def update_board(self):
             self.x_pos = self.board_obj.board_key[self.position[0]]
             self.y_pos = self.board_obj.board_key[self.position[1]]
             self.board_obj.board[self.x_pos][self.y_pos] = self.position
             print(self.name, "moved to", self.position) 
+        
         update_position(on_board())
-        update_board()
+        update_board(self)
+        """
+        update_position(on_board())
 
 # class Pawn:
     # movement is dependent on whether or not the pawn has moved
