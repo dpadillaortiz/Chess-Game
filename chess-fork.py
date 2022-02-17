@@ -46,7 +46,21 @@ class Chesspiece:
             if func == True:
                 self.position = new_pos
                 self.board_obj.update_board(self.position)
+                print(self.name, "is on", self.position)
+                # adding spot_available here
+                if spot_available(self.position) == True:
+                    print("Returned true")
+        # Check if that spot is taken
+        def spot_available(position):
+            x_pos = self.board_obj.board_key[position[0]]
+            y_pos = self.board_obj.board_key[position[1]]
+            if self.board_obj.board[x_pos][y_pos] == None:
+                return True
+            else:
+                print("Position is not available")
+
         update_position(on_board())
+        spot_available('C4')
 
 # class Pawn:
     # movement is dependent on whether or not the pawn has moved
