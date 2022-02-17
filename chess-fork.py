@@ -6,6 +6,7 @@
         # Might have to include taking pieces
         # Should I create a different class to keep track of where pieces are?
     # Create Rook movement
+    # Move on_board to Chessboard
 
 import string
 
@@ -20,6 +21,12 @@ class Chessboard:
         self.board_key = {key:value for key, value in zip(self.board_index, [x for x in range(8)] + [x for x in range(8)])}
     def __str__(self):
         return str(self.board)
+    # Checks to see if new_pos is a within the bounds of the board
+    def on_board(self, position):
+        if position[0] in self.board_index and position[1:] in self.board_index:
+            return True
+        else:
+            print(position, "is out of bounds.")
     # Updates the board with the position of the piece
     def update_board(self, position):
         self.x_pos = self.board_key[position[0]]
@@ -37,18 +44,23 @@ class Chessboard:
 class Chesspiece:
     def __init__(self, name, position, board_obj = None):
         self.name = name
-        self.position = position
+        # self.position = position
         self.board_obj = board_obj
+        # initialize position
+        if position[0] in self.board_obj.board_index and position[1:] in self.board_obj.board_index:
+            self.position = position
     def __repr__(self):
         return self.name + " is on " + self.position
     # Updates the position of the piece
     def move_piece(self, new_pos):
+        """
         # Checks to see if new_pos is a within the bounds of the board
         def on_board():
             if new_pos[0] in self.board_obj.board_index and new_pos[1:] in self.board_obj.board_index:
                 return True
             else:
                 print(new_pos, "is out of bounds.")
+        """
         # Updates the position of Chesspiece and adds it to Chessboard.board
         def update_position(func):
             if func == True:
@@ -57,7 +69,7 @@ class Chesspiece:
                     self.board_obj.update_board(self.position)
                     print(self.name, "is on", self.position)
         # Function calls        
-        update_position(on_board())
+        update_position(self.board_obj.on_board(new_pos))
 
 # class Pawn:
     # movement is dependent on whether or not the pawn has moved
