@@ -11,10 +11,9 @@
 import string
 
 class Chessboard:
-    def __init__(self, piece = None):
+    def __init__(self):
         # Creates an 8x8 board
         self.board = [[None for x in range(8)] for x in range(8)]
-        self.piece = piece
         # Makes this 'ABCDEFGH12345678'into a list - each element is of type str
         self.board_index = list(string.ascii_uppercase)[:8] + [str(x) for x in range(1,9)]
         # Creates {'A':0, ..., 'H':7, '1':0, ..., '8':7}
@@ -53,14 +52,6 @@ class Chesspiece:
         return self.name + " is on " + self.position
     # Updates the position of the piece
     def move_piece(self, new_pos):
-        """
-        # Checks to see if new_pos is a within the bounds of the board
-        def on_board():
-            if new_pos[0] in self.board_obj.board_index and new_pos[1:] in self.board_obj.board_index:
-                return True
-            else:
-                print(new_pos, "is out of bounds.")
-        """
         # Updates the position of Chesspiece and adds it to Chessboard.board
         def update_position(func):
             if func == True:
