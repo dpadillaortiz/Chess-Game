@@ -2,9 +2,10 @@
     # [x] Create classes for rook, bishop, etc...
     # [x] Put Chesspiece class within specific piece class
     # [x] Map the board_index to corresponding spot in self.board
-    # Check if a piece is already on that spot 
-        # Might have to include taking pieces
-        # Should I create a different class to keep track of where pieces are?
+    # [x]Check if a piece is already on that spot 
+        # [x] Might have to include taking pieces
+        # [x] Should I create a different class to keep track of where pieces are?
+            # Added to Chessboard
     # Create Rook movement
     # [x] Move on_board to Chessboard
 
@@ -43,11 +44,9 @@ class Chessboard:
 class Chesspiece:
     def __init__(self, name, position, board_obj = None):
         self.name = name
-        # self.position = position
         self.board_obj = board_obj
-        # initialize position
-        if position[0] in self.board_obj.board_index and position[1:] in self.board_obj.board_index:
-            self.position = position
+        self.position = position
+        self.board_obj.update_board(position)
     def __repr__(self):
         return self.name + " is on " + self.position
     # Updates the position of the piece
@@ -58,15 +57,37 @@ class Chesspiece:
                 if self.board_obj.spot_available(new_pos) == True:
                     self.position = new_pos
                     self.board_obj.update_board(self.position)
-                    print(self.name, "is on", self.position)
-        # Function calls        
+                    print(self.name, "is on", self.position)     
         update_position(self.board_obj.on_board(new_pos))
+
+class Rook(Chesspiece):
+    # Initialized Rook differently and I'm still able to use move_piece
+    def __init__(self, position, board_obj = None):
+        self.name = "Rook"
+        self.board_obj = board_obj
+        self.position = position
+        self.board_obj.update_board(position)
+    # move horizontally
+        # checks if position[0] is the same as it's previous 
+            # example starts at 'A3' (starting)
+                # wants to move to 'A8' (ending)
+                    # check to see if x position is the same
+    # move vertically
+        # check if postion[x][0] is the same as it's previous
+            # example starts to 'A3'
+                # wants to move to 'D3'
+                    # check to see if y postion is the same
+
+    # move to
+        # check if movement is horizontal or vertical
+            # move piece 
+
+
+
 
 # class Pawn:
     # movement is dependent on whether or not the pawn has moved
-# class Rook:
 # class Knight:
-
 # class Bishop:
 # class Queen:
     # Inherit Rook
@@ -75,8 +96,8 @@ class Chesspiece:
     # Possibly inherit Pawn
 
 chessBoard = Chessboard()
-
-
+print(chessBoard)
+"""
 chessPiece = Chesspiece('Rook', 'A2', chessBoard)
 print(chessPiece)
 chessPiece.move_piece('C4')
@@ -92,4 +113,13 @@ print(queenchessPiece)
 # Should print "Position is not available"
 queenchessPiece.move_piece('C4')
 # Should have A3 on the board
+print(chessBoard)
+
+kingchessPiece = Chesspiece('King', 'C4', chessBoard)
+print(kingchessPiece)
+
+"""
+rook = Rook("A3", chessBoard)
+rook.move_piece('C4')
+print(rook)
 print(chessBoard)
