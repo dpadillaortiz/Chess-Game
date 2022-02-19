@@ -6,8 +6,11 @@
         # [x] Might have to include taking pieces
         # [x] Should I create a different class to keep track of where pieces are?
             # Added to Chessboard
-    # Create Rook movement
+    # [x] Create Rook movement
     # [x] Move on_board to Chessboard
+    # Clean up Chessboard:
+        # Right now when I call move_piece/move_to, it likes behind the position
+        # When I move to a new position, that index should be cleaned 
 
 import string
 
@@ -67,22 +70,21 @@ class Rook(Chesspiece):
         self.board_obj = board_obj
         self.position = position
         self.board_obj.update_board(position)
-    # move horizontally
-        # checks if position[0] is the same as it's previous 
-            # example starts at 'A3' (starting)
-                # wants to move to 'A8' (ending)
-                    # check to see if x position is the same
-    # move vertically
-        # check if postion[x][0] is the same as it's previous
-            # example starts to 'A3'
-                # wants to move to 'D3'
-                    # check to see if y postion is the same
-
     # move to
-        # check if movement is horizontal or vertical
-            # move piece 
-
-
+    def move_to(self, position):
+        self.start_pos = self.position
+        self.end_pos = position
+        # move horizontally
+        if self.start_pos[1] == self.end_pos[1]:
+            print(self.name, "moved to", self.end_pos)
+            self.move_piece(position)
+            return self.end_pos
+        # move vertically
+        elif self.start_pos[0] == self.end_pos[0]:
+            print(self.name, "moved to", self.end_pos)
+            return self.end_pos
+        else:
+            print(self.name, "cannot move to", self.end_pos)
 
 
 # class Pawn:
@@ -120,6 +122,15 @@ print(kingchessPiece)
 
 """
 rook = Rook("A3", chessBoard)
-rook.move_piece('C4')
 print(rook)
+rook.move_piece('C4')
+print(chessBoard)
+rook.move_to("F4")
+rook.move_to("C8")
+rook.move_to("F8")
+rook.move_to("F4")
+
+rook.move_to("F2")
+rook.move_to("F2")
+
 print(chessBoard)
