@@ -70,7 +70,7 @@ class Rook(Chesspiece):
         self.board_obj = board_obj
         self.position = position
         self.board_obj.update_board(position)
-    # move to
+    # movement specific to Rook
     def move_to(self, position):
         self.start_pos = self.position
         self.end_pos = position
@@ -85,8 +85,8 @@ class Rook(Chesspiece):
             return self.end_pos
         else:
             print(self.name, "cannot move to", self.end_pos)
-
-
+class Knight(Chesspiece):
+    pass
 # class Pawn:
     # movement is dependent on whether or not the pawn has moved
 # class Knight:
