@@ -1,18 +1,8 @@
 # To do:
-    # [x] Create classes for rook, bishop, etc...
-    # [x] Put Chesspiece class within specific piece class
-    # [x] Map the board_index to corresponding spot in self.board
-    # [x]Check if a piece is already on that spot 
-        # [x] Might have to include taking pieces
-        # [x] Should I create a different class to keep track of where pieces are?
-            # Added to Chessboard
-    # [x] Create Rook movement
-    # [x] Move on_board to Chessboard
     # Clean up Chessboard:
         # Right now when I call move_piece/move_to, it likes behind the position
         # When I move to a new position, that index should be cleaned 
 
-from cmath import sqrt
 import string
 
 class Chessboard:
@@ -102,12 +92,16 @@ class Knight(Chesspiece):
             self.move_piece(new_pos)
         else:
             print("Not a valid Knight move")
-
-        
+class Bishop: 
+    # Bishop movement will work similarly like Knight's movement
+    # if you create a right triagnle with the starting and ending point
+    # the triangle will alway be isoceles triangle i.e. both legs the same
+    # x^2 + x^2 = c^2 => 2x^2 = c^2
+    # unlike Knight the triangle won't be the same every time 
+    pass
 # class Pawn:
     # movement is dependent on whether or not the pawn has moved
-# class Knight:
-# class Bishop:
+
 # class Queen:
     # Inherit Rook
     # Inherit Bishop
