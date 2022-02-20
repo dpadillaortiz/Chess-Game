@@ -12,6 +12,7 @@
         # Right now when I call move_piece/move_to, it likes behind the position
         # When I move to a new position, that index should be cleaned 
 
+from cmath import sqrt
 import string
 
 class Chessboard:
@@ -86,7 +87,23 @@ class Rook(Chesspiece):
         else:
             print(self.name, "cannot move to", self.end_pos)
 class Knight(Chesspiece):
-    pass
+    def __init__(self, position, board_obj = None):
+        self.name = "Knight"
+        self.position = position
+        self.board_obj = board_obj
+        self.board_obj.update_board(position)
+    # movement specific to Rook
+    def move_to(self, new_pos):
+        self.a = self.board_obj.board_key[new_pos[1]] - self.board_obj.board_key[self.position[1]]
+        print(self.a**2)
+        self.b = self.board_obj.board_key[new_pos[0]] - self.board_obj.board_key[self.position[0]]
+        print(self.b**2)
+        if self.a**2 + self.b**2 == 5:
+            self.move_piece(new_pos)
+        else:
+            print("Not a valid Knight move")
+
+        
 # class Pawn:
     # movement is dependent on whether or not the pawn has moved
 # class Knight:
@@ -99,6 +116,16 @@ class Knight(Chesspiece):
 
 chessBoard = Chessboard()
 print(chessBoard)
+
+knight = Knight("A1", chessBoard)
+print(knight)
+print(chessBoard)
+knight.move_to("C3")
+print(chessBoard)
+knight.move_to("B3")
+knight.move_to("C4")
+knight.move_to("D7")
+knight.move_to("D2")
 """
 chessPiece = Chesspiece('Rook', 'A2', chessBoard)
 print(chessPiece)
@@ -120,7 +147,7 @@ print(chessBoard)
 kingchessPiece = Chesspiece('King', 'C4', chessBoard)
 print(kingchessPiece)
 
-"""
+
 rook = Rook("A3", chessBoard)
 print(rook)
 rook.move_piece('C4')
@@ -134,3 +161,4 @@ rook.move_to("F2")
 rook.move_to("F2")
 
 print(chessBoard)
+"""
