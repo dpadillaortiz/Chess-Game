@@ -9,10 +9,14 @@ class Chessboard:
     def __init__(self):
         # Creates an 8x8 board
         self.board = [[None for x in range(8)] for x in range(8)]
-        # Makes this 'ABCDEFGH12345678'into a list - each element is of type str
-        self.board_index = list(string.ascii_uppercase)[:8] + [str(x) for x in range(1,9)]
+        self.letters = list(string.ascii_uppercase)[:8] 
+        self.numbers = [str(x) for x in range(1,9)]
+        # Creates list ['A', ..., 'H','1', ..., '8']
+        self.board_index = self.letters + self.numbers
         # Creates {'A':0, ..., 'H':7, '1':0, ..., '8':7}
         self.board_key = {key:value for key, value in zip(self.board_index, [x for x in range(8)] + [x for x in range(8)])}
+        # Creates list ["A1", ..., "A8", ..., "H1", ..., "H8"]
+        self.board_positions = [self.letters[y] + self.numbers[x] for y in range(len(self.letters)) for x in range(len(self.numbers))]
     def __str__(self):
         return str(self.board)
     # Checks to see if new_pos is a within the bounds of the board
@@ -62,20 +66,15 @@ class Rook(Chesspiece):
         self.position = position
         self.board_obj.update_board(position)
     # movement specific to Rook
-    def move_to(self, position):
-        self.start_pos = self.position
-        self.end_pos = position
+    def move_to(self, new_pos):
         # move horizontally
-        if self.start_pos[1] == self.end_pos[1]:
-            print(self.name, "moved to", self.end_pos)
-            self.move_piece(position)
-            return self.end_pos
+        if new_pos[1] == self.position[1]:
+            self.move_piece(new_pos)
         # move vertically
-        elif self.start_pos[0] == self.end_pos[0]:
-            print(self.name, "moved to", self.end_pos)
-            return self.end_pos
+        elif new_pos[0] == self.position[0]:
+            self.move_piece(new_pos)
         else:
-            print(self.name, "cannot move to", self.end_pos)
+            print(new_pos,"is not a valid Rook move.")
 
 class Knight(Chesspiece):
     def __init__(self, position, board_obj = None):
@@ -83,34 +82,30 @@ class Knight(Chesspiece):
         self.position = position
         self.board_obj = board_obj
         self.board_obj.update_board(position)
-    # movement specific to Rook
+    # movement specific to Knight
     def move_to(self, new_pos):
         self.a = self.board_obj.board_key[new_pos[1]] - self.board_obj.board_key[self.position[1]]
         self.b = self.board_obj.board_key[new_pos[0]] - self.board_obj.board_key[self.position[0]]
         if self.a**2 + self.b**2 == 5:
             self.move_piece(new_pos)
         else:
-            print("Not a valid Knight move")
+            print(new_pos,"is not a valid Knight move.")
 
 class Bishop(Chesspiece): 
-    # Bishop movement will work similarly like Knight's movement
-    # if you create a right triagnle with the starting and ending point
-    # the triangle will alway be isoceles triangle i.e. both legs the same
-    # x^2 + x^2 = c^2 => 2x^2 = c^2
-    # unlike Knight the triangle won't be the same every time 
     def __init__(self, position, board_obj = None):
         self.name = "Bishop"
         self.position = position
         self.board_obj = board_obj
         self.board_obj.update_board(position)
+    # Movement specific to Bishop
     def move_to(self, new_pos):
         self.a = self.board_obj.board_key[new_pos[1]] - self.board_obj.board_key[self.position[1]]
         self.b = self.board_obj.board_key[new_pos[0]] - self.board_obj.board_key[self.position[0]]
         if self.a**2 == self.b**2:
-            print(new_pos, "is valid Bishop move")
-             #self.move_piece(new_pos)
+            self.move_piece(new_pos)
         else:
-            print("Not a valid Bishop move")
+            print(new_pos,"is not a valid Bishop move.")
+        
 
 # class Pawn:
     # movement is dependent on whether or not the pawn has moved
@@ -124,8 +119,23 @@ class Bishop(Chesspiece):
 chessBoard = Chessboard()
 print(chessBoard)
 
+"""
+# Rook movement
+rook = Rook("D4", chessBoard)
+print(rook)
+print(chessBoard)
+
+letters = list(string.ascii_uppercase)[:8] 
+numbers = [str(x) for x in range(1,9)]
+positions = [letters[y] + numbers[x] for y in range(len(letters)) for x in range(len(numbers))]
+
+for spot in positions:
+    rook.move_to(spot)
+"""
+
+"""
 # Bishop movement
-bishop = Bishop("C1", chessBoard)
+bishop = Bishop("E4", chessBoard)
 print(bishop)
 print(chessBoard)
 
@@ -135,16 +145,19 @@ positions = [letters[y] + numbers[x] for y in range(len(letters)) for x in range
 
 for spot in positions:
     bishop.move_to(spot)
+"""
 
 """
 # Knight movement
-knight = Knight("A1", chessBoard)
+knight = Knight("C3", chessBoard)
 print(knight)
 print(chessBoard)
-knight.move_to("C3")
-print(chessBoard)
-knight.move_to("B3")
-knight.move_to("C4")
-knight.move_to("D7")
-knight.move_to("D2")
+
+letters = list(string.ascii_uppercase)[:8] 
+numbers = [str(x) for x in range(1,9)]
+positions = [letters[y] + numbers[x] for y in range(len(letters)) for x in range(len(numbers))]
+
+for spot in positions:
+    knight.move_to(spot)
 """
+
