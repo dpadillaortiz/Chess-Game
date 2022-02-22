@@ -105,19 +105,37 @@ class Bishop(Chesspiece):
             self.move_piece(new_pos)
         else:
             print(new_pos,"is not a valid Bishop move.")
-        
+
+class Queen(Chesspiece):   
+    def __init__(self, position, board_obj = None):
+        self.name = "Queen"
+        self.position = position
+        self.board_obj = board_obj
+        self.board_obj.update_board(position)
+    
+
+
 
 # class Pawn:
     # movement is dependent on whether or not the pawn has moved
-
-# class Queen:
-    # Inherit Rook
-    # Inherit Bishop
 # class King
     # Possibly inherit Pawn
 
 chessBoard = Chessboard()
 print(chessBoard)
+
+# Queen movement
+queen = Queen("D4", chessBoard)
+print(queen)
+print(chessBoard)
+
+letters = list(string.ascii_uppercase)[:8] 
+numbers = [str(x) for x in range(1,9)]
+positions = [letters[y] + numbers[x] for y in range(len(letters)) for x in range(len(numbers))]
+
+for spot in positions:
+    queen.move_to(spot)
+
 
 """
 # Rook movement
