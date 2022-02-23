@@ -59,7 +59,6 @@ class Chesspiece:
         update_position(self.board_obj.on_board(new_pos))
 
 class Rook(Chesspiece):
-    # Initialized Rook differently and I'm still able to use move_piece
     def __init__(self, position, board_obj = None):
         self.name = "Rook"
         self.board_obj = board_obj
@@ -67,14 +66,14 @@ class Rook(Chesspiece):
         self.board_obj.update_board(position)
     # movement specific to Rook
     def move_to(self, new_pos):
+        self.a = self.board_obj.board_key[new_pos[1]] - self.board_obj.board_key[self.position[1]]
+        self.b = self.board_obj.board_key[new_pos[0]] - self.board_obj.board_key[self.position[0]]
         # move horizontally
-        if new_pos[1] == self.position[1]:
-            self.move_piece(new_pos)
-        # move vertically
-        elif new_pos[0] == self.position[0]:
-            self.move_piece(new_pos)
-        else:
-            print(new_pos,"is not a valid Rook move.")
+        if self.b**2 == 0:
+            print(new_pos,"is a valid Rook move.")
+        # move vertically 
+        elif self.a**2 == 0:
+            print(new_pos,"is a valid Rook move.")
 
 class Knight(Chesspiece):
     def __init__(self, position, board_obj = None):
@@ -106,26 +105,79 @@ class Bishop(Chesspiece):
         else:
             print(new_pos,"is not a valid Bishop move.")
 
+class King(Chesspiece):   
+    def __init__(self, position, board_obj = None):
+        self.name = "King"
+        self.position = position
+        self.board_obj = board_obj
+        self.board_obj.update_board(position)
+    def move_to(self, new_pos):
+        self.a = self.board_obj.board_key[new_pos[1]] - self.board_obj.board_key[self.position[1]]
+        self.b = self.board_obj.board_key[new_pos[0]] - self.board_obj.board_key[self.position[0]]
+        # move once diagonally 
+        if self.a**2 == 1 and self.b**2 == 1:
+            print(new_pos,"is a valid King move.")
+        # move once vertically  
+        elif self.a**2 == 1 and self.b**2 == 0:
+            print(new_pos,"is a valid King move.")
+        # move once horizontally 
+        elif self.a**2 == 0 and self.b**2 == 1:
+            print(new_pos,"is a valid King move.")
+        
+
+    
 class Queen(Chesspiece):   
     def __init__(self, position, board_obj = None):
         self.name = "Queen"
         self.position = position
         self.board_obj = board_obj
         self.board_obj.update_board(position)
-    
+    def move_to(self, new_pos):
+        self.a = self.board_obj.board_key[new_pos[1]] - self.board_obj.board_key[self.position[1]]
+        self.b = self.board_obj.board_key[new_pos[0]] - self.board_obj.board_key[self.position[0]]
+        # move diagonally 
+        if self.a**2 == self.b**2:
+            print(new_pos,"is a valid Queen move.")
+        # move horizontally 
+        elif self.b**2 == 0:
+            print(new_pos,"is a valid Queen move.")
+        # move vertically 
+        elif self.a**2 == 0:
+            print(new_pos,"is a valid Queen move.")
 
+class Pawn(Chesspiece):   
+    def __init__(self, position, board_obj = None):
+        self.name = "Pawn"
+        self.position = position
+        self.board_obj = board_obj
+        self.board_obj.update_board(position)
+    def move_to(self, new_pos):
+        self.a = self.board_obj.board_key[new_pos[1]] - self.board_obj.board_key[self.position[1]]
+        self.b = self.board_obj.board_key[new_pos[0]] - self.board_obj.board_key[self.position[0]]
+        # move once vertically 
+        if self.a == 1 and self.b**2 == 0:
+            print(new_pos,"is a valid Pawn move.")
 
-
-# class Pawn:
-    # movement is dependent on whether or not the pawn has moved
-# class King
-    # Possibly inherit Pawn
 
 chessBoard = Chessboard()
 print(chessBoard)
 
-# Queen movement
-queen = Queen("D4", chessBoard)
+# Pawn Movement
+pawn = Pawn("C3", chessBoard)
+print(pawn)
+print(chessBoard)
+
+letters = list(string.ascii_uppercase)[:8] 
+numbers = [str(x) for x in range(1,9)]
+positions = [letters[y] + numbers[x] for y in range(len(letters)) for x in range(len(numbers))]
+
+for spot in positions:
+    pawn.move_to(spot)
+
+
+"""
+# Queen Movement
+queen = Queen("C3", chessBoard)
 print(queen)
 print(chessBoard)
 
@@ -135,11 +187,27 @@ positions = [letters[y] + numbers[x] for y in range(len(letters)) for x in range
 
 for spot in positions:
     queen.move_to(spot)
+"""
+
+
+"""
+# King movement
+king = King("C3", chessBoard)
+print(king)
+print(chessBoard)
+
+letters = list(string.ascii_uppercase)[:8] 
+numbers = [str(x) for x in range(1,9)]
+positions = [letters[y] + numbers[x] for y in range(len(letters)) for x in range(len(numbers))]
+
+for spot in positions:
+    king.move_to(spot)
+"""
 
 
 """
 # Rook movement
-rook = Rook("D4", chessBoard)
+rook = Rook("C3", chessBoard)
 print(rook)
 print(chessBoard)
 
@@ -150,6 +218,7 @@ positions = [letters[y] + numbers[x] for y in range(len(letters)) for x in range
 for spot in positions:
     rook.move_to(spot)
 """
+
 
 """
 # Bishop movement
