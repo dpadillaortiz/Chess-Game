@@ -37,13 +37,13 @@ class Chessboard:
         if self.board[self.x_pos][self.y_pos] == None:
             return True
         else:
-            print("Position is not available")
+            print(position + " is taken.")
 
 class Chesspiece:
     def __init__(self, name, position, board_obj = None):
         self.name = name
         self.board_obj = board_obj
-        self.position = position
+        self.position = position.upper()
         self.board_obj.update_board(position)
     def __repr__(self):
         return self.name + " is on " + self.position
@@ -86,9 +86,10 @@ class Knight(Chesspiece):
         self.a = self.board_obj.board_key[new_pos[1]] - self.board_obj.board_key[self.position[1]]
         self.b = self.board_obj.board_key[new_pos[0]] - self.board_obj.board_key[self.position[0]]
         if self.a**2 + self.b**2 == 5:
-            self.move_piece(new_pos)
-        else:
-            print(new_pos,"is not a valid Knight move.")
+            print(new_pos,"is a valid Knight move.")
+            # self.move_piece(new_pos)
+        """else:
+            print(new_pos,"is not a valid Knight move.")"""
 
 class Bishop(Chesspiece): 
     def __init__(self, position, board_obj = None):
@@ -101,9 +102,8 @@ class Bishop(Chesspiece):
         self.a = self.board_obj.board_key[new_pos[1]] - self.board_obj.board_key[self.position[1]]
         self.b = self.board_obj.board_key[new_pos[0]] - self.board_obj.board_key[self.position[0]]
         if self.a**2 == self.b**2:
-            self.move_piece(new_pos)
-        else:
-            print(new_pos,"is not a valid Bishop move.")
+            print(new_pos,"is a valid Bishop move.")
+            # self.move_piece(new_pos)
 
 class King(Chesspiece):   
     def __init__(self, position, board_obj = None):
@@ -123,8 +123,6 @@ class King(Chesspiece):
         # move once horizontally 
         elif self.a**2 == 0 and self.b**2 == 1:
             print(new_pos,"is a valid King move.")
-        
-
     
 class Queen(Chesspiece):   
     def __init__(self, position, board_obj = None):
@@ -159,13 +157,37 @@ class Pawn(Chesspiece):
             print(new_pos,"is a valid Pawn move.")
 
 
+
+
+def tests(chess_piece):
+    chessBoard = Chessboard()
+    pawn = Pawn("C3", chessBoard)
+    queen = Queen("C3", chessBoard)
+    king = King("C3", chessBoard)
+    rook = Rook("C3", chessBoard)
+    bishop = Bishop("C3", chessBoard)
+    knight = Knight("C3", chessBoard)
+    pieces = {"pawn":pawn, "queen":queen, "king":king, "rook":rook, "bishop":bishop, "knight":knight}
+
+    letters = list(string.ascii_uppercase)[:8] 
+    numbers = [str(x) for x in range(1,9)]
+    positions = [letters[y] + numbers[x] for y in range(len(letters)) for x in range(len(numbers))]
+
+    if chess_piece in pieces:
+        print(pieces[chess_piece])
+        for spot in positions:
+            pieces[chess_piece].move_to(spot)
+
+
+tests("knight")
+
+"""
 chessBoard = Chessboard()
 print(chessBoard)
 
 # Pawn Movement
 pawn = Pawn("C3", chessBoard)
 print(pawn)
-print(chessBoard)
 
 letters = list(string.ascii_uppercase)[:8] 
 numbers = [str(x) for x in range(1,9)]
@@ -173,7 +195,7 @@ positions = [letters[y] + numbers[x] for y in range(len(letters)) for x in range
 
 for spot in positions:
     pawn.move_to(spot)
-
+"""
 
 """
 # Queen Movement
