@@ -1,8 +1,6 @@
 # Chess Project
-
-from curses import setupterm
 import string
-from sys import settrace
+
 
 class Chessboard:
     def __init__(self):
@@ -39,21 +37,19 @@ class Chessboard:
     
     # defining setter for board
     @get_board.setter
-    def update_board(self, position):
+    def update_board(self, name_pos):
+        name, position = name_pos
         # using __board_positions to check valid position 
         # is replacing the need for on_board
         if self.spot_available(position) == True:
-            self.__board[self.x_axis][self.y_axis] = position
-        else:
-            print("Position is unavailable")
-
+            self.__board[self.x_axis][self.y_axis] = name
 
 class Chesspiece:
     def __init__(self, name, position, chessboard = None):
         self.__name = name
         self.__position = position
         self.__chessboard = chessboard
-        self.__chessboard.update_board = self.__position
+        self.__chessboard.update_board = (self.__name, self.__position)
     # defining getter for chesspiece
     @property
     def get_position(self):
@@ -61,15 +57,11 @@ class Chesspiece:
     # defining setter
     @get_position.setter
     def set_position(self, position):
-        print("no cond")
-        #self.to_pos = position
-        #self.from_pos = self.__position
-        if self.__chessboard.spot_available(position) == True:
-            print("in cond")
-            self.__position = position
-            self.__chessboard.update_board = position
-        else:
-             print("wtf")
+        self.to_pos = position
+        self.from_pos = self.__position
+        if self.__chessboard.spot_available(self.to_pos) == True:
+            self.__position, self.__chessboard.update_board = self.to_pos, (self.__name, self.to_pos)
+            print("{} moved from {} to {}".format(self.__name, self.from_pos, self.to_pos))
 
 
 
@@ -78,13 +70,10 @@ class Chesspiece:
 
 
 test = Chessboard()
-test.print_board()
-print()
-test.update_board = "A3"
-test.print_board()
-print()
 rook = Chesspiece("Rook", "B3", test)
 test.print_board()
 print()
 rook.set_position = "C3"
 test.print_board()
+
+
