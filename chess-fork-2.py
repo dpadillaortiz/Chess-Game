@@ -17,17 +17,17 @@ class Chessboard:
 
     # Checks if position is available
     def spot_available(self, position):
-        self.x_axis = self._board_key[position[0].upper()]
-        self.y_axis = self._board_key[position[1].upper()]
-        position = position.upper()
-        if position in self.__board_positions:
+        spot = position.upper()
+        self.x_axis = self._board_key[spot[0]]
+        self.y_axis = self._board_key[spot[1]]
+        if spot in self.__board_positions:
             if self.__board[self.x_axis][self.y_axis] == None:
                 return True
 
     # Prints board in a legible way 
     def print_board(self):
-        meme_p = self.get_board
-        for row in meme_p:
+        chessboard = self.get_board
+        for row in chessboard:
             print(row)
     
     # defining getter for board
@@ -37,24 +37,23 @@ class Chessboard:
     
     # defining setter for board
     @get_board.setter
-    def update_board(self, name_pos):
-        name, position = name_pos
+    def update_board(self, name_pos, old_position = None):
+        name, position, old_position = name_pos
         # using __board_positions to check valid position 
         # is replacing the need for on_board
         if self.spot_available(position) == True:
             self.__board[self.x_axis][self.y_axis] = name
+            if old_position != None:
+                self.x_old = self._board_key[old_position[0]]
+                self.y_old = self._board_key[old_position[1]]
+                self.__board[self.x_old][self.y_old] = None
 
 class Chesspiece:
     def __init__(self, name, position, chessboard = None):
         self.__name = name
-        self.__position = position
+        self.__position = position.upper()
         self.__chessboard = chessboard
-        self.__chessboard.update_board = (self.__name, self.__position)
-    
-    # defining name getter
-    @property
-    def get_name(self):
-        return self.__name
+        self.__chessboard.update_board = (self.__name, self.__position, None)
     
     # defining getter for chesspiece
     @property
@@ -64,11 +63,11 @@ class Chesspiece:
     # defining setter
     @get_position.setter
     def set_position(self, position):
-        self.to_pos = position
+        self.to_pos = position.upper()
         self.from_pos = self.__position
         if self.__chessboard.spot_available(self.to_pos) == True:
             # update position and update the board
-            self.__position, self.__chessboard.update_board = self.to_pos, (self.__name, self.to_pos)
+            self.__position, self.__chessboard.update_board = self.to_pos, (self.__name, self.to_pos, self.from_pos)
             print("{} moved from {} to {}".format(self.__name, self.from_pos, self.to_pos))
 
     def calc_dist(self, position):
@@ -90,13 +89,44 @@ class Rook(Chesspiece):
             self.set_position = position
 
 
+class Knight(Chesspiece):
+    def __init__(self, position, chessboard = None):
+        super().__init__("Knight", position, chessboard)
+    def move_to(self, position):
+        a_side, b_side = self.calc_dist(position)
+        if a_side**2 + b_side**2 == 5:
+            self.set_position = position
+
+
+class Bishop(Chesspiece):
+    def __init__(self, position, chessboard = None):
+        super().__init__("Bishop", position, chessboard)
+    def move_to(self, position):
+        a_side, b_side = self.calc_dist(position)
+        if a_side**2 == b_side**2:
+            self.set_position = position
+class Queen(Chesspiece, Rook):
+    def __init__(self, position, chessboard = None):
+        super().__init__("Bishop", position, chessboard)
 
 
 
-test = Chessboard()
-rook = Rook('C3', test)
-rook.move_to("C6")
-rook.move_to("e6")
-test.print_board()
+
+def test(chess_piece):
+    chessBoard = Chessboard()
+    # rook = Rook("C3", chessBoard)
+    knight = Knight("C3", chessBoard)
+    pieces = {"knight":knight}
+
+    letters = list(string.ascii_uppercase)[:8] 
+    numbers = [str(x) for x in range(1,9)]
+    positions = [letters[y] + numbers[x] for y in range(len(letters)) for x in range(len(numbers))]
+
+    if chess_piece in pieces:
+        for spot in positions:
+            pieces[chess_piece].move_to(spot)
+
+    chessBoard.print_board()
 
 
+test("knight")
