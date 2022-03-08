@@ -1,7 +1,6 @@
 # Chess Project
 import string
 
-
 class Chessboard:
     def __init__(self):
         # Creates an 8x8 board
@@ -13,7 +12,7 @@ class Chessboard:
         # Creates {'A':0, ..., 'H':7, '1':0, ..., '8':7}
         self._board_key = {key:value for key, value in zip(self.__board_axis, [x for x in range(8)] + [x for x in range(8)])}
         # Creates list ["A1", ..., "A8", ..., "H1", ..., "H8"]
-        self.__board_positions = [self.__letters[y] + self.__numbers[x] for y in range(len(self.__letters)) for x in range(len(self.__numbers))]
+        self.__board_positions = [self.__letters[y] + self.__numbers[x] for y in range(8) for x in range(8)]
 
     # Checks if position is available
     def spot_available(self, position):
@@ -64,7 +63,7 @@ class Chesspiece:
     @get_position.setter
     def set_position(self, position):
         self.to_pos = position.upper()
-        self.from_pos = self.__position
+        self.from_pos = self.get_position
         if self.__chessboard.spot_available(self.to_pos) == True:
             # update position and update the board
             self.__position, self.__chessboard.update_board = self.to_pos, (self.__name, self.to_pos, self.from_pos)
@@ -72,7 +71,7 @@ class Chesspiece:
 
     def calc_dist(self, position):
         self.to_pos = position.upper()
-        self.from_pos = self.__position
+        self.from_pos = self.get_position
         self.a = self.__chessboard._board_key[self.to_pos[1]] - self.__chessboard._board_key[self.from_pos[1]]
         self.b = self.__chessboard._board_key[self.to_pos[0]] - self.__chessboard._board_key[self.from_pos[0]]
         return (self.a, self.b)
@@ -167,3 +166,22 @@ def test(chess_piece):
 
 
 test("pawn")
+
+"""
+'|        |'
+'[ Pawn   ]'
+'|--------|'
+'[-Pawn---]'
+'|-Rook---|'
+'|-Knight-|'
+'|-Bishop-|'
+'|-Queen--|'
+'|-King---|'
+
+'|A1:Knight|'
+'|A2:Rook  |'
+
+
+# board_0 = [["{}{}:".format(l,x+1) for l in letters] for x in range(8)]
+"""
+
