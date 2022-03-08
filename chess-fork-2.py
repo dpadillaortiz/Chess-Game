@@ -12,6 +12,21 @@ class Chessboard:
         self._board_key = {key:value for key, value in zip(self.__board_axis, [x for x in range(8)] + [x for x in range(8)])}
         # Creates list ["A1", ..., "A8", ..., "H1", ..., "H8"]
         self.__board_positions = [self.__letters[y] + self.__numbers[x] for y in range(8) for x in range(8)]
+    # defining getter for board
+    @property
+    def get_board(self):
+        return self.__board
+    # defining setter for board
+    @get_board.setter
+    def update_board(self, name_pos, old_position = None):
+        name, position, old_position = name_pos
+        # using __board_positions to check valid position is replacing the need for on_board
+        if self.spot_available(position) == True:
+            self.__board[self.x_axis][self.y_axis] = name
+            if old_position != None:
+                self.x_old = self._board_key[old_position[0]]
+                self.y_old = self._board_key[old_position[1]]
+                self.__board[self.x_old][self.y_old] = None
     # Checks if position is available
     def spot_available(self, position):
         spot = position.upper()
@@ -25,22 +40,6 @@ class Chessboard:
         chessboard = self.get_board
         for row in chessboard:
             print(row)
-    # defining getter for board
-    @property
-    def get_board(self):
-        return self.__board
-    # defining setter for board
-    @get_board.setter
-    def update_board(self, name_pos, old_position = None):
-        name, position, old_position = name_pos
-        # using __board_positions to check valid position 
-        # is replacing the need for on_board
-        if self.spot_available(position) == True:
-            self.__board[self.x_axis][self.y_axis] = name
-            if old_position != None:
-                self.x_old = self._board_key[old_position[0]]
-                self.y_old = self._board_key[old_position[1]]
-                self.__board[self.x_old][self.y_old] = None
 
 class Chesspiece:
     def __init__(self, name, position, chessboard = None):
@@ -48,6 +47,9 @@ class Chesspiece:
         self.__position = position.upper()
         self.__chessboard = chessboard
         self.__chessboard.update_board = (self.__name, self.__position, None)
+    @property
+    def get_name(self):
+        return self.__name
     # defining getter for chesspiece
     @property
     def get_position(self):
@@ -59,14 +61,18 @@ class Chesspiece:
         self.from_pos = self.get_position
         if self.__chessboard.spot_available(self.to_pos) == True:
             # update position and update the board
-            self.__position, self.__chessboard.update_board = self.to_pos, (self.__name, self.to_pos, self.from_pos)
-            print("{} moved from {} to {}".format(self.__name, self.from_pos, self.to_pos))
+            self.__position, self.__chessboard.update_board = self.to_pos, (self.get_name, self.to_pos, self.from_pos)
+            print("{} moved from {} to {}".format(self.get_name, self.from_pos, self.to_pos))
+    # calculates distance bw new position and old position
     def calc_dist(self, position):
         self.to_pos = position.upper()
         self.from_pos = self.get_position
         self.a = self.__chessboard._board_key[self.to_pos[1]] - self.__chessboard._board_key[self.from_pos[1]]
         self.b = self.__chessboard._board_key[self.to_pos[0]] - self.__chessboard._board_key[self.from_pos[0]]
         return (self.a, self.b)
+    # print position
+    def print_position(self):
+        print("{} is on {}.".format(self.get_name, self.get_position))
 
 class Rook(Chesspiece):
     def __init__(self, position, chessboard = None):
@@ -77,6 +83,12 @@ class Rook(Chesspiece):
             self.set_position = position
         elif b_side**2 == 0:
             self.set_position = position
+    def valid_moves(self, position):
+        a_side, b_side = self.calc_dist(position)
+        if a_side**2 == 0:
+            print("{} can move to {}.".format(self.get_name, position))
+        elif b_side**2 == 0:
+            print("{} can move to {}.".format(self.get_name, position))
 
 class Knight(Chesspiece):
     def __init__(self, position, chessboard = None):
@@ -85,6 +97,10 @@ class Knight(Chesspiece):
         a_side, b_side = self.calc_dist(position)
         if a_side**2 + b_side**2 == 5:
             self.set_position = position
+    def valid_moves(self, position):
+        a_side, b_side = self.calc_dist(position)
+        if a_side**2 + b_side**2 == 5:
+            print("{} can move to {}.".format(self.get_name, position))
 
 class Bishop(Chesspiece):
     def __init__(self, position, chessboard = None):
@@ -93,6 +109,10 @@ class Bishop(Chesspiece):
         a_side, b_side = self.calc_dist(position)
         if a_side**2 == b_side**2:
             self.set_position = position
+    def valid_moves(self, position):
+        a_side, b_side = self.calc_dist(position)
+        if a_side**2 == b_side**2:
+            print("{} can move to {}.".format(self.get_name, position))
 
 class Queen(Chesspiece):
     def __init__(self, position, chessboard = None):
@@ -105,6 +125,14 @@ class Queen(Chesspiece):
             self.set_position = position
         elif b_side**2 == 0:
             self.set_position = position
+    def valid_moves(self, position):
+        a_side, b_side = self.calc_dist(position)
+        if a_side**2 == b_side**2:
+            print("{} can move to {}.".format(self.get_name, position))
+        elif a_side**2 == 0:
+            print("{} can move to {}.".format(self.get_name, position))
+        elif b_side**2 == 0:
+            print("{} can move to {}.".format(self.get_name, position))
 
 class King(Chesspiece):
     def __init__(self, position, chessboard = None):
@@ -120,6 +148,17 @@ class King(Chesspiece):
         # move once horizontally 
         elif a_side**2 == 0 and b_side**2 == 1:
             self.set_position = position
+    def valid_moves(self, position):
+        a_side, b_side = self.calc_dist(position)
+        # move once diagonally 
+        if a_side**2 == 1 and b_side**2 == 1:
+            print("{} can move to {}.".format(self.get_name, position))
+        # move once vertically  
+        elif a_side**2 == 1 and b_side**2 == 0:
+            print("{} can move to {}.".format(self.get_name, position))
+        # move once horizontally 
+        elif a_side**2 == 0 and b_side**2 == 1:
+            print("{} can move to {}.".format(self.get_name, position))
             
 class Pawn(Chesspiece):
     def __init__(self, position, chessboard = None):
@@ -128,17 +167,21 @@ class Pawn(Chesspiece):
         a_side, b_side = self.calc_dist(position)
         if a_side > 0 and a_side**2 == 1 and b_side**2 == 0:
             self.set_position = position
+    def valid_moves(self, position):
+        a_side, b_side = self.calc_dist(position)
+        if a_side > 0 and a_side**2 == 1 and b_side**2 == 0:
+            print("{} can move to {}.".format(self.get_name, position))
 
 
 def test(chess_piece):
     chessBoard = Chessboard()
-    # rook = Rook("C3", chessBoard)
-    # knight = Knight("C3", chessBoard)
-    # bishop = Bishop("C3", chessBoard)
-    # queen = Queen("C3", chessBoard)
-    # king = King("C3", chessBoard)
+    rook = Rook("C3", chessBoard)
+    knight = Knight("C3", chessBoard)
+    bishop = Bishop("C3", chessBoard)
+    queen = Queen("C3", chessBoard)
+    king = King("C3", chessBoard)
     pawn = Pawn("C3", chessBoard)
-    pieces = {"pawn":pawn}
+    pieces = {"pawn":pawn, "rook":rook, "knight":knight, "bishop":bishop, "queen":queen, "king":king}
 
     letters = list(string.ascii_uppercase)[:8] 
     numbers = [str(x) for x in range(1,9)]
@@ -146,12 +189,15 @@ def test(chess_piece):
 
     if chess_piece in pieces:
         for spot in positions:
-            pieces[chess_piece].move_to(spot)
+            pieces[chess_piece].valid_moves(spot)
 
-    chessBoard.print_board()
+    #chessBoard.print_board()
+
+pieces = ["pawn",'rook', 'knight', 'bishop', 'queen', 'king']
+
+test(pieces[4])
 
 
-test("pawn")
 
 """
 '|        |'
