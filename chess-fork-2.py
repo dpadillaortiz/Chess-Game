@@ -1,4 +1,3 @@
-# Chess Project
 import string
 
 class Chessboard:
@@ -13,7 +12,6 @@ class Chessboard:
         self._board_key = {key:value for key, value in zip(self.__board_axis, [x for x in range(8)] + [x for x in range(8)])}
         # Creates list ["A1", ..., "A8", ..., "H1", ..., "H8"]
         self.__board_positions = [self.__letters[y] + self.__numbers[x] for y in range(8) for x in range(8)]
-
     # Checks if position is available
     def spot_available(self, position):
         spot = position.upper()
@@ -22,18 +20,15 @@ class Chessboard:
         if spot in self.__board_positions:
             if self.__board[self.x_axis][self.y_axis] == None:
                 return True
-
     # Prints board in a legible way 
     def print_board(self):
         chessboard = self.get_board
         for row in chessboard:
             print(row)
-    
     # defining getter for board
     @property
     def get_board(self):
         return self.__board
-    
     # defining setter for board
     @get_board.setter
     def update_board(self, name_pos, old_position = None):
@@ -53,12 +48,10 @@ class Chesspiece:
         self.__position = position.upper()
         self.__chessboard = chessboard
         self.__chessboard.update_board = (self.__name, self.__position, None)
-    
     # defining getter for chesspiece
     @property
     def get_position(self):
         return self.__position
-
     # defining setter
     @get_position.setter
     def set_position(self, position):
@@ -68,14 +61,12 @@ class Chesspiece:
             # update position and update the board
             self.__position, self.__chessboard.update_board = self.to_pos, (self.__name, self.to_pos, self.from_pos)
             print("{} moved from {} to {}".format(self.__name, self.from_pos, self.to_pos))
-
     def calc_dist(self, position):
         self.to_pos = position.upper()
         self.from_pos = self.get_position
         self.a = self.__chessboard._board_key[self.to_pos[1]] - self.__chessboard._board_key[self.from_pos[1]]
         self.b = self.__chessboard._board_key[self.to_pos[0]] - self.__chessboard._board_key[self.from_pos[0]]
         return (self.a, self.b)
-
 
 class Rook(Chesspiece):
     def __init__(self, position, chessboard = None):
@@ -87,7 +78,6 @@ class Rook(Chesspiece):
         elif b_side**2 == 0:
             self.set_position = position
 
-
 class Knight(Chesspiece):
     def __init__(self, position, chessboard = None):
         super().__init__("Knight", position, chessboard)
@@ -96,7 +86,6 @@ class Knight(Chesspiece):
         if a_side**2 + b_side**2 == 5:
             self.set_position = position
 
-
 class Bishop(Chesspiece):
     def __init__(self, position, chessboard = None):
         super().__init__("Bishop", position, chessboard)
@@ -104,7 +93,6 @@ class Bishop(Chesspiece):
         a_side, b_side = self.calc_dist(position)
         if a_side**2 == b_side**2:
             self.set_position = position
-
 
 class Queen(Chesspiece):
     def __init__(self, position, chessboard = None):
@@ -117,7 +105,6 @@ class Queen(Chesspiece):
             self.set_position = position
         elif b_side**2 == 0:
             self.set_position = position
-
 
 class King(Chesspiece):
     def __init__(self, position, chessboard = None):
@@ -133,8 +120,7 @@ class King(Chesspiece):
         # move once horizontally 
         elif a_side**2 == 0 and b_side**2 == 1:
             self.set_position = position
-
-
+            
 class Pawn(Chesspiece):
     def __init__(self, position, chessboard = None):
         super().__init__("Pawn", position, chessboard)
