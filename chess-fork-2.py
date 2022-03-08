@@ -105,18 +105,55 @@ class Bishop(Chesspiece):
         a_side, b_side = self.calc_dist(position)
         if a_side**2 == b_side**2:
             self.set_position = position
-class Queen(Chesspiece, Rook):
+
+
+class Queen(Chesspiece):
     def __init__(self, position, chessboard = None):
-        super().__init__("Bishop", position, chessboard)
+        super().__init__("Queen", position, chessboard)
+    def move_to(self, position):
+        a_side, b_side = self.calc_dist(position)
+        if a_side**2 == b_side**2:
+            self.set_position = position
+        elif a_side**2 == 0:
+            self.set_position = position
+        elif b_side**2 == 0:
+            self.set_position = position
 
 
+class King(Chesspiece):
+    def __init__(self, position, chessboard = None):
+        super().__init__("King", position, chessboard)
+    def move_to(self, position):
+        a_side, b_side = self.calc_dist(position)
+        # move once diagonally 
+        if a_side**2 == 1 and b_side**2 == 1:
+            self.set_position = position
+        # move once vertically  
+        elif a_side**2 == 1 and b_side**2 == 0:
+            self.set_position = position
+        # move once horizontally 
+        elif a_side**2 == 0 and b_side**2 == 1:
+            self.set_position = position
+
+
+class Pawn(Chesspiece):
+    def __init__(self, position, chessboard = None):
+        super().__init__("Pawn", position, chessboard)
+    def move_to(self, position):
+        a_side, b_side = self.calc_dist(position)
+        if a_side > 0 and a_side**2 == 1 and b_side**2 == 0:
+            self.set_position = position
 
 
 def test(chess_piece):
     chessBoard = Chessboard()
     # rook = Rook("C3", chessBoard)
-    knight = Knight("C3", chessBoard)
-    pieces = {"knight":knight}
+    # knight = Knight("C3", chessBoard)
+    # bishop = Bishop("C3", chessBoard)
+    # queen = Queen("C3", chessBoard)
+    # king = King("C3", chessBoard)
+    pawn = Pawn("C3", chessBoard)
+    pieces = {"pawn":pawn}
 
     letters = list(string.ascii_uppercase)[:8] 
     numbers = [str(x) for x in range(1,9)]
@@ -129,4 +166,4 @@ def test(chess_piece):
     chessBoard.print_board()
 
 
-test("knight")
+test("pawn")
