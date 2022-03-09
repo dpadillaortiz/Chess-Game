@@ -42,11 +42,21 @@ class Chessboard:
             print(row)
 
 class Chesspiece:
-    def __init__(self, name, position, chessboard = None):
+    def __init__(self, name, position, chessboard = None, color = None):
         self.__name = name
         self.__position = position.upper()
         self.__chessboard = chessboard
         self.__chessboard.update_board = (self.__name, self.__position, None)
+        self.__color = color
+    # getter
+    @property
+    def color(self):
+        return self.__color
+    #seter
+    @color.setter
+    def color(self, colour):
+        self.color = colour
+    #getter
     @property
     def get_name(self):
         return self.__name
@@ -73,10 +83,13 @@ class Chesspiece:
     # print position
     def print_position(self):
         print("{} is on {}.".format(self.get_name, self.get_position))
+    # print color
+    def get_color(self):
+        print(self.color)
 
 class Rook(Chesspiece):
-    def __init__(self, position, chessboard = None):
-        super().__init__("Rook", position, chessboard)
+    def __init__(self, position, chessboard = None, color = None):
+        super().__init__("Rook", position, chessboard, color)
     def move_to(self, position):
         a_side, b_side = self.calc_dist(position)
         if a_side**2 == 0:
@@ -91,8 +104,8 @@ class Rook(Chesspiece):
             print("{} can move to {}.".format(self.get_name, position))
 
 class Knight(Chesspiece):
-    def __init__(self, position, chessboard = None):
-        super().__init__("Knight", position, chessboard)
+    def __init__(self, position, chessboard = None, color = None):
+        super().__init__("Knight", position, chessboard, color)
     def move_to(self, position):
         a_side, b_side = self.calc_dist(position)
         if a_side**2 + b_side**2 == 5:
@@ -103,8 +116,8 @@ class Knight(Chesspiece):
             print("{} can move to {}.".format(self.get_name, position))
 
 class Bishop(Chesspiece):
-    def __init__(self, position, chessboard = None):
-        super().__init__("Bishop", position, chessboard)
+    def __init__(self, position, chessboard = None, color = None):
+        super().__init__("Bishop", position, chessboard, color)
     def move_to(self, position):
         a_side, b_side = self.calc_dist(position)
         if a_side**2 == b_side**2:
@@ -115,8 +128,8 @@ class Bishop(Chesspiece):
             print("{} can move to {}.".format(self.get_name, position))
 
 class Queen(Chesspiece):
-    def __init__(self, position, chessboard = None):
-        super().__init__("Queen", position, chessboard)
+    def __init__(self, position, chessboard = None, color = None):
+        super().__init__("Queen", position, chessboard, color)
     def move_to(self, position):
         a_side, b_side = self.calc_dist(position)
         if a_side**2 == b_side**2:
@@ -135,8 +148,8 @@ class Queen(Chesspiece):
             print("{} can move to {}.".format(self.get_name, position))
 
 class King(Chesspiece):
-    def __init__(self, position, chessboard = None):
-        super().__init__("King", position, chessboard)
+    def __init__(self, position, chessboard = None, color = None):
+        super().__init__("King", position, chessboard, color)
     def move_to(self, position):
         a_side, b_side = self.calc_dist(position)
         # move once diagonally 
@@ -161,8 +174,8 @@ class King(Chesspiece):
             print("{} can move to {}.".format(self.get_name, position))
             
 class Pawn(Chesspiece):
-    def __init__(self, position, chessboard = None):
-        super().__init__("Pawn", position, chessboard)
+    def __init__(self, position, chessboard = None, color = None):
+        super().__init__("Pawn", position, chessboard, color)
     def move_to(self, position):
         a_side, b_side = self.calc_dist(position)
         if a_side > 0 and a_side**2 == 1 and b_side**2 == 0:
@@ -172,6 +185,33 @@ class Pawn(Chesspiece):
         if a_side > 0 and a_side**2 == 1 and b_side**2 == 0:
             print("{} can move to {}.".format(self.get_name, position))
 
+class Color:
+    def __init__(self, color, board = None):
+        self.__color = color
+        self.__board = board
+
+    def get_color(self):
+        return self.__color
+
+    def get_meme(self):
+        return self.__board
+
+    pawn = Pawn("A6", get_meme(self), get_color(self))
+    """rook = Rook("A1", self.board, self.color)
+    knight = Knight("A2", self.board, self.color)
+    bishop = Bishop("A3", self.board, self.color)
+    queen = Queen("A4", self.board, self.color)
+    king = King("A5", self.board, self.color)"""
+        
+
+class Black(Color):
+    def __init__(self, board):
+        super().__init__("Black", board)
+    
+
+class White():
+    def __init__(self, board):
+        super().__init__("White", board)
 
 def test(chess_piece):
     chessBoard = Chessboard()
@@ -191,29 +231,17 @@ def test(chess_piece):
         for spot in positions:
             pieces[chess_piece].valid_moves(spot)
 
-    #chessBoard.print_board()
 
-pieces = ["pawn",'rook', 'knight', 'bishop', 'queen', 'king']
-
-test(pieces[4])
-
+chessBoard = Chessboard()
+black = Black(chessBoard)
+black.rook.valid_moves("F3")
 
 
-"""
-'|        |'
-'[ Pawn   ]'
-'|--------|'
-'[-Pawn---]'
-'|-Rook---|'
-'|-Knight-|'
-'|-Bishop-|'
-'|-Queen--|'
-'|-King---|'
-
-'|A1:Knight|'
-'|A2:Rook  |'
-
+"""player = White
+player.rook.valid_moves("F3")
+player.knight.get_color()
+player.chessboard.print_board()"""
 
 # board_0 = [["{}{}:".format(l,x+1) for l in letters] for x in range(8)]
-"""
+
 
