@@ -52,7 +52,7 @@ class Chesspiece:
     @property
     def color(self):
         return self.__color
-    #seter
+    #setter
     @color.setter
     def color(self, colour):
         self.color = colour
@@ -185,6 +185,45 @@ class Pawn(Chesspiece):
         if a_side > 0 and a_side**2 == 1 and b_side**2 == 0:
             print("{} can move to {}.".format(self.get_name, position))
 
+def test(chess_piece):
+    chessBoard = Chessboard()
+    rook = Rook("C3", chessBoard, "black")
+    knight = Knight("C3", chessBoard, "black")
+    bishop = Bishop("C3", chessBoard, "black")
+    queen = Queen("C3", chessBoard, "black")
+    king = King("C3", chessBoard, "black")
+    pawn = Pawn("C3", chessBoard, "black")
+    pieces = {"pawn":pawn, "rook":rook, "knight":knight, "bishop":bishop, "queen":queen, "king":king}
+
+    letters = list(string.ascii_uppercase)[:8] 
+    numbers = [str(x) for x in range(1,9)]
+    positions = [letters[y] + numbers[x] for y in range(len(letters)) for x in range(len(numbers))]
+
+    if chess_piece in pieces:
+        for spot in positions:
+            pieces[chess_piece].valid_moves(spot)
+
+# -- Ideas --
+
+class GameState:
+    def __init__(self):
+        self.__round = 1
+        self.__turn = None
+    @property
+    def round(self):
+        return self.__round
+    @round.setter
+    def round(self, round):
+        self.__round += round
+    @property
+    def turn(self): 
+        return self.__turn
+    @turn.setter
+    def turn(self, color):
+        self.__turn = color
+
+
+
 class Color:
     def __init__(self, board = None, color = None):
         self.pawn_1 = Pawn("A2", board, color)
@@ -211,35 +250,23 @@ class Color:
 
 class Black(Color):
     def __init__(self, board = None):
-        super().__init__(board, "Black")
-    
+        # super().__init__(board, "Black")
+        self.pawn_1 = Pawn("A2", board, "Black")
+        self.pawn_2 = Pawn("B2", board, "Black")
 
 class White(Color):
     def __init__(self, board = None):
-        super().__init__(board, "White")
+        # super().__init__(board, "White")
+        self.pawn_1 = Pawn("A6", board, "Black")
+        self.pawn_2 = Pawn("B6", board, "Black")
 
-def test(chess_piece):
-    chessBoard = Chessboard()
-    rook = Rook("C3", chessBoard, "black")
-    knight = Knight("C3", chessBoard, "black")
-    bishop = Bishop("C3", chessBoard, "black")
-    queen = Queen("C3", chessBoard, "black")
-    king = King("C3", chessBoard, "black")
-    pawn = Pawn("C3", chessBoard, "black")
-    pieces = {"pawn":pawn, "rook":rook, "knight":knight, "bishop":bishop, "queen":queen, "king":king}
 
-    letters = list(string.ascii_uppercase)[:8] 
-    numbers = [str(x) for x in range(1,9)]
-    positions = [letters[y] + numbers[x] for y in range(len(letters)) for x in range(len(numbers))]
-
-    if chess_piece in pieces:
-        for spot in positions:
-            pieces[chess_piece].valid_moves(spot)
 
 chessboard = Chessboard()
 daniel = Black(chessboard)
+player = White(chessboard)
 chessboard.print_board()
-daniel.rook_1.get_color()
+daniel.pawn_1.get_color()
 
 
 
