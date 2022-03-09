@@ -186,41 +186,46 @@ class Pawn(Chesspiece):
             print("{} can move to {}.".format(self.get_name, position))
 
 class Color:
-    def __init__(self, color, board = None):
-        self.__color = color
-        self.__board = board
+    def __init__(self, board = None, color = None):
+        self.pawn_1 = Pawn("A2", board, color)
+        self.pawn_2 = Pawn("B2", board, color)
+        self.pawn_3 = Pawn("C2", board, color)
+        self.pawn_4 = Pawn("D2", board, color)
+        self.pawn_5 = Pawn("E2", board, color)
+        self.pawn_6 = Pawn("F2", board, color)
+        self.pawn_7 = Pawn("G2", board, color)
+        self.pawn_8 = Pawn("H2", board, color)
 
-    def get_color(self):
-        return self.__color
+        self.rook_1 = Rook("A1", board, color)
+        self.rook_2 = Rook("H1", board, color)
 
-    def get_meme(self):
-        return self.__board
+        self.knight_1 = Knight("B1", board, color)
+        self.knight_2 = Knight("G1", board, color)
 
-    pawn = Pawn("A6", get_meme(self), get_color(self))
-    """rook = Rook("A1", self.board, self.color)
-    knight = Knight("A2", self.board, self.color)
-    bishop = Bishop("A3", self.board, self.color)
-    queen = Queen("A4", self.board, self.color)
-    king = King("A5", self.board, self.color)"""
+        self.bishop_1 = Bishop("C1", board, color)
+        self.bishop_2 = Bishop("F1", board, color)
+
+        self.king = King("D1", board, color)
+        self.queen = Queen("E1", board, color)
         
 
 class Black(Color):
-    def __init__(self, board):
-        super().__init__("Black", board)
+    def __init__(self, board = None):
+        super().__init__(board, "Black")
     
 
-class White():
-    def __init__(self, board):
-        super().__init__("White", board)
+class White(Color):
+    def __init__(self, board = None):
+        super().__init__(board, "White")
 
 def test(chess_piece):
     chessBoard = Chessboard()
-    rook = Rook("C3", chessBoard)
-    knight = Knight("C3", chessBoard)
-    bishop = Bishop("C3", chessBoard)
-    queen = Queen("C3", chessBoard)
-    king = King("C3", chessBoard)
-    pawn = Pawn("C3", chessBoard)
+    rook = Rook("C3", chessBoard, "black")
+    knight = Knight("C3", chessBoard, "black")
+    bishop = Bishop("C3", chessBoard, "black")
+    queen = Queen("C3", chessBoard, "black")
+    king = King("C3", chessBoard, "black")
+    pawn = Pawn("C3", chessBoard, "black")
     pieces = {"pawn":pawn, "rook":rook, "knight":knight, "bishop":bishop, "queen":queen, "king":king}
 
     letters = list(string.ascii_uppercase)[:8] 
@@ -231,17 +236,11 @@ def test(chess_piece):
         for spot in positions:
             pieces[chess_piece].valid_moves(spot)
 
+chessboard = Chessboard()
+daniel = Black(chessboard)
+chessboard.print_board()
+daniel.rook_1.get_color()
 
-chessBoard = Chessboard()
-black = Black(chessBoard)
-black.rook.valid_moves("F3")
 
-
-"""player = White
-player.rook.valid_moves("F3")
-player.knight.get_color()
-player.chessboard.print_board()"""
-
-# board_0 = [["{}{}:".format(l,x+1) for l in letters] for x in range(8)]
 
 
