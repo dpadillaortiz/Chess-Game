@@ -178,7 +178,9 @@ def tests(chess_piece):
         for spot in positions:
             pieces[chess_piece].move_to(spot)
 
-
-tests("knight")
+chessBoard = Chessboard()
+#tests("knight")
+pawn = Pawn("C3", chessBoard)
+print(pawn.name)
 
 

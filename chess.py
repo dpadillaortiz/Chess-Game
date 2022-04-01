@@ -15,11 +15,12 @@ class Chesspiece:
         self.board = board
     def __repr__(self):
         return self.name + " is on " + self.position
+    # Updates the position of the piece
     def move_piece(self, new_pos):
         self.position = new_pos
         if "F" in self.position:
             if self.board[0][2] == None:
-                self.board[0][2] = self.position
+                self.board[0][2] = self.name
                 print(self.name,"moved to",self.board[0][2])
 
 
