@@ -271,3 +271,5 @@ daniel.pawn_1.get_color()
 pushed my nranch changes
  
 This is mu actual branch commit
+ 
+edit from second brand chess
