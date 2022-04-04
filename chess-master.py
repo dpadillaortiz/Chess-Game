@@ -11,12 +11,14 @@ class Chessboard:
          # Creates list ["A1", ..., "A8", ..., "H1", ..., "H8"]
         self.__cords = [self.__letters[y] + self.__numbers[x] for y in range(8) for x in range(8)]
         # Creates {'A':0, ..., 'H':7, '1':0, ..., '8':7}
-        self.__board_key = {key:value for key, value in zip(self.__cords, [None for x in range(len(self.__cords))])}
+        self.__boardKey = {key:value for key, value in zip(self.__cords, [None for x in range(len(self.__cords))])}
     
     # Get Functions
     @property
     def board(self):
-        return self.__board_key
+        return self.__boardKey
+
+    # Set Functions
 
 
 class Chesspiece:
@@ -37,6 +39,14 @@ class Chesspiece:
     @property
     def color(self):
         return self.__color
+    
+    # Set Functions
+
+
+
+        
+
+
 
 class Pawn(Chesspiece):
     pass
@@ -54,7 +64,14 @@ class Queen(Chesspiece):
     pass
 
 class King(Chesspiece):
-    pass
+    def __init__(self):
+        self.__inCheck = True
+    # Get Functions
+    @property
+    def inCheck(self):
+        print("I'm in the King class")
+        return self.__inCheck
+
 
 
 rook = Chesspiece("Rook", "A3", "Black")
@@ -63,3 +80,5 @@ print(rook.color)
 
 chess = Chessboard()
 print(chess.board)
+
+
