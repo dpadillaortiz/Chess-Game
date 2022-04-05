@@ -1,17 +1,16 @@
 import string
-import unittest
 
 class Gamestate:
     pass
 
 class Chessboard:
+    rank = list(string.ascii_uppercase)[:8] 
+    numbers = [str(x) for x in range(1,9)]
+    # Creates list ["A1", ..., "A8", ..., "H1", ..., "H8"]
+    cords = [Chessboard.rank[y] + Chessboard.numbers[x] for y in range(8) for x in range(8)]
     def __init__(self):
-        self.__letters = list(string.ascii_uppercase)[:8] 
-        self.__numbers = [str(x) for x in range(1,9)]
-         # Creates list ["A1", ..., "A8", ..., "H1", ..., "H8"]
-        self.__cords = [self.__letters[y] + self.__numbers[x] for y in range(8) for x in range(8)]
         # Creates {'A':0, ..., 'H':7, '1':0, ..., '8':7}
-        self.__boardKey = {key:value for key, value in zip(self.__cords, [None for x in range(len(self.__cords))])}
+        self.__boardKey = {key:value for key, value in zip(cords, [None for x in range(len(cords))])}
     
     # Get Functions
     @property
@@ -42,14 +41,11 @@ class Chesspiece:
     
     # Set Functions
 
-
-
-        
-
-
-
 class Pawn(Chesspiece):
-    pass
+    name = "Pawn"
+
+    def __init__(self, position, color, chessboard = None):
+        super().__init__(Pawn.name, position, color, chessboard)
 
 class Rook(Chesspiece):
     pass
@@ -64,21 +60,16 @@ class Queen(Chesspiece):
     pass
 
 class King(Chesspiece):
-    def __init__(self):
-        self.__inCheck = True
-    # Get Functions
-    @property
-    def inCheck(self):
-        print("I'm in the King class")
-        return self.__inCheck
+    inCheck = False
 
 
 
-rook = Chesspiece("Rook", "A3", "Black")
+
+rook = Pawn("A3", "Black")
 print(rook.name)
 print(rook.color)
 
-chess = Chessboard()
-print(chess.board)
+chessBoard = Chessboard()
+print(chessBoard.board)
 
 
