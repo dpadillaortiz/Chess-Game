@@ -7,10 +7,12 @@ class Chessboard:
     rank = list(string.ascii_uppercase)[:8] 
     numbers = [str(x) for x in range(1,9)]
     # Creates list ["A1", ..., "A8", ..., "H1", ..., "H8"]
-    cords = [Chessboard.rank[y] + Chessboard.numbers[x] for y in range(8) for x in range(8)]
+
+    cords = [list(string.ascii_uppercase)[:8][y] + [str(x) for x in range(1,9)][x] for y in range(8) for x in range(8)]
+  
     def __init__(self):
         # Creates {'A':0, ..., 'H':7, '1':0, ..., '8':7}
-        self.__boardKey = {key:value for key, value in zip(cords, [None for x in range(len(cords))])}
+        self.__boardKey = {key:value for key, value in zip(Chessboard.cords, [None for x in range(len(Chessboard.cords))])}
     
     # Get Functions
     @property
