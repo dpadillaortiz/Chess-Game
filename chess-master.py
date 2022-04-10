@@ -1,8 +1,5 @@
 import string
 
-class Gamestate:
-    turn = 0
-
 class Chessboard:
     rank = list(string.ascii_uppercase)[:8] 
     numbers = [str(x) for x in range(1,9)]
@@ -22,27 +19,38 @@ class Chessboard:
     @board.setter
     def board(self, pos_name):
         # the pos_name parameter is a tuple
-        new_pos, name = pos_name
+        name, new_pos = pos_name
         if self.isFree(new_pos) == True:
             self.__board[new_pos].append(name)
 
     # Other
     def isFree(self, position):
+    # Checks whether the position is available on the board
         if len(self.__board[position]) == 1:
             return True
-        else: 
-            return False
 
+    def onBoard(self, test):
+    # Checks whether the position is valid
+        if test in Chessboard.positions:
+            return True
 
+    def printBoard(self):
+        print(self.board)
+
+class Gamestate:
+    turn = 0
 
 
 class Chesspiece:
     kingInCheck = False
+    canMove = True
     
     def __init__(self, name, position, color, chessboard = None):
         self.__name = name
         self.__position = position
         self.__color = color
+        #self.chessboard = chessboard
+        #self.chessboard.board = (self.__name, self.__position)
 
     # Get Functions
     @property
@@ -59,6 +67,10 @@ class Chesspiece:
 
     # Set Functions
 
+    # Other Functions:
+
+
+
 class Pawn(Chesspiece):
     name = "Pawn"
     initPos = True
@@ -67,7 +79,12 @@ class Pawn(Chesspiece):
         super().__init__(Pawn.name, position, color, chessboard)
 
 class Rook(Chesspiece):
-    pass
+    name = "Rook"
+    initPos = True
+
+    def __init__(self, position, color, chessboard = None):
+        super().__init__(Rook.name, position, color, chessboard)
+
 
 class Knight(Chesspiece):
     pass
@@ -79,23 +96,49 @@ class Queen(Chesspiece):
     pass
 
 class King(Chesspiece):
-    pass
+    name = "King"
+    initPos = True
+
+    def __init__(self, position, color, chessboard = None):
+        super().__init__(Rook.name, position, color, chessboard)
 
 
-
-
-rook = Pawn("A3", "Black")
-print(rook.name)
-print(rook.color)
-pawn = Pawn("A3", "Black")
-pawn.name = "test"
-print(pawn.name)
-print(rook.name)
-
+# Make separate file for this
 chessBoard = Chessboard()
-chessBoard.board = ("A3", "Rook")
-print(chessBoard.board)
+pawn = Pawn("A3", "Black")
+rook = Rook("B1", "White")
+king = King("B2", "White")
 
+chessBoard.board = (pawn.name, pawn.position)
+chessBoard.board = (rook.name, rook.position)
+chessBoard.board = (king.name, king.position)
+#chessBoard.printBoard()
 
-print(chessBoard.isFree("B2"))
-print(chessBoard.isFree("A3"))
+print("     Chesspiece class    inCheck atrribute:", Chesspiece.kingInCheck)
+print("pawn Chesspiece instance inCheck atrribute:", pawn.kingInCheck)
+print("rook Chesspiece instance inCheck atrribute:", rook.kingInCheck)
+print("king Chesspiece instance inCheck atrribute:", king.kingInCheck)
+
+print("--Changing class inCheck attribute--")
+
+Chesspiece.kingInCheck = True
+print("     Chesspiece class    inCheck atrribute:", Chesspiece.kingInCheck)
+print("pawn Chesspiece instance inCheck atrribute:", pawn.kingInCheck)
+print("rook Chesspiece instance inCheck atrribute:", rook.kingInCheck)
+print("king Chesspiece instance inCheck atrribute:", king.kingInCheck)
+
+print("--Changing king inCheck attribute--")
+Chesspiece.kingInCheck = False
+king.kingInCheck = True
+print("     Chesspiece class    inCheck atrribute:", Chesspiece.kingInCheck)
+print("pawn Chesspiece instance inCheck atrribute:", pawn.kingInCheck)
+print("rook Chesspiece instance inCheck atrribute:", rook.kingInCheck)
+print("king Chesspiece instance inCheck atrribute:", king.kingInCheck)
+
+print("--Adding function to change inCheck for the rest--")
+if king.kingInCheck == True:
+    Chesspiece.kingInCheck = True
+    print("     Chesspiece class    inCheck atrribute:", Chesspiece.kingInCheck)
+    print("pawn Chesspiece instance inCheck atrribute:", pawn.kingInCheck)
+    print("rook Chesspiece instance inCheck atrribute:", rook.kingInCheck)
+    print("king Chesspiece instance inCheck atrribute:", king.kingInCheck)
