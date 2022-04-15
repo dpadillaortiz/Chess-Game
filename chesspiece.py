@@ -26,7 +26,9 @@ class Chesspiece:
     # Set Functions
     @position.setter
     def position(self, new_pos):
-        pass
+        #print("test")
+        self.__position = new_pos
+
         
          
 
