@@ -16,10 +16,10 @@ class Chessboard:
 
     # Set Functions
     @board.setter
-    def board(self, pos_name):
-        # the pos_name parameter is a tuple
-        name, new_pos = pos_name
-        self.__board[new_pos].append(name)
+    def board(self, name_pos):
+        # the name_pos parameter is a tuple
+        chesspiece, new_pos = name_pos
+        self.__board[new_pos].append(chesspiece.name)
         """if self.isFree(new_pos) == True and self.onBoard(new_pos):
             self.__board[new_pos].append(name)"""
 

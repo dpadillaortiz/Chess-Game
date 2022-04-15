@@ -9,3 +9,6 @@ chessBoard.printBoard()
 rook = Chesspiece.Rook("A3", "Black")
 print(rook)
 print(chessBoard.isFree("B2"))
+
+chessBoard.board = (rook, "B2")
+chessBoard.printBoard()
