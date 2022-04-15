@@ -26,14 +26,13 @@ class Chesspiece:
     # Set Functions
     @position.setter
     def position(self, new_pos):
-        self.from_pos = self.position
-        self.to_pos = new_pos
-        if Chessboard.isFree(self.to_pos) == True:
-            print("Yo")
+        pass
+        
          
 
     # Other Functions:
-
+    def __repr__(self):
+        return "{} is on {}".format(self.name, self.position)
 
 
 class Pawn(Chesspiece):
