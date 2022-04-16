@@ -5,14 +5,26 @@ import chesspiece as Chesspiece
 import gamestate as Gamestate
 
 chessBoard = Chessboard.Chessboard()
-chessBoard.printBoard()
 
 rook = Chesspiece.Rook("A3", "Black")
-print(rook)
-print(chessBoard.isFree("B2"))
-
-chessBoard.board = (rook, "B2")
+chessBoard.board = (rook, "A3")
 chessBoard.printBoard()
+print(rook)
+
+
 
 rook.position = "B4"
+chessBoard.board = (rook, "B4")
+chessBoard.printBoard()
 print(rook)
+
+
+pawn = Chesspiece.Pawn("C3", "Black")
+chessBoard.board = (pawn, "C3")
+pawn.moveTo("C5")
+chessBoard.board = (pawn, "C5")
+chessBoard.printBoard()
+print(pawn)
+
+print(pawn.hasMoved())
+pawn.moveTo("C7")

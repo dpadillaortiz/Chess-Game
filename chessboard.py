@@ -27,7 +27,7 @@ class Chessboard:
         if len(Chessboard.__board[position]) == 1:
             return True
     
-    def onBoard(self, position):
+    def onBoard(self,position):
     # Checks whether the position is valid
         if position in Chessboard.positions:
             return True
