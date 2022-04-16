@@ -49,16 +49,21 @@ class Pawn(Chesspiece):
         super().__init__(Pawn.name, position, color)
         self.__hasMoved = False
     
+    @property
     def hasMoved(self):
         return self.__hasMoved
+
+    @hasMoved.setter
+    def hasMoved2(self, state):
+        self.__hasMoved = state
 
     def moveTo(self, position):
         run, rise = self.calcDist(position)
         if rise == 1 and run == 0:
             self.position = position
-        elif self.__hasMoved == False and rise == 2 and run == 0:
+        elif self.hasMoved == False and rise == 2 and run == 0:
             self.position = position
-            self.__hasMoved = True
+            self.hasMoved2 = True
         else:
             print("Cannot move to {} from {}".format(position, self.position))
 

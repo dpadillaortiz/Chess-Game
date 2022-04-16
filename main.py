@@ -12,7 +12,6 @@ chessBoard.printBoard()
 print(rook)
 
 
-
 rook.position = "B4"
 chessBoard.board = (rook, "B4")
 chessBoard.printBoard()
@@ -25,6 +24,6 @@ pawn.moveTo("C5")
 chessBoard.board = (pawn, "C5")
 chessBoard.printBoard()
 print(pawn)
-
-print(pawn.hasMoved())
 pawn.moveTo("C7")
+pawn.moveTo("C6")
+print(pawn)
