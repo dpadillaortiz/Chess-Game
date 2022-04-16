@@ -74,6 +74,7 @@ class Rook(Chesspiece):
 
     def __init__(self, position, color):
         super().__init__(Rook.name, position, color)
+        self.__firstMove = True 
 
 
 class Knight(Chesspiece):
@@ -91,3 +92,4 @@ class King(Chesspiece):
 
     def __init__(self, position, color):
         super().__init__(Rook.name, position, color)
+        self.__firstMove = True
