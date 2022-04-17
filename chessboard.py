@@ -18,8 +18,8 @@ class Chessboard:
     @board.setter
     def board(self, name_pos):
         # the name_pos parameter is a tuple
-        piece_obj, new_pos = name_pos
-        self.__board[new_pos].append(piece_obj.name)
+        name, new_pos = name_pos
+        self.__board[new_pos].append(name)
 
     # Other
     def isFree(self, position):
@@ -27,10 +27,15 @@ class Chessboard:
         if len(Chessboard.__board[position]) == 1:
             return True
     
-    def onBoard(self,position):
+    def onBoard(self, position):
     # Checks whether the position is valid
         if position in Chessboard.positions:
             return True
+
+    def updateBoard(self, lastPos, newPos):
+        self.board[lastPos].pop(1)
+        self.board = newPos
+
 
     def printBoard(self):
         print(self.board)

@@ -35,7 +35,6 @@ class Chesspiece:
 
         run = Chessboard.Chessboard().board[toPos][0][0] - Chessboard.Chessboard().board[fromPos][0][0]
         rise = int(Chessboard.Chessboard().board[toPos][0][1]) - int(Chessboard.Chessboard().board[fromPos][0][1])
-
         return (run, rise)
 
     def __repr__(self):
@@ -43,39 +42,98 @@ class Chesspiece:
 
 
 class Pawn(Chesspiece):
-    name = "Pawn"
+    __name = "Pawn"
 
     def __init__(self, position, color):
-        super().__init__(Pawn.name, position, color)
-        self.__hasMoved = False
+        super().__init__(Pawn.__name, position, color)
+        self.__firstMove = True
+        self.__isTaken = False
     
     @property
-    def hasMoved(self):
-        return self.__hasMoved
+    def firstMove(self):
+        return self.__firstMove
 
-    @hasMoved.setter
-    def hasMoved2(self, state):
-        self.__hasMoved = state
+    @firstMove.setter
+    def firstMove(self, state):
+        self.__firstMove = state
+
+    @property
+    def isTaken(self):
+        return self.__isTaken
+
+    @isTaken.setter
+    def isTaken(self, state):
+        self.__isTaken = state
 
     def moveTo(self, position):
         run, rise = self.calcDist(position)
         if rise == 1 and run == 0:
+            Chessboard.Chessboard().updateBoard(self.position, (self.name, position))
+            print("{} moved from {} to {}.".format(self.name, self.position, position))
             self.position = position
-        elif self.hasMoved == False and rise == 2 and run == 0:
+            self.firstMove = False
+        elif self.firstMove == True and rise == 2 and run == 0:
+            Chessboard.Chessboard().updateBoard(self.position, (self.name, position))
+            print("{} moved from {} to {}.".format(self.name, self.position, position))
             self.position = position
-            self.hasMoved2 = True
+            self.firstMove = False
+            print(self.position)
         else:
             print("Cannot move to {} from {}".format(position, self.position))
 
+    def validMove(self, position):
+        run, rise = self.calcDist(position)
+        if rise == 1 and run == 0:
+            print("{} can move from {} to {}.".format(self.name, self.position, position))
+        elif self.firstMove == True and rise == 2 and run == 0:
+            print("{} can move from {} to {}.".format(self.name, self.position, position))
+        else:
+            print("{} can move from {} to {}.".format(self.name, self.position, position))
+
 
 class Rook(Chesspiece):
-    name = "Rook"
-    initPos = True
+    __name = "Rook"
 
     def __init__(self, position, color):
-        super().__init__(Rook.name, position, color)
+        super().__init__(Rook.__name, position, color)
         self.__firstMove = True 
+        self.__isTaken = False
 
+    @property
+    def firstMove(self):
+        return self.__firstMove
+
+    @firstMove.setter
+    def firstMove(self, state):
+        self.__firstMove = state
+
+    @property
+    def isTaken(self):
+        return self.__isTaken
+
+    @isTaken.setter
+    def isTaken(self, state):
+        self.__isTaken = state
+
+    def moveTo(self, position):
+        run, rise = self.calcDist(position)
+        if run**2 == 0:
+            Chessboard.Chessboard().updateBoard(self.position, (self.name, position))
+            self.position = position
+            self.firstMove = False
+        elif rise**2 == 0:
+            Chessboard.Chessboard().updateBoard(self.position, (self.name, position))
+            self.position = position
+            self.firstMove = False
+
+    def validMove(self, position):
+        run, rise = self.calcDist(position)
+        if run**2 == 0:
+            print("{} can move to {} from {}.".format(self.name, position, self.position))
+        elif rise**2 == 0:
+            print("{} can move to {} from {}.".format(self.name, position, self.position))
+        else:
+            print("{} cannot move to {} from {}".format(self.name, position, self.position))
 
 class Knight(Chesspiece):
     pass
