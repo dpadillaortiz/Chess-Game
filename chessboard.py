@@ -32,12 +32,15 @@ class Chessboard:
         if position in Chessboard.positions:
             return True
 
-    def updateBoard(self, newPos, lastPos = None):
-        if lastPos == None:
-            self.board = newPos
+    def updateBoard(self, boardSetter, currentPos = None):
+        if currentPos == None:
+            self.board = boardSetter
         else:
-            self.board[lastPos].pop(1)
-            self.board = newPos
+            print("in updateBoard 'else'")
+            print("self.board[currentPos].pop(1)")
+            self.board[currentPos].pop(1)
+            self.board = boardSetter
+            print(self.board[currentPos])
 
 
     def printBoard(self):

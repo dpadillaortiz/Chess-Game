@@ -11,7 +11,6 @@ class Chesspiece:
         self.__color = color
         Chessboard.Chessboard().updateBoard((self.name, self.position))
 
-    # Get Functions
     @property
     def name(self):
         return self.__name
@@ -24,12 +23,10 @@ class Chesspiece:
     def position(self):
         return self.__position
 
-    # Set Functions
     @position.setter
     def position(self, new_pos):
         self.__position = new_pos.upper()
 
-    # Other Functions:
     def calcDist(self, new_pos):
         toPos = new_pos.upper()
         fromPos = self.position
@@ -38,10 +35,15 @@ class Chesspiece:
         return (run, rise)
 
     def updatePiece(self, boardSetter, newPos):
+        print(self.name, "in updatePiece") #yo
         currentPos = self.position
         Chessboard.Chessboard().updateBoard(boardSetter, currentPos)
         print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
         self.position = newPos
+
+    def takesPiece(self):
+        #run, rise = self.calcDist(position)
+        pass
 
     def __repr__(self):
         return "{} is on {}".format(self.name, self.position)
@@ -73,10 +75,14 @@ class Pawn(Chesspiece):
 
     def moveTo(self, position):
         run, rise = self.calcDist(position)
-        if rise == 1 and run == 0:
+        if rise**2 == 1 and run**2 == 0:
             self.updatePiece((self.name, position), position)
             self.firstMove = False
-        elif self.firstMove == True and rise == 2 and run == 0:
+        elif self.firstMove == True and rise**2 == 4 and run**2 == 0:
+            self.updatePiece((self.name, position), position)
+            self.firstMove = False
+        elif rise**2 + run**2 == 2:
+            print(self.name, "in moveTo 'elif rise**2 + run**2'")
             self.updatePiece((self.name, position), position)
             self.firstMove = False
         else:
@@ -90,6 +96,7 @@ class Pawn(Chesspiece):
             print("{} can move from {} to {}.".format(self.name, self.position, position))
         else:
             print("{} can move from {} to {}.".format(self.name, self.position, position))
+
 
 
 class Rook(Chesspiece):
@@ -119,15 +126,11 @@ class Rook(Chesspiece):
     def moveTo(self, position):
         run, rise = self.calcDist(position)
         if run**2 == 0:
-            Chessboard.Chessboard().updateBoard((self.name, position), self.position)
-            self.position = position
+            self.updatePiece((self.name, position), position)
             self.firstMove = False
-            print("{} moved from {} to {}.".format(self.name, self.position, position))
         elif rise**2 == 0:
-            Chessboard.Chessboard().updateBoard((self.name, position), self.position)
-            self.position = position
+            self.updatePiece((self.name, position), position)
             self.firstMove = False
-            print("{} moved from {} to {}.".format(self.name, self.position, position))
 
     def validMove(self, position):
         run, rise = self.calcDist(position)
