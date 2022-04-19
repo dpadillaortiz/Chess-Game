@@ -8,16 +8,13 @@ class Chessboard:
     # Creates list ["A1", ..., "A8", ..., "H1", ..., "H8"]
     positions = [list(string.ascii_uppercase)[:8][y] + [str(x) for x in range(1,9)][x] for y in range(8) for x in range(8)]
     __board = {key:value for key, value in zip(positions, [[(x,y)] for x in range(1,9) for y in range(1,9)])}
-   
-    # Get Functions
+
     @property
     def board(self):
         return self.__board
 
-    # Set Functions
     @board.setter
     def board(self, name_pos):
-        # the name_pos parameter is a tuple
         name, new_pos = name_pos
         self.__board[new_pos].append(name)
 
@@ -36,12 +33,9 @@ class Chessboard:
         if currentPos == None:
             self.board = boardSetter
         else:
-            print("in updateBoard 'else'")
-            print("self.board[currentPos].pop(1)")
             self.board[currentPos].pop(1)
             self.board = boardSetter
             print(self.board[currentPos])
-
 
     def printBoard(self):
         print(self.board)

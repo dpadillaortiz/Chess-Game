@@ -35,15 +35,16 @@ class Chesspiece:
         return (run, rise)
 
     def updatePiece(self, boardSetter, newPos):
-        print(self.name, "in updatePiece") #yo
         currentPos = self.position
         Chessboard.Chessboard().updateBoard(boardSetter, currentPos)
         print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
         self.position = newPos
 
-    def takesPiece(self):
-        #run, rise = self.calcDist(position)
-        pass
+    def takesPiece(self, position):
+        self.updatePiece((self.name, position), position)
+        pieceTaken = Chessboard.Chessboard().board[position][1]
+        Chessboard.Chessboard().board[position].pop(1)
+        print("{} takes {}".format(self.name, pieceTaken))
 
     def __repr__(self):
         return "{} is on {}".format(self.name, self.position)
@@ -82,8 +83,7 @@ class Pawn(Chesspiece):
             self.updatePiece((self.name, position), position)
             self.firstMove = False
         elif rise**2 + run**2 == 2:
-            print(self.name, "in moveTo 'elif rise**2 + run**2'")
-            self.updatePiece((self.name, position), position)
+            self.takesPiece(position)
             self.firstMove = False
         else:
             print("{} cannot move from {} to {}.".format(self.name, self.position, position))
