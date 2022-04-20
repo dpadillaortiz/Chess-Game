@@ -1,5 +1,6 @@
 # chesspiece.py
 import chessboard as Chessboard
+import gamestate as Gamestate
 
 class Chesspiece:
     kingInCheck = False
@@ -103,7 +104,7 @@ class Pawn(Chesspiece):
 class Rook(Chesspiece):
     __name = "Rook"
 
-    def __init__(self, position, color):
+    def __init__(self, position = None, color = None):
         super().__init__(Rook.__name, position, color)
         self.__firstMove = True 
 

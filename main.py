@@ -2,7 +2,7 @@
 
 import chessboard as Chessboard
 import chesspiece as Chesspiece
-import gamestate as Gamestate
+#import gamestate as Gamestate
 
 chessBoard = Chessboard.Chessboard()
 
@@ -15,3 +15,5 @@ pawn.moveTo("B4")
 pawn.moveTo("B3")
 
 chessBoard.printBoard()
+
+print(rook.isTaken)
