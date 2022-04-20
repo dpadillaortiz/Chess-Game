@@ -35,7 +35,6 @@ class Chessboard:
         else:
             self.board[currentPos].pop(1)
             self.board = boardSetter
-            print(self.board[currentPos])
 
     def printBoard(self):
         print(self.board)

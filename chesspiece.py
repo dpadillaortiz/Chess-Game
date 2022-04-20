@@ -9,6 +9,7 @@ class Chesspiece:
         self.__name = name
         self.__position = position.upper()
         self.__color = color
+        self.__isTaken = False
         Chessboard.Chessboard().updateBoard((self.name, self.position))
 
     @property
@@ -16,16 +17,24 @@ class Chesspiece:
         return self.__name
 
     @property
-    def color(self):
-        return self.__color
-
-    @property
     def position(self):
         return self.__position
-
+    
     @position.setter
     def position(self, new_pos):
         self.__position = new_pos.upper()
+    
+    @property
+    def isTaken(self):
+        return self.__isTaken
+
+    @isTaken.setter
+    def isTaken(self, state):
+        self.__isTaken = state
+
+    @property
+    def color(self):
+        return self.__color
 
     def calcDist(self, new_pos):
         toPos = new_pos.upper()
@@ -56,7 +65,6 @@ class Pawn(Chesspiece):
     def __init__(self, position, color):
         super().__init__(Pawn.__name, position, color)
         self.__firstMove = True
-        self.__isTaken = False
     
     @property
     def firstMove(self):
@@ -66,23 +74,16 @@ class Pawn(Chesspiece):
     def firstMove(self, state):
         self.__firstMove = state
 
-    @property
-    def isTaken(self):
-        return self.__isTaken
-
-    @isTaken.setter
-    def isTaken(self, state):
-        self.__isTaken = state
-
     def moveTo(self, position):
         run, rise = self.calcDist(position)
-        if rise**2 == 1 and run**2 == 0:
-            self.updatePiece((self.name, position), position)
-            self.firstMove = False
-        elif self.firstMove == True and rise**2 == 4 and run**2 == 0:
-            self.updatePiece((self.name, position), position)
-            self.firstMove = False
-        elif rise**2 + run**2 == 2 and len(Chessboard.Chessboard().board[position]) == 2:
+        if rise > 0 and run == 0:
+            if rise**2 == 1:
+                self.updatePiece((self.name, position), position)
+                self.firstMove = False
+            elif self.firstMove == True and rise**2 == 4:
+                self.updatePiece((self.name, position), position)
+                self.firstMove = False
+        elif rise > 0 and rise**2 + run**2 == 2 and len(Chessboard.Chessboard().board[position]) == 2:
             self.takesPiece(position)
             self.firstMove = False
         else:
@@ -105,7 +106,6 @@ class Rook(Chesspiece):
     def __init__(self, position, color):
         super().__init__(Rook.__name, position, color)
         self.__firstMove = True 
-        self.__isTaken = False
 
     @property
     def firstMove(self):
@@ -114,14 +114,6 @@ class Rook(Chesspiece):
     @firstMove.setter
     def firstMove(self, state):
         self.__firstMove = state
-
-    @property
-    def isTaken(self):
-        return self.__isTaken
-
-    @isTaken.setter
-    def isTaken(self, state):
-        self.__isTaken = state
 
     def moveTo(self, position):
         run, rise = self.calcDist(position)
