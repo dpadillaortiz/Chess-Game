@@ -6,9 +6,11 @@ import gamestate as Gamestate
 
 chessBoard = Chessboard.Chessboard()
 
-rook = Chesspiece.Rook("D4", "Black")
+rook = Chesspiece.Rook("b4", "Black")
 
 pawn = Chesspiece.Pawn("C3", "Black")
 pawn.moveTo("D4")
+pawn.moveTo("B4")
+pawn.moveTo("B3")
 
 chessBoard.printBoard()

@@ -82,7 +82,7 @@ class Pawn(Chesspiece):
         elif self.firstMove == True and rise**2 == 4 and run**2 == 0:
             self.updatePiece((self.name, position), position)
             self.firstMove = False
-        elif rise**2 + run**2 == 2:
+        elif rise**2 + run**2 == 2 and len(Chessboard.Chessboard().board[position]) == 2:
             self.takesPiece(position)
             self.firstMove = False
         else:
