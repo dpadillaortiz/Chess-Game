@@ -3,5 +3,5 @@ import chessboard as Chessboard
 import chesspiece as Chesspiece
 
 
-class GameState:
+class Fuck:
     pass

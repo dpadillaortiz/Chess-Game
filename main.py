@@ -4,16 +4,21 @@ import chessboard as Chessboard
 import chesspiece as Chesspiece
 #import gamestate as Gamestate
 
-chessBoard = Chessboard.Chessboard()
 
-rook = Chesspiece.Rook("b4", "Black")
-print(rook)
 
-pawn = Chesspiece.Pawn("C3", "Black")
-pawn.moveTo("D4")
-pawn.moveTo("B4")
-pawn.moveTo("B3")
 
-chessBoard.printBoard()
+def testme():
+    ChessBoard = Chessboard.Chessboard()
+    knight = Chesspiece.Knight("B1")
+    knight = Chesspiece.Knight("G1")
+    knight = Chesspiece.Knight("B8")
+    knight = Chesspiece.Knight("G8")
+    print("Welcome to chess game!")
+    print(knight)
+    yo = input()
+    yo_split = yo.split()
+    if "Knight to" in yo:
+        print(yo_split[-1])
+        knight.moveTo(yo_split[-1])
 
-print(rook.isTaken)
+testme()

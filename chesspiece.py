@@ -6,10 +6,10 @@ class Chesspiece:
     kingInCheck = False
     canMove = True
     
-    def __init__(self, name, position, color):
+    def __init__(self, name, position):
         self.__name = name
         self.__position = position.upper()
-        self.__color = color
+        self.__color = None
         self.__isTaken = False
         Chessboard.Chessboard().updateBoard((self.name, self.position))
 
@@ -63,8 +63,8 @@ class Chesspiece:
 class Pawn(Chesspiece):
     __name = "Pawn"
 
-    def __init__(self, position, color):
-        super().__init__(Pawn.__name, position, color)
+    def __init__(self, position):
+        super().__init__(Pawn.__name, position)
         self.__firstMove = True
     
     @property
@@ -104,8 +104,8 @@ class Pawn(Chesspiece):
 class Rook(Chesspiece):
     __name = "Rook"
 
-    def __init__(self, position = None, color = None):
-        super().__init__(Rook.__name, position, color)
+    def __init__(self, position):
+        super().__init__(Rook.__name, position)
         self.__firstMove = True 
 
     @property
@@ -135,7 +135,19 @@ class Rook(Chesspiece):
             print("{} cannot move to {} from {}".format(self.name, position, self.position))
 
 class Knight(Chesspiece):
-    pass
+    __name = "Knight"
+
+    def __init__(self, position):
+        super().__init__(Knight.__name, position)
+
+    def moveTo(self, newPos):
+        run, rise = self.calcDist(newPos)
+        if run**2 + rise**2 == 5:
+            currentPos = self.position
+            self.position = newPos
+            print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
+        else:
+            print("{} cannot move from {} to {}.".format(self.name, currentPos, newPos))
 
 class Bishop(Chesspiece):
     pass
@@ -147,6 +159,7 @@ class King(Chesspiece):
     name = "King"
     initPos = True
 
-    def __init__(self, position, color):
-        super().__init__(Rook.name, position, color)
+    def __init__(self, position):
+        super().__init__(Rook.name, position)
         self.__firstMove = True
+
