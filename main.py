@@ -9,16 +9,34 @@ import chesspiece as Chesspiece
 
 def testme():
     ChessBoard = Chessboard.Chessboard()
-    knight = Chesspiece.Knight("B1")
-    knight = Chesspiece.Knight("G1")
-    knight = Chesspiece.Knight("B8")
     knight = Chesspiece.Knight("G8")
     print("Welcome to chess game!")
     print(knight)
     yo = input()
     yo_split = yo.split()
+    gameOn = True
     if "Knight to" in yo:
-        print(yo_split[-1])
         knight.moveTo(yo_split[-1])
+    if "Turn off game" == yo:
+        gameOn = False
+        print("Game ended")
 
-testme()
+chessNotation = {
+    "N": Chesspiece.Knight(),
+    "Q": Chesspiece.Queen()
+}
+
+test = chessNotation["N"]
+print(test.name)
+test = chessNotation["Q"]
+print(test.name)
+test.position = "A3"
+test.moveTo("A8")
+test.moveTo("H8")
+test.moveTo("A1")
+test.moveTo("B3")
+print("yo")
+test = chessNotation["N"]
+#test.position = "A3"
+test.moveTest("C3")
+print(test.knights)
