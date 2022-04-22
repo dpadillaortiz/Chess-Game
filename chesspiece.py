@@ -136,15 +136,26 @@ class Rook(Chesspiece):
 
 class Knight(Chesspiece):
     __name = "Knight"
-    leftKnight = "B1"
-    rightKnight = "G1"
-    knights = {
+    knights7 = {
         "knight1": "B1",
         "knight2": "G1"
     }
 
     def __init__(self, position = None):
         super().__init__(Knight.__name, position)
+        self.__knights = { 
+            "knight1": "B1", 
+            "knight2": "G1"
+        }
+    @property
+    def knights(self):
+        return self.__knights
+
+    @knights.setter
+    def knights(self, n_setter):
+        knight, position = n_setter
+        self.__knights[knight] = position
+        
 
     def calcDist(self, newPos, lastPos):
         toPos = newPos.upper()
@@ -153,13 +164,12 @@ class Knight(Chesspiece):
         return (run, rise)
     
     def moveTest(self, newPos):
-        for knight in Knight.knights:
-            currentPos = Knight.knights[knight]
+        for knight in self.knights:
+            currentPos = self.knights[knight]
             run, rise = self.calcDist(newPos, currentPos)
             if run**2 + rise**2 == 5:
-                Knight.knights[knight] = newPos
+                self.knights = (knight, newPos)
                 print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
-
 
     def moveTo(self, newPos):
         run, rise = self.calcDist(newPos)

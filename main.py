@@ -2,13 +2,12 @@
 
 import chessboard as Chessboard
 import chesspiece as Chesspiece
-#import gamestate as Gamestate
+
 
 
 
 
 def testme():
-    ChessBoard = Chessboard.Chessboard()
     knight = Chesspiece.Knight("G8")
     print("Welcome to chess game!")
     print(knight)
@@ -21,6 +20,8 @@ def testme():
         gameOn = False
         print("Game ended")
 
+ChessBoard = Chessboard.Chessboard()
+
 chessNotation = {
     "N": Chesspiece.Knight(),
     "Q": Chesspiece.Queen()
@@ -28,15 +29,24 @@ chessNotation = {
 
 test = chessNotation["N"]
 print(test.name)
-test = chessNotation["Q"]
-print(test.name)
-test.position = "A3"
-test.moveTo("A8")
-test.moveTo("H8")
-test.moveTo("A1")
-test.moveTo("B3")
-print("yo")
+"""
 test = chessNotation["N"]
 #test.position = "A3"
 test.moveTest("C3")
 print(test.knights)
+test.moveTest("A2")
+print(test.knights)
+test.moveTest("C1")
+print(test.knights)
+"""
+def testMeToo():
+    print("Welcome to Chessgame")
+    knight = chessNotation["N"]
+    test.moveTest("C3")
+    play = input("Move Knight").upper()
+    piece = play[:1]
+    newPos = play[1:]
+    if piece in play and newPos in play:
+        chessNotation[piece].moveTest(newPos)
+
+testMeToo()
