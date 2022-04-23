@@ -144,8 +144,8 @@ class Knight(Chesspiece):
     def __init__(self, position = None):
         super().__init__(Knight.__name, position)
         self.__knights = { 
-            "knight1": "B1", 
-            "knight2": "G1"
+            "knight1": "A1", 
+            "knight2": "C1"
         }
     @property
     def knights(self):
@@ -163,31 +163,27 @@ class Knight(Chesspiece):
         rise = int(Chessboard.Chessboard().board[toPos][0][1]) - int(Chessboard.Chessboard().board[lastPos][0][1])
         return (run, rise)
     
-    def moveTest(self, newPos):
-        for knight in self.knights:
-            currentPos = self.knights[knight]
-            run, rise = self.calcDist(newPos, currentPos)
-            if run**2 + rise**2 == 5:
-                self.knights = (knight, newPos)
-                print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
-
     def moveTo(self, newPos):
-        run, rise = self.calcDist(newPos)
-        if run**2 + rise**2 == 5:
-            currentPos = self.position
-            self.position = newPos
+        knight1Val = self.validMove(newPos, self.knights["knight1"])
+        knight2Val = self.validMove(newPos, self.knights["knight2"])
+        if knight1Val == True and knight2Val == False:
+            currentPos = self.knights["knight1"]
+            self.knights = ("knight1", newPos)
             print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
+        elif knight2Val == True and knight1Val == False:
+            currentPos = self.knights["knight2"]
+            self.knights = ("knight2", newPos)
+            print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
+        elif knight1Val == True and knight2Val == True:
+            print("Move too ambiguous")
         else:
-            print("{} cannot move from {} to {}.".format(self.name, currentPos, newPos))
-    
-    def validMove(self, newPos):
-        run, rise = self.calcDist(newPos)
-        currentPos = self.position
+            print("{} cannot move to {}.".format(self.name, newPos))
+
+    def validMove(self, newPos, currentPos):
+        run, rise = self.calcDist(newPos, currentPos)
         if run**2 + rise**2 == 5:
-            print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
             return True
         else:
-            print("{} cannot move from {} to {}.".format(self.name, currentPos, newPos))
             return False
 
 class Bishop(Chesspiece):
