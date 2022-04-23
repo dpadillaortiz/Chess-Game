@@ -10,12 +10,16 @@ chessNotation = {
 }
 
 class Black:
-    knight = chessNotation["N"]
-    knight.color = "black"
+    #Chesspiece.Chesspiece.color = "black"
+    Chesspiece = Chesspiece.Chesspiece()
+    knight = Chesspiece.Knight()
+    queen = Chesspiece.Queen()
+    #knight.color = "black"
 
 class White:
-    knight = chessNotation["N"]
-    knight.color = "black"
+    #Chesspiece.Chesspiece.color = "White"
+    knight = Chesspiece.Knight()
+    #knight.color = "black"
 
 def testKnight():
     knight = chessNotation["N"]
@@ -28,8 +32,20 @@ def testKnight():
     print(knight.knights)
     knight.moveTo("D8")
 
-Black.knight.moveTo("B3")
-Black.knight.moveTo("C2")
-print("####")
-White.knight.moveTo("B3")
-White.knight.moveTo("C2")
+def testClasses():
+    Black.knight.moveTo("B3")
+    Black.knight.moveTo("C2")
+    print("####")
+    White.knight.moveTo("B3")
+    White.knight.moveTo("C2")
+
+
+    White.knight.moveTo("E3")
+    Black.knight.moveTo("A1")
+
+    print(White.knight.knights)
+    print(Black.knight.knights)
+
+print(Black.queen.color)
+print(White.knight.color)
+print(Black.queen.color)

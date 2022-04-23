@@ -140,10 +140,6 @@ class Rook(Chesspiece):
 
 class Knight(Chesspiece):
     __name = "Knight"
-    knights7 = {
-        "knight1": "B1",
-        "knight2": "G1"
-    }
 
     def __init__(self, position = None):
         super().__init__(Knight.__name, position)
@@ -151,13 +147,14 @@ class Knight(Chesspiece):
             "knight1": "A1", 
             "knight2": "C1"
         }
+    
     @property
     def knights(self):
         return self.__knights
 
     @knights.setter
-    def knights(self, n_setter):
-        knight, position = n_setter
+    def knights(self, nSetter):
+        knight, position = nSetter
         self.__knights[knight] = position
         
 
@@ -193,7 +190,54 @@ class Knight(Chesspiece):
     
 
 class Bishop(Chesspiece):
-    pass
+    __name = "Bishop"
+
+    def __init__(self):
+        super().__init__(Bishop.__name)
+        self.__bishops = { 
+            "bishop1": "C1", 
+            "bishop2": "F1"
+        }
+
+    @property
+    def bishops(self):
+        return self.__bishops
+
+    @bishops.setter
+    def bishops(self, bSetter):
+        bishop, position = bSetter
+        self.__bishops[bishop] = position
+        
+    def calcDist(self, newPos, lastPos):
+        toPos = newPos.upper()
+        run = Chessboard.Chessboard().board[toPos][0][0] - Chessboard.Chessboard().board[lastPos][0][0]
+        rise = int(Chessboard.Chessboard().board[toPos][0][1]) - int(Chessboard.Chessboard().board[lastPos][0][1])
+        return (run, rise)
+
+    def validMove(self, newPos, currentPos):
+        run, rise = self.calcDist(newPos, currentPos)
+        if run**2 == rise**2:
+            return True
+        else:
+            return False
+    
+    def moveTo(self, newPos):
+        bishop1ValMov = self.validMove(newPos, self.bishops["bishop1"])
+        bishop2ValMov = self.validMove(newPos, self.bishops["bishop2"])
+        if bishop1ValMov == True and bishop2ValMov == False:
+            currentPos = self.bishops["bishop1"]
+            self.bishops = ("bishop1", newPos)
+            print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
+        elif bishop2ValMov == True and bishop1ValMov == False:
+            currentPos = self.bishops["bishop2"]
+            self.bishops = ("bishop2", newPos)
+            print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
+        elif bishop1ValMov == True and bishop2ValMov == True:
+            print("Move too ambiguous")
+        else:
+            print("{} cannot move to {}.".format(self.name, newPos))
+
+
 
 class Queen(Chesspiece):
     __name = "Queen"
