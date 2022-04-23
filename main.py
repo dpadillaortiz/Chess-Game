@@ -10,14 +10,11 @@ chessNotation = {
 }
 
 class Black:
-    #Chesspiece.Chesspiece.color = "black"
-    Chesspiece = Chesspiece.Chesspiece()
     knight = Chesspiece.Knight()
     queen = Chesspiece.Queen()
-    #knight.color = "black"
+    knight.color = "black"
 
 class White:
-    #Chesspiece.Chesspiece.color = "White"
     knight = Chesspiece.Knight()
     #knight.color = "black"
 
