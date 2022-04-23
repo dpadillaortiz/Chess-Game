@@ -36,6 +36,10 @@ class Chesspiece:
     @property
     def color(self):
         return self.__color
+    
+    @color.setter
+    def color(self, color):
+        self.__color = color
 
     def calcDist(self, new_pos):
         toPos = new_pos.upper()
@@ -162,6 +166,13 @@ class Knight(Chesspiece):
         run = Chessboard.Chessboard().board[toPos][0][0] - Chessboard.Chessboard().board[lastPos][0][0]
         rise = int(Chessboard.Chessboard().board[toPos][0][1]) - int(Chessboard.Chessboard().board[lastPos][0][1])
         return (run, rise)
+
+    def validMove(self, newPos, currentPos):
+        run, rise = self.calcDist(newPos, currentPos)
+        if run**2 + rise**2 == 5:
+            return True
+        else:
+            return False
     
     def moveTo(self, newPos):
         knight1Val = self.validMove(newPos, self.knights["knight1"])
@@ -179,12 +190,7 @@ class Knight(Chesspiece):
         else:
             print("{} cannot move to {}.".format(self.name, newPos))
 
-    def validMove(self, newPos, currentPos):
-        run, rise = self.calcDist(newPos, currentPos)
-        if run**2 + rise**2 == 5:
-            return True
-        else:
-            return False
+    
 
 class Bishop(Chesspiece):
     pass
