@@ -5,18 +5,19 @@ import chesspiece as Chesspiece
 
 
 chessNotation = {
-    "N": Chesspiece.Knight(),
-    "Q": Chesspiece.Queen()
+    "N": Chesspiece.Knight("yo"),
+    "Q": Chesspiece.Queen("memes")
 }
 
 class Black:
-    knight = Chesspiece.Knight()
-    queen = Chesspiece.Queen()
-    knight.color = "black"
+    knight = Chesspiece.Knight("Black")
+    queen = Chesspiece.Queen("Black")
+    rook = Chesspiece.Rook("Black")
 
 class White:
-    knight = Chesspiece.Knight()
-    #knight.color = "black"
+    knight = Chesspiece.Knight("White")
+    queen = Chesspiece.Queen("White")
+    rook = Chesspiece.Rook("White")
 
 def testKnight():
     knight = chessNotation["N"]

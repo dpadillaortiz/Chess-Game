@@ -6,10 +6,10 @@ class Chesspiece:
     kingInCheck = False
     canMove = True
     
-    def __init__(self, name = None, position = None):
+    def __init__(self, name = None, position = None, color = None):
         self.__name = name
         self.__position = position
-        self.__color = None
+        self.__color = color
         self.__isTaken = False
         #Chessboard.Chessboard().updateBoard((self.name, self.position))
 
@@ -110,39 +110,60 @@ class Rook(Chesspiece):
 
     def __init__(self, position):
         super().__init__(Rook.__name, position)
-        self.__firstMove = True 
+        self.__rooks = { 
+            "rook1": {
+                "position":"A1",
+                "firstMove": True
+            }, 
+            "rook2": {
+                "position":"H1",
+                "firstMove": True
+            }
+        }
 
     @property
-    def firstMove(self):
-        return self.__firstMove
+    def rooks(self):
+        return self.__rooks
 
-    @firstMove.setter
-    def firstMove(self, state):
-        self.__firstMove = state
+    @rooks.setter
+    def rooks(self, rSetter):
+        rook, position = rSetter
+        self.__rooks[rook] = position
+        self.__rooks[rook]["firstMove"] = False
 
-    def moveTo(self, position):
-        run, rise = self.calcDist(position)
-        if run**2 == 0:
-            self.updatePiece((self.name, position), position)
-            self.firstMove = False
-        elif rise**2 == 0:
-            self.updatePiece((self.name, position), position)
-            self.firstMove = False
+    def calcDist(self, newPos, lastPos):
+        toPos = newPos.upper()
+        run = Chessboard.Chessboard().board[toPos][0][0] - Chessboard.Chessboard().board[lastPos][0][0]
+        rise = int(Chessboard.Chessboard().board[toPos][0][1]) - int(Chessboard.Chessboard().board[lastPos][0][1])
+        return (run, rise)
 
-    def validMove(self, position):
-        run, rise = self.calcDist(position)
-        if run**2 == 0:
-            print("{} can move to {} from {}.".format(self.name, position, self.position))
-        elif rise**2 == 0:
-            print("{} can move to {} from {}.".format(self.name, position, self.position))
+    def validMove(self, newPos, lastPos):
+        run, rise = self.calcDist(newPos, lastPos)
+        if (run**2 == 0) ^ (rise**2 == 0):
+            return True
         else:
-            print("{} cannot move to {} from {}".format(self.name, position, self.position))
+            return False
+
+    def moveTo(self, newPos):
+        r1ValidMove = self.validMove(newPos, self.rooks["rook1"]["position"])
+        r2ValidMove = self.validMove(newPos, self.rooks["rook2"]["position"])
+        if r1ValidMove == True and r2ValidMove == False:
+            currentPos = self.rooks["rook1"]
+            self.rooks = ("rook1", newPos)
+            print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
+        elif r1ValidMove == False and r2ValidMove == True:
+            currentPos = self.rooks["rook2"]
+            self.rooks = ("rook2", newPos)
+            print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
+        elif r1ValidMove == True and r2ValidMove == True:
+            pass
+
 
 class Knight(Chesspiece):
     __name = "Knight"
 
-    def __init__(self, position = None):
-        super().__init__(Knight.__name, position)
+    def __init__(self, color):
+        super().__init__(Knight.__name, color = color)
         self.__knights = { 
             "knight1": "A1", 
             "knight2": "C1"
@@ -157,7 +178,6 @@ class Knight(Chesspiece):
         knight, position = nSetter
         self.__knights[knight] = position
         
-
     def calcDist(self, newPos, lastPos):
         toPos = newPos.upper()
         run = Chessboard.Chessboard().board[toPos][0][0] - Chessboard.Chessboard().board[lastPos][0][0]
@@ -242,8 +262,8 @@ class Bishop(Chesspiece):
 class Queen(Chesspiece):
     __name = "Queen"
 
-    def __init__(self, position = None):
-        super().__init__(Queen.__name, position)
+    def __init__(self, color, position = None):
+        super().__init__(Queen.__name, position, color = color)
     
     def moveTo(self, newPos):
         run, rise = self.calcDist(newPos)
