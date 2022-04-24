@@ -14,12 +14,14 @@ class Black:
     queen = Chesspiece.Queen("Black")
     rook = Chesspiece.Rook("Black")
     bishop = Chesspiece.Bishop("Black")
+    king = Chesspiece.King("Black")
 
 class White:
     knight = Chesspiece.Knight("White")
     queen = Chesspiece.Queen("White", "E1")
     rook = Chesspiece.Rook("White")
     bishop = Chesspiece.Bishop("White")
+    king = Chesspiece.King("White", "D1")
 
 def testKnight():
     knight = chessNotation["N"]
@@ -54,16 +56,15 @@ def knightTests():
 #knightTests()
 
 def rookTests():
-    pass
+    White.rook.moveTo("H8")
+    White.rook.moveTo("A8")
+#rookTests()
 
 def bishopTests():
     print(Black.bishop.bishops)
     Black.bishop.moveTo("D2")
     Black.bishop.moveTo("H6")
     Black.bishop.moveTo("H8")
-    #Chessboard.Chessboard().board = (Black.bishop.name, "H6")
-    #Chessboard.Chessboard().printBoard()
-    
 #bishopTests()
 
 def queenTests():
@@ -72,5 +73,12 @@ def queenTests():
     White.queen.moveTo("H8")
     White.queen.moveTo("A1")
     White.queen.moveTo("B3")
+#queenTests()
 
-queenTests()
+def kingTests():
+    White.king.moveTo("C1")
+    White.king.moveTo("C2")
+    White.king.moveTo("D3")
+    White.king.moveTo("H3")
+    White.king.moveTo("D8")
+kingTests()

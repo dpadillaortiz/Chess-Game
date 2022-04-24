@@ -69,40 +69,81 @@ class Pawn(Chesspiece):
 
     def __init__(self, position):
         super().__init__(Pawn.__name, position)
-        self.__firstMove = True
-    
+        self.__pawns = {
+            "pawn1":{
+                "position":"A2",
+                "firstMove":True
+            },
+            "pawn2":{
+                "position":"B2",
+                "firstMove":True
+            },
+            "pawn3":{
+                "position":"C2",
+                "firstMove":True
+            },
+            "pawn4":{
+                "position":"D2",
+                "firstMove":True
+            },
+            "pawn5":{
+                "position":"E2",
+                "firstMove":True
+            },
+            "pawn6":{
+                "position":"F2",
+                "firstMove":True
+            },
+            "pawn7":{
+                "position":"G2",
+                "firstMove":True
+            },
+            "pawn8":{
+                "position":"H2",
+                "firstMove":True
+            },
+        }
+
     @property
-    def firstMove(self):
-        return self.__firstMove
+    def pawns(self):
+        return self.__pawns
 
-    @firstMove.setter
-    def firstMove(self, state):
-        self.__firstMove = state
+    @pawns.setter
+    def pawns(self, pSetter):
+        pawn, position = pSetter
+        self.__pawns[pawn]["position"] = position
+        self.__pawns[pawn]["firstMove"] = False
 
-    def moveTo(self, position):
-        run, rise = self.calcDist(position)
-        if rise > 0 and run == 0:
-            if rise**2 == 1:
-                self.updatePiece((self.name, position), position)
-                self.firstMove = False
-            elif self.firstMove == True and rise**2 == 4:
-                self.updatePiece((self.name, position), position)
-                self.firstMove = False
-        elif rise > 0 and rise**2 + run**2 == 2 and len(Chessboard.Chessboard().board[position]) == 2:
-            self.takesPiece(position)
-            self.firstMove = False
+    def calcDist(self, newPos, lastPos):
+        toPos = newPos.upper()
+        run = Chessboard.Chessboard().board[toPos][0][0] - Chessboard.Chessboard().board[lastPos][0][0]
+        rise = int(Chessboard.Chessboard().board[toPos][0][1]) - int(Chessboard.Chessboard().board[lastPos][0][1])
+        return (run, rise)
+    
+    def validMove(self, newPos, lastPos):
+        run, rise = self.calcDist(newPos, lastPos)
+        for pawn in self.pawns:
+            if rise > 0 and run**2 == 0:
+                if rise**2 == 1:
+                    return True
+                elif run**2 == 4 and self.pawns[pawn]["firstMove"] == True:
+                    return True
+            else:
+                return False
+
+    def moveTo(self, newPos):
+        pawnCounter = 0
+        pawnPiece = None
+        
+        for pawn in self.pawns:
+            if self.validMove(newPos, self.pawns[pawn]["position"]) == True:
+                pawnCounter += 1
+                pawnPiece = pawn
+
+        if pawnCounter == 1:
+            self.pawns[pawnPiece]["position"] = newPos
         else:
-            print("{} cannot move from {} to {}.".format(self.name, self.position, position))
-
-    def validMove(self, position):
-        run, rise = self.calcDist(position)
-        if rise == 1 and run == 0:
-            print("{} can move from {} to {}.".format(self.name, self.position, position))
-        elif self.firstMove == True and rise == 2 and run == 0:
-            print("{} can move from {} to {}.".format(self.name, self.position, position))
-        else:
-            print("{} can move from {} to {}.".format(self.name, self.position, position))
-
+            print("Move too ambiguous")
 
 
 class Rook(Chesspiece):
@@ -156,7 +197,9 @@ class Rook(Chesspiece):
             self.rooks = ("rook2", newPos)
             print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
         elif r1ValidMove == True and r2ValidMove == True:
-            pass
+            print("Move too ambiguous")
+        else:
+            print("{} cannot move to {}.".format(self.name, newPos))
 
 class Knight(Chesspiece):
     __name = "Knight"
@@ -262,14 +305,19 @@ class Bishop(Chesspiece):
         else:
             print("{} cannot move to {}.".format(self.name, newPos))
 
-
-
 class Queen(Chesspiece):
     __name = "Queen"
 
     def __init__(self, color, position = None):
         super().__init__(Queen.__name, position, color = color)
     
+    def validMove(self, newPos):
+        run, rise = self.calcDist(newPos)
+        if (run**2 == rise**2) ^ ((run**2 == 0) ^ (rise**2 == 0)):
+            return True
+        else:
+            return False
+        
     def moveTo(self, newPos):
         currentPos = self.position
         if self.validMove(newPos) == True:
@@ -278,18 +326,33 @@ class Queen(Chesspiece):
         else:
             print("{} cannot move from {} to {}.".format(self.name, currentPos, newPos))
 
-    def validMove(self, newPos):
-        run, rise = self.calcDist(newPos)
-        if (run**2 == rise**2) ^ ((run**2 == 0) ^ (rise**2 == 0)):
-            return True
-        else:
-            return False
-    
 class King(Chesspiece):
     __name = "King"
-    initPos = True
 
-    def __init__(self, position):
-        super().__init__(King.__name, position)
+    def __init__(self, color, position = None):
+        super().__init__(King.__name, position, color = color)
         self.__firstMove = True
+    
+    @property
+    def firstMove(self):
+        return self.__firstMove
 
+    @firstMove.setter
+    def firstMove(self, state):
+        self.__firstMove == state
+
+    def validMove(self, position):
+        run, rise = self.calcDist(position)
+        if (run**2 + rise**2 == 2) ^ ((run**2 == 1) ^ (rise**2 == 1)):
+            return True
+        else: 
+            return False
+
+    def moveTo(self, newPos):
+        currentPos = self.position
+        if self.validMove(newPos) == True:
+            self.position = newPos
+            self.firstMove = False
+            print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
+        else:
+            print("{} cannot move from {} to {}.".format(self.name, currentPos, newPos))
