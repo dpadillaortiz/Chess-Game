@@ -108,8 +108,8 @@ class Pawn(Chesspiece):
 class Rook(Chesspiece):
     __name = "Rook"
 
-    def __init__(self, position):
-        super().__init__(Rook.__name, position)
+    def __init__(self, color):
+        super().__init__(Rook.__name, color = color)
         self.__rooks = { 
             "rook1": {
                 "position":"A1",
@@ -128,7 +128,7 @@ class Rook(Chesspiece):
     @rooks.setter
     def rooks(self, rSetter):
         rook, position = rSetter
-        self.__rooks[rook] = position
+        self.__rooks[rook]["position"] = position
         self.__rooks[rook]["firstMove"] = False
 
     def calcDist(self, newPos, lastPos):
@@ -148,16 +148,15 @@ class Rook(Chesspiece):
         r1ValidMove = self.validMove(newPos, self.rooks["rook1"]["position"])
         r2ValidMove = self.validMove(newPos, self.rooks["rook2"]["position"])
         if r1ValidMove == True and r2ValidMove == False:
-            currentPos = self.rooks["rook1"]
+            currentPos = self.rooks["rook1"]["position"]
             self.rooks = ("rook1", newPos)
             print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
         elif r1ValidMove == False and r2ValidMove == True:
-            currentPos = self.rooks["rook2"]
+            currentPos = self.rooks["rook2"]["position"]
             self.rooks = ("rook2", newPos)
             print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
         elif r1ValidMove == True and r2ValidMove == True:
             pass
-
 
 class Knight(Chesspiece):
     __name = "Knight"
@@ -165,8 +164,12 @@ class Knight(Chesspiece):
     def __init__(self, color):
         super().__init__(Knight.__name, color = color)
         self.__knights = { 
-            "knight1": "A1", 
-            "knight2": "C1"
+            "knight1": {
+                "position":"B2"
+            }, 
+            "knight2": {
+                "position":"G2"
+            }
         }
     
     @property
@@ -176,7 +179,7 @@ class Knight(Chesspiece):
     @knights.setter
     def knights(self, nSetter):
         knight, position = nSetter
-        self.__knights[knight] = position
+        self.__knights[knight]["position"] = position
         
     def calcDist(self, newPos, lastPos):
         toPos = newPos.upper()
@@ -192,14 +195,14 @@ class Knight(Chesspiece):
             return False
     
     def moveTo(self, newPos):
-        knight1Val = self.validMove(newPos, self.knights["knight1"])
-        knight2Val = self.validMove(newPos, self.knights["knight2"])
+        knight1Val = self.validMove(newPos, self.knights["knight1"]["position"])
+        knight2Val = self.validMove(newPos, self.knights["knight2"]["position"])
         if knight1Val == True and knight2Val == False:
-            currentPos = self.knights["knight1"]
+            currentPos = self.knights["knight1"]["position"]
             self.knights = ("knight1", newPos)
             print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
         elif knight2Val == True and knight1Val == False:
-            currentPos = self.knights["knight2"]
+            currentPos = self.knights["knight2"]["position"]
             self.knights = ("knight2", newPos)
             print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
         elif knight1Val == True and knight2Val == True:
@@ -207,16 +210,18 @@ class Knight(Chesspiece):
         else:
             print("{} cannot move to {}.".format(self.name, newPos))
 
-    
-
 class Bishop(Chesspiece):
     __name = "Bishop"
 
-    def __init__(self):
-        super().__init__(Bishop.__name)
+    def __init__(self, color):
+        super().__init__(Bishop.__name, color = color)
         self.__bishops = { 
-            "bishop1": "C1", 
-            "bishop2": "F1"
+            "bishop1": {
+                "position":"C1"
+            }, 
+            "bishop2": {
+                "position":"F1"
+            }
         }
 
     @property
@@ -226,7 +231,7 @@ class Bishop(Chesspiece):
     @bishops.setter
     def bishops(self, bSetter):
         bishop, position = bSetter
-        self.__bishops[bishop] = position
+        self.__bishops[bishop]["position"] = position
         
     def calcDist(self, newPos, lastPos):
         toPos = newPos.upper()
@@ -242,14 +247,14 @@ class Bishop(Chesspiece):
             return False
     
     def moveTo(self, newPos):
-        bishop1ValMov = self.validMove(newPos, self.bishops["bishop1"])
-        bishop2ValMov = self.validMove(newPos, self.bishops["bishop2"])
+        bishop1ValMov = self.validMove(newPos, self.bishops["bishop1"]["position"])
+        bishop2ValMov = self.validMove(newPos, self.bishops["bishop2"]["position"])
         if bishop1ValMov == True and bishop2ValMov == False:
-            currentPos = self.bishops["bishop1"]
+            currentPos = self.bishops["bishop1"]["position"]
             self.bishops = ("bishop1", newPos)
             print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
         elif bishop2ValMov == True and bishop1ValMov == False:
-            currentPos = self.bishops["bishop2"]
+            currentPos = self.bishops["bishop2"]["position"]
             self.bishops = ("bishop2", newPos)
             print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
         elif bishop1ValMov == True and bishop2ValMov == True:
@@ -266,12 +271,8 @@ class Queen(Chesspiece):
         super().__init__(Queen.__name, position, color = color)
     
     def moveTo(self, newPos):
-        run, rise = self.calcDist(newPos)
         currentPos = self.position
-        if run**2 == rise**2:
-            self.position = newPos
-            print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
-        elif (run**2 == 0) ^ (rise**2 == 0):
+        if self.validMove(newPos) == True:
             self.position = newPos
             print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
         else:
@@ -279,13 +280,10 @@ class Queen(Chesspiece):
 
     def validMove(self, newPos):
         run, rise = self.calcDist(newPos)
-        currentPos = self.position
-        if run**2 == rise**2:
-            print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
-        elif (run**2 == 0) ^ (rise**2 == 0):
-            print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
+        if (run**2 == rise**2) ^ ((run**2 == 0) ^ (rise**2 == 0)):
+            return True
         else:
-            print("{} cannot move from {} to {}.".format(self.name, currentPos, newPos))
+            return False
     
 class King(Chesspiece):
     __name = "King"
