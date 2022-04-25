@@ -41,24 +41,11 @@ class Chesspiece:
     def color(self, color):
         self.__color = color
 
-    def calcDist(self, new_pos):
-        toPos = new_pos.upper()
-        fromPos = self.position
-        run = Chessboard.Chessboard().board[toPos][0][0] - Chessboard.Chessboard().board[fromPos][0][0]
-        rise = int(Chessboard.Chessboard().board[toPos][0][1]) - int(Chessboard.Chessboard().board[fromPos][0][1])
+    def calcDist(self, newPos, lastPos):
+        toPos = newPos.upper()
+        run = Chessboard.Chessboard().board[toPos][0][0] - Chessboard.Chessboard().board[lastPos][0][0]
+        rise = int(Chessboard.Chessboard().board[toPos][0][1]) - int(Chessboard.Chessboard().board[lastPos][0][1])
         return (run, rise)
-
-    def updatePiece(self, boardSetter, newPos):
-        currentPos = self.position
-        Chessboard.Chessboard().updateBoard(boardSetter, currentPos)
-        print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
-        self.position = newPos
-
-    def takesPiece(self, position):
-        self.updatePiece((self.name, position), position)
-        pieceTaken = Chessboard.Chessboard().board[position][1]
-        Chessboard.Chessboard().board[position].pop(1)
-        print("{} takes {}".format(self.name, pieceTaken))
 
     def __repr__(self):
         return "{} is on {}".format(self.name, self.position)
@@ -112,41 +99,25 @@ class Pawn(Chesspiece):
         pawn, position = pSetter
         self.__pawns[pawn]["position"] = position
         self.__pawns[pawn]["firstMove"] = False
-
-    def calcDist(self, newPos, lastPos):
-        toPos = newPos.upper()
-        run = Chessboard.Chessboard().board[toPos][0][0] - Chessboard.Chessboard().board[lastPos][0][0]
-        rise = int(Chessboard.Chessboard().board[toPos][0][1]) - int(Chessboard.Chessboard().board[lastPos][0][1])
-        return (run, rise)
-    
+   
     def validMove(self, pawn, newPos, lastPos):
-        #print("Pawn.validMove for", pawn)
         run, rise = self.calcDist(newPos, lastPos)
-        #print("run = {} and rise = {}".format(run, rise))
         if rise > 0 and run**2 == 0:
-            #print("rise > 0 is {} and run**2 == 0 is {}".format(rise >0, run**2 == 0))
             if rise**2 == 1:
-                #print("moved once")
                 return True
             elif rise**2 == 4 and self.pawns[pawn]["firstMove"] == True:
-                #print("moved twice at first turn")
                 return True
         else:
             return False
 
     def moveTo(self, newPos):
-        #print("Pawn.moveTo")
         pawnCounter = []
         pawnPiece = None
         for pawn in self.pawns:
-            #print("Pawn for loop")
             if self.validMove(pawn, newPos, self.pawns[pawn]["position"]) == True:
-                    #print("Pawn nested if")
                     pawnCounter.append(pawn)
                     pawnPiece = pawn
-        #print(pawnCounter)
         if len(pawnCounter) == 1:
-            #print("pawnCounter")
             currentPos = self.pawns[pawnPiece]["position"]
             self.pawns = (pawnPiece, newPos)
             print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
@@ -180,12 +151,6 @@ class Rook(Chesspiece):
         rook, position = rSetter
         self.__rooks[rook]["position"] = position
         self.__rooks[rook]["firstMove"] = False
-
-    def calcDist(self, newPos, lastPos):
-        toPos = newPos.upper()
-        run = Chessboard.Chessboard().board[toPos][0][0] - Chessboard.Chessboard().board[lastPos][0][0]
-        rise = int(Chessboard.Chessboard().board[toPos][0][1]) - int(Chessboard.Chessboard().board[lastPos][0][1])
-        return (run, rise)
 
     def validMove(self, newPos, lastPos):
         run, rise = self.calcDist(newPos, lastPos)
@@ -232,12 +197,6 @@ class Knight(Chesspiece):
     def knights(self, nSetter):
         knight, position = nSetter
         self.__knights[knight]["position"] = position
-        
-    def calcDist(self, newPos, lastPos):
-        toPos = newPos.upper()
-        run = Chessboard.Chessboard().board[toPos][0][0] - Chessboard.Chessboard().board[lastPos][0][0]
-        rise = int(Chessboard.Chessboard().board[toPos][0][1]) - int(Chessboard.Chessboard().board[lastPos][0][1])
-        return (run, rise)
 
     def validMove(self, newPos, currentPos):
         run, rise = self.calcDist(newPos, currentPos)
@@ -284,12 +243,6 @@ class Bishop(Chesspiece):
     def bishops(self, bSetter):
         bishop, position = bSetter
         self.__bishops[bishop]["position"] = position
-        
-    def calcDist(self, newPos, lastPos):
-        toPos = newPos.upper()
-        run = Chessboard.Chessboard().board[toPos][0][0] - Chessboard.Chessboard().board[lastPos][0][0]
-        rise = int(Chessboard.Chessboard().board[toPos][0][1]) - int(Chessboard.Chessboard().board[lastPos][0][1])
-        return (run, rise)
 
     def validMove(self, newPos, currentPos):
         run, rise = self.calcDist(newPos, currentPos)
@@ -321,7 +274,8 @@ class Queen(Chesspiece):
         super().__init__(Queen.__name, position, color = color)
     
     def validMove(self, newPos):
-        run, rise = self.calcDist(newPos)
+        currentPos = self.position
+        run, rise = self.calcDist(newPos, currentPos)
         if (run**2 == rise**2) ^ ((run**2 == 0) ^ (rise**2 == 0)):
             return True
         else:
@@ -351,7 +305,8 @@ class King(Chesspiece):
         self.__firstMove == state
 
     def validMove(self, position):
-        run, rise = self.calcDist(position)
+        currentPos = self.position
+        run, rise = self.calcDist(position, currentPos)
         if (run**2 + rise**2 == 2) ^ ((run**2 == 1) ^ (rise**2 == 1)):
             return True
         else: 

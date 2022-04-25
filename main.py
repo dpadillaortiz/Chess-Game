@@ -50,16 +50,21 @@ def testClasses():
     print(White.knight.knights)
     print(Black.knight.knights)
 
-def knightTests():
-    print(Black.knight.knights)
-    Black.knight.moveTo("C4")
-    print(Black.knight.knights)
-#knightTests()
+def pawnTests():
+    Black.pawn.moveTo("G4")
+    Black.pawn.moveTo("G3")
+    Black.pawn.moveTo("A4")
+    Black.pawn.moveTo("B3")
+#pawnTests()
 
 def rookTests():
     White.rook.moveTo("H8")
     White.rook.moveTo("A8")
 #rookTests()
+
+def knightTests():
+    Black.knight.moveTo("C4")
+#knightTests()
 
 def bishopTests():
     print(Black.bishop.bishops)
@@ -77,17 +82,10 @@ def queenTests():
 #queenTests()
 
 def kingTests():
+    print(White.king)
     White.king.moveTo("C1")
     White.king.moveTo("C2")
     White.king.moveTo("D3")
     White.king.moveTo("H3")
     White.king.moveTo("D8")
 #kingTests()
-
-def pawnTests():
-    Black.pawn.moveTo("G4")
-    Black.pawn.moveTo("G3")
-    Black.pawn.moveTo("A4")
-    Black.pawn.moveTo("B3")
-
-pawnTests()
