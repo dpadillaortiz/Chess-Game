@@ -15,6 +15,7 @@ class Black:
     rook = Chesspiece.Rook("Black")
     bishop = Chesspiece.Bishop("Black")
     king = Chesspiece.King("Black")
+    pawn = Chesspiece.Pawn("Black")
 
 class White:
     knight = Chesspiece.Knight("White")
@@ -22,6 +23,7 @@ class White:
     rook = Chesspiece.Rook("White")
     bishop = Chesspiece.Bishop("White")
     king = Chesspiece.King("White", "D1")
+    pawn = Chesspiece.Pawn("White")
 
 def testKnight():
     knight = chessNotation["N"]
@@ -52,7 +54,6 @@ def knightTests():
     print(Black.knight.knights)
     Black.knight.moveTo("C4")
     print(Black.knight.knights)
-
 #knightTests()
 
 def rookTests():
@@ -81,4 +82,12 @@ def kingTests():
     White.king.moveTo("D3")
     White.king.moveTo("H3")
     White.king.moveTo("D8")
-kingTests()
+#kingTests()
+
+def pawnTests():
+    Black.pawn.moveTo("G4")
+    Black.pawn.moveTo("G3")
+    Black.pawn.moveTo("A4")
+    Black.pawn.moveTo("B3")
+
+pawnTests()

@@ -63,7 +63,6 @@ class Chesspiece:
     def __repr__(self):
         return "{} is on {}".format(self.name, self.position)
 
-
 class Pawn(Chesspiece):
     __name = "Pawn"
 
@@ -120,31 +119,41 @@ class Pawn(Chesspiece):
         rise = int(Chessboard.Chessboard().board[toPos][0][1]) - int(Chessboard.Chessboard().board[lastPos][0][1])
         return (run, rise)
     
-    def validMove(self, newPos, lastPos):
+    def validMove(self, pawn, newPos, lastPos):
+        #print("Pawn.validMove for", pawn)
         run, rise = self.calcDist(newPos, lastPos)
-        for pawn in self.pawns:
-            if rise > 0 and run**2 == 0:
-                if rise**2 == 1:
-                    return True
-                elif run**2 == 4 and self.pawns[pawn]["firstMove"] == True:
-                    return True
-            else:
-                return False
+        #print("run = {} and rise = {}".format(run, rise))
+        if rise > 0 and run**2 == 0:
+            #print("rise > 0 is {} and run**2 == 0 is {}".format(rise >0, run**2 == 0))
+            if rise**2 == 1:
+                #print("moved once")
+                return True
+            elif rise**2 == 4 and self.pawns[pawn]["firstMove"] == True:
+                #print("moved twice at first turn")
+                return True
+        else:
+            return False
 
     def moveTo(self, newPos):
-        pawnCounter = 0
+        #print("Pawn.moveTo")
+        pawnCounter = []
         pawnPiece = None
-        
         for pawn in self.pawns:
-            if self.validMove(newPos, self.pawns[pawn]["position"]) == True:
-                pawnCounter += 1
-                pawnPiece = pawn
-
-        if pawnCounter == 1:
-            self.pawns[pawnPiece]["position"] = newPos
-        else:
+            #print("Pawn for loop")
+            if self.validMove(pawn, newPos, self.pawns[pawn]["position"]) == True:
+                    #print("Pawn nested if")
+                    pawnCounter.append(pawn)
+                    pawnPiece = pawn
+        #print(pawnCounter)
+        if len(pawnCounter) == 1:
+            #print("pawnCounter")
+            currentPos = self.pawns[pawnPiece]["position"]
+            self.pawns = (pawnPiece, newPos)
+            print("{} moved from {} to {}.".format(self.name, currentPos, newPos))
+        elif len(pawnCounter) > 1:
             print("Move too ambiguous")
-
+        else:
+            print("{} cannot move to {}.".format(self.name, newPos))
 
 class Rook(Chesspiece):
     __name = "Rook"
