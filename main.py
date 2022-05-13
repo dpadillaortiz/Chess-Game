@@ -1,20 +1,20 @@
 # main.py
 
-import chessboard as Chessboard
+#import chessboard as Chessboard
 import chesspiece as Chesspiece
 
 
-chessNotation = {
+"""chessNotation = {
     "N": Chesspiece.Knight("yo"),
     "Q": Chesspiece.Queen("memes")
-}
+}"""
 
 class Black:
     knight = Chesspiece.Knight("Black")
-    queen = Chesspiece.Queen("Black")
+    queen = Chesspiece.Queen("Black", "E1")
     rook = Chesspiece.Rook("Black")
     bishop = Chesspiece.Bishop("Black")
-    king = Chesspiece.King("Black")
+    king = Chesspiece.King("Black", "D1")
     pawn = Chesspiece.Pawn("Black")
 
 class White:
@@ -25,7 +25,7 @@ class White:
     king = Chesspiece.King("White", "D1")
     pawn = Chesspiece.Pawn("White")
 
-def testKnight():
+"""def testKnight():
     knight = chessNotation["N"]
     print(knight.name)
     print(knight.knights)
@@ -34,7 +34,7 @@ def testKnight():
     print(knight.knights)
     knight.moveTo("D3")
     print(knight.knights)
-    knight.moveTo("D8")
+    knight.moveTo("D8")"""
 
 def testClasses():
     Black.knight.moveTo("B3")
@@ -55,37 +55,37 @@ def pawnTests():
     Black.pawn.moveTo("G3")
     Black.pawn.moveTo("A4")
     Black.pawn.moveTo("B3")
-#pawnTests()
+    Black.pawn.moveTo("Z8")
+pawnTests()
 
 def rookTests():
     White.rook.moveTo("H8")
     White.rook.moveTo("A8")
-#rookTests()
+rookTests()
 
 def knightTests():
     Black.knight.moveTo("C4")
-#knightTests()
+    
+knightTests()
 
 def bishopTests():
     print(Black.bishop.bishops)
     Black.bishop.moveTo("D2")
     Black.bishop.moveTo("H6")
     Black.bishop.moveTo("H8")
-#bishopTests()
+bishopTests()
 
 def queenTests():
-    print(White.queen)
     White.queen.moveTo("E8")
     White.queen.moveTo("H8")
     White.queen.moveTo("A1")
     White.queen.moveTo("B3")
-#queenTests()
+queenTests()
 
 def kingTests():
-    print(White.king)
     White.king.moveTo("C1")
     White.king.moveTo("C2")
     White.king.moveTo("D3")
     White.king.moveTo("H3")
     White.king.moveTo("D8")
-#kingTests()
+kingTests()

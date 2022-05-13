@@ -25,7 +25,6 @@ class Chessboard:
             return True
     
     def onBoard(self, position):
-    # Checks whether the position is valid
         if position in Chessboard.positions:
             return True
 

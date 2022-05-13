@@ -6,25 +6,15 @@ class Chesspiece:
     kingInCheck = False
     canMove = True
     
-    def __init__(self, name = None, position = None, color = None):
+    def __init__(self, name = None, color = None):
         self.__name = name
-        self.__position = position
         self.__color = color
         self.__isTaken = False
-        #Chessboard.Chessboard().updateBoard((self.name, self.position))
 
     @property
     def name(self):
         return self.__name
 
-    @property
-    def position(self):
-        return self.__position
-    
-    @position.setter
-    def position(self, new_pos):
-        self.__position = new_pos.upper()
-    
     @property
     def isTaken(self):
         return self.__isTaken
@@ -47,8 +37,6 @@ class Chesspiece:
         rise = int(Chessboard.Chessboard().board[toPos][0][1]) - int(Chessboard.Chessboard().board[lastPos][0][1])
         return (run, rise)
 
-    def __repr__(self):
-        return "{} is on {}".format(self.name, self.position)
 
 class Pawn(Chesspiece):
     __name = "Pawn"
@@ -101,6 +89,9 @@ class Pawn(Chesspiece):
         self.__pawns[pawn]["firstMove"] = False
    
     def validMove(self, pawn, newPos, lastPos):
+        if Chessboard.Chessboard().onBoard(newPos) == False:
+            return False
+        
         run, rise = self.calcDist(newPos, lastPos)
         if rise > 0 and run**2 == 0:
             if rise**2 == 1:
@@ -270,8 +261,17 @@ class Bishop(Chesspiece):
 class Queen(Chesspiece):
     __name = "Queen"
 
-    def __init__(self, color, position = None):
-        super().__init__(Queen.__name, position, color = color)
+    def __init__(self, color, position):
+        super().__init__(Queen.__name, color = color)
+        self.__position = position
+
+    @property
+    def position(self):
+        return self.__position
+    
+    @position.setter
+    def position(self, new_pos):
+        self.__position = new_pos.upper()
     
     def validMove(self, newPos):
         currentPos = self.position
@@ -292,9 +292,10 @@ class Queen(Chesspiece):
 class King(Chesspiece):
     __name = "King"
 
-    def __init__(self, color, position = None):
-        super().__init__(King.__name, position, color = color)
+    def __init__(self, color, position):
+        super().__init__(King.__name, color = color)
         self.__firstMove = True
+        self.__position = position
     
     @property
     def firstMove(self):
@@ -303,6 +304,14 @@ class King(Chesspiece):
     @firstMove.setter
     def firstMove(self, state):
         self.__firstMove == state
+
+    @property
+    def position(self):
+        return self.__position
+    
+    @position.setter
+    def position(self, new_pos):
+        self.__position = new_pos.upper()
 
     def validMove(self, position):
         currentPos = self.position
