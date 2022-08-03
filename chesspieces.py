@@ -3,41 +3,46 @@
 
 class Movement:
 
-    def distance(self, from_position, to_position):
-        from_x, from_y = from_position
-        to_x, to_y = to_position
-        x = to_x - from_x
-        y = to_y - from_y 
+    def distance_between(self, initial_position: tuple, final_position: tuple) -> tuple:
+        '''Distance between two points 
+        i.e. Pythagoras theorem
+        d^2 = (x_2 - x_1)^2 + (y_2 - y_1)^2
+        where (x_2 - x_1) and (y_2 - y_1) are not the hypothenuse 
+        Note: returns ((x_2 - x_1), (y_2 - y_1))
+        '''
+        initial_x, initial_y = initial_position
+        final_x, final_y = final_position
+        x = final_x - initial_x
+        y = final_y - initial_y
         return (x, y)
 
-    def move_pawn_to(self, from_position, to_position, first_move=False):
-        if first_move == True and self.distance(from_position, to_position) == (0,2):
-            return to_position
-        elif distance(from_position, to_position) == (0,1):
+    def move_pawn_to(self, from_position: tuple, to_position: tuple) -> tuple:
+        run, rise = self.distance_between(from_position, to_position)
+        if (rise == 1 or rise == 2) and run == 0:
             return to_position
     
-    def move_rook_to(self, from_position, to_position):
-        run, rise = self.distance(from_position, to_position)
+    def move_rook_to(self, from_position: tuple, to_position: tuple) -> tuple:
+        run, rise = self.distance_between(from_position, to_position)
         if run == 0 ^ rise == 0:
             return to_position 
         
-    def move_knight_to(self, from_position, to_position):
-        run, rise = self.distance(from_position, to_position)
+    def move_knight_to(self, from_position: tuple, to_position: tuple) -> tuple:
+        run, rise = self.distance_between(from_position, to_position)
         if run**2 + rise**2 == 5:
             return to_position
 
-    def move_bishop_to(self, from_position, to_position):
-        run, rise = self.distance(from_position, to_position)
+    def move_bishop_to(self, from_position: tuple, to_position: tuple) -> tuple:
+        run, rise = self.distance_between(from_position, to_position)
         if run**2 == rise**2:
             return to_position
 
-    def move_king_to(self, from_position, to_position):
-        run, rise = self.distance(from_position, to_position)
+    def move_king_to(self, from_position: tuple, to_position: tuple) -> tuple:
+        run, rise = self.distance_between(from_position, to_position)
         if run**2 + rise**2 == 1:
             return to_position
 
-    def move_queen_to(self, from_position, to_position):
-        run, rise = self.distance(from_position, to_position)
+    def move_queen_to(self, from_position: tuple, to_position: tuple) -> tuple:
+        run, rise = self.distance_between(from_position, to_position)
         if run**2 == rise**2:
             return to_position
         elif rise**2 == 0 ^ run**2 == 0:
