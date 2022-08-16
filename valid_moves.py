@@ -2,11 +2,6 @@
 
 import movement as move
 
-def generate_coordinates() -> tuple:
-    range_of_eight = range(1,9)
-    coordinates = [(x,y) for x in range_of_eight for y in range_of_eight]
-    return coordinates
-
 def valid_queen_moves(initial_position: tuple, coordinate_list: list) -> list:
     valid_moves = []
     for coordinate in coordinate_list:
