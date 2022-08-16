@@ -1,17 +1,17 @@
 #!/bin/usr/python3
 
+import chess_tools
 import movement as move
 import unittest
 import valid_moves as valid_move
 
-
 class TestDistance(unittest.TestCase):
     def test_distance(self):
-        self.assertEqual(move.distance_between((2,1),(4,1)), (2,0), 'Expected (2,0)')
+        self.assertEqual(chess_tools.distance_between((2,1),(4,1)), (2,0), 'Expected (2,0)')
 
 class TestMovement(unittest.TestCase):
     initial_position = (4,4)
-    coordinate_list = valid_move.generate_coordinates()
+    coordinate_list = chess_tools.generate_coordinates()
 
     def test_queen_to(self):
         valid_queen_move_list = valid_move.valid_queen_moves(self.initial_position, self.coordinate_list)
